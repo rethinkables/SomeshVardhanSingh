@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>चौ० सोमेश वर्धन सिंह | Somesh Vardhan Singh - Official Portal</title>
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rozha+One&family=Yantramanav:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <!-- PDF.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
@@ -43,6 +47,7 @@
         }
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
+
     <style>
         .hero-mesh {
             background-color: #080d1a;
@@ -55,15 +60,44 @@
             background: linear-gradient(90deg, #d4af37 0%, #fff2b2 50%, #d4af37 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-glow {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card-glow:hover {
-            box-shadow: 0 10px 30px -10px rgba(234, 88, 12, 0.3);
-            border-color: rgba(234, 88, 12, 0.6);
+            box-shadow: 0 12px 32px -10px rgba(234, 88, 12, 0.35);
+            border-color: rgba(234, 88, 12, 0.55);
+            transform: translateY(-4px);
         }
         .pdf-canvas-thumb {
             width: 100% !important;
             height: auto !important;
             display: block;
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.75s ease, transform 0.75s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stat number polish */
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Smooth header */
+        header {
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        header.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.35);
         }
     </style>
 </head>
@@ -85,7 +119,7 @@
     </div>
 
     <!-- Navigation Header -->
-    <header class="sticky top-0 z-50 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-slate-800">
+    <header id="mainHeader" class="sticky top-0 z-50 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-bjpOrange-600 via-amber-400 to-bjpOrange-500 p-0.5 shadow-lg">
@@ -110,18 +144,18 @@
                 </a>
             </nav>
 
-            <button id="mobileNavToggle" class="lg:hidden p-2 text-slate-300 hover:text-white">
+            <button id="mobileNavToggle" class="lg:hidden p-2 text-slate-300 hover:text-white transition">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
 
         <div id="mobileDrawer" class="hidden lg:hidden bg-slate-900 border-b border-slate-800 px-6 py-4 space-y-3 font-sans text-sm">
-            <a href="#about" class="block py-1 hover:text-amber-400">परिचय</a>
-            <a href="#micro-booth" class="block py-1 hover:text-amber-400">माइक्रो बूथ रणनीति</a>
-            <a href="#gallery" class="block py-1 hover:text-amber-400">चित्र दीर्घा</a>
-            <a href="#timeline" class="block py-1 hover:text-amber-400">कार्यकाल यात्रा</a>
-            <a href="#document" class="block py-1 hover:text-amber-400">अभिलेख (PDF)</a>
-            <a href="#contact" class="block py-2 text-center bg-bjpOrange-600 text-white font-bold rounded-lg">संपर्क सूत्र</a>
+            <a href="#about" class="block py-1.5 hover:text-amber-400 transition">परिचय</a>
+            <a href="#micro-booth" class="block py-1.5 hover:text-amber-400 transition">माइक्रो बूथ रणनीति</a>
+            <a href="#gallery" class="block py-1.5 hover:text-amber-400 transition">चित्र दीर्घा</a>
+            <a href="#timeline" class="block py-1.5 hover:text-amber-400 transition">कार्यकाल यात्रा</a>
+            <a href="#document" class="block py-1.5 hover:text-amber-400 transition">अभिलेख (PDF)</a>
+            <a href="#contact" class="block py-2.5 text-center bg-bjpOrange-600 text-white font-bold rounded-lg mt-2">संपर्क सूत्र</a>
         </div>
     </header>
 
@@ -131,41 +165,41 @@
             <div class="grid lg:grid-cols-12 gap-12 items-center">
                 
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 bg-bjpOrange-500/10 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full text-bjpOrange-400 text-xs font-sans font-bold">
+                    <div class="inline-flex items-center gap-2 bg-bjpOrange-500/10 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full text-bjpOrange-400 text-xs font-sans font-bold reveal">
                         <i data-lucide="award" class="w-4 h-4 text-amber-400"></i>
                         <span>राष्ट्र प्रथम • वैचारिक निष्ठा • पन्ना प्रमुख व बूथ शिल्पी</span>
                     </div>
 
-                    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold font-title leading-tight text-white">
+                    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold font-title leading-tight text-white reveal">
                         ज़मीनी संगठन, कुशल रणनीति एवं <span class="gold-shimmer">निष्ठावान जनसेवा</span>
                     </h2>
 
-                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed font-sans max-w-2xl">
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed font-sans max-w-2xl reveal">
                         1986 से राष्ट्रीय स्वयंसेवक संघ व ABVP के सिपाही से लेकर उच्च न्यायालय की वकालत तक, तथा भाजपा के ऐतिहासिक 
                         <strong class="text-amber-300">"माइक्रो बूथ मैनेजमेंट"</strong> के प्रणेता — ४ दशकों का निष्कलंक सांगठनिक इतिहास।
                     </p>
 
                     <!-- Strategic Impact Metrics -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-sans">
-                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center">
-                            <div class="text-3xl font-extrabold text-amber-400">40+</div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-sans reveal">
+                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center card-glow">
+                            <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="40">0</div>
                             <div class="text-xs text-slate-400 mt-1 font-medium">वर्षों का संगठन अनुभव</div>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center">
-                            <div class="text-3xl font-extrabold text-amber-400">403</div>
+                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center card-glow">
+                            <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="403">0</div>
                             <div class="text-xs text-slate-400 mt-1 font-medium">विधानसभाओं में प्रवास</div>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center">
-                            <div class="text-3xl font-extrabold text-amber-400">1826</div>
+                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center card-glow">
+                            <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="1826">0</div>
                             <div class="text-xs text-slate-400 mt-1 font-medium">बूथों पर विधिक टीम</div>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center">
-                            <div class="text-3xl font-extrabold text-amber-400">3.5L+</div>
-                            <div class="text-xs text-slate-400 mt-1 font-medium">लखनऊ जीत अंतर</div>
+                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center card-glow">
+                            <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="3.5">0</div>
+                            <div class="text-xs text-slate-400 mt-1 font-medium">लखनऊ जीत अंतर (लाख)</div>
                         </div>
                     </div>
 
-                    <div class="pt-2 flex flex-wrap justify-center lg:justify-start gap-4 font-sans text-sm">
+                    <div class="pt-2 flex flex-wrap justify-center lg:justify-start gap-4 font-sans text-sm reveal">
                         <a href="#gallery" class="bg-bjpOrange-600 hover:bg-bjpOrange-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg transition flex items-center gap-2">
                             <span>शीर्ष नेतृत्व दीर्घा देखें</span>
                             <i data-lucide="arrow-down" class="w-4 h-4"></i>
@@ -177,7 +211,7 @@
                 </div>
 
                 <!-- Leader Portrait Card -->
-                <div class="lg:col-span-5 flex justify-center">
+                <div class="lg:col-span-5 flex justify-center reveal">
                     <div class="relative w-full max-w-md bg-gradient-to-b from-slate-800 to-slate-950 border-2 border-amber-500/40 rounded-3xl p-6 shadow-2xl text-center">
                         <div class="relative w-60 h-60 mx-auto rounded-full overflow-hidden border-4 border-bjpOrange-500 shadow-2xl bg-slate-900 flex items-center justify-center">
                             <canvas id="portraitCanvas" class="w-full h-full object-cover"></canvas>
@@ -191,7 +225,7 @@
                             <h3 class="text-2xl font-bold font-title text-white">चौ० सोमेश वर्धन सिंह</h3>
                             <p class="text-sm font-semibold text-amber-400">अधिवक्ता - उच्च न्यायालय लखनऊ</p>
                             <p class="text-xs text-slate-300">महामंत्री - महामना मालवीय मिशन (अवध क्षेत्र)</p>
-                            <div class="pt-3 flex justify-center gap-2">
+                            <div class="pt-3 flex justify-center gap-2 flex-wrap">
                                 <span class="bg-bjpOrange-500/20 border border-bjpOrange-500/40 text-orange-300 px-3 py-1 rounded-full text-xs font-medium">
                                     सक्रिय सदस्य, भा०ज०पा०
                                 </span>
@@ -210,7 +244,7 @@
     <!-- Strategic Pillars: Micro Booth Management -->
     <section id="micro-booth" class="py-20 bg-[#090e1a] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-14">
+            <div class="text-center max-w-3xl mx-auto mb-14 reveal">
                 <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">
                     चुनावी नवाचार एवं बूथ इंजीनियरिंग
                 </span>
@@ -223,7 +257,7 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-6 font-sans">
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow transition duration-300">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow reveal">
                     <div class="w-12 h-12 bg-bjpOrange-600 text-white rounded-xl flex items-center justify-center mb-5 shadow-lg">
                         <i data-lucide="file-check" class="w-6 h-6"></i>
                     </div>
@@ -234,7 +268,7 @@
                     </p>
                 </div>
 
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow transition duration-300">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow reveal">
                     <div class="w-12 h-12 bg-amber-500 text-slate-950 rounded-xl flex items-center justify-center mb-5 shadow-lg font-bold">
                         <i data-lucide="scale" class="w-6 h-6"></i>
                     </div>
@@ -245,7 +279,7 @@
                     </p>
                 </div>
 
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow transition duration-300">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow reveal">
                     <div class="w-12 h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center mb-5 shadow-lg">
                         <i data-lucide="trophy" class="w-6 h-6"></i>
                     </div>
@@ -262,7 +296,7 @@
     <!-- Curated Leadership & Action Photo Gallery -->
     <section id="gallery" class="py-20 bg-[#0c1222] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-wrap justify-between items-end mb-12">
+            <div class="flex flex-wrap justify-between items-end mb-12 reveal">
                 <div>
                     <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">
                         ऐतिहासिक दस्तावेज एवं चित्र
@@ -289,7 +323,7 @@
     <!-- Verified Credentials & Biodata -->
     <section id="about" class="py-20 bg-[#090e1a] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-slate-800 p-8 sm:p-10 shadow-xl">
+            <div class="bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-slate-800 p-8 sm:p-10 shadow-xl reveal">
                 <div class="flex items-center gap-2 text-bjpOrange-400 font-bold text-xs uppercase font-sans mb-4">
                     <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
                     <span>प्रामाणिक विवरण | Verified Credentials</span>
@@ -331,7 +365,7 @@
     <!-- Chronological Service Timeline -->
     <section id="timeline" class="py-20 bg-[#0c1222] border-b border-slate-800">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-14">
+            <div class="text-center mb-14 reveal">
                 <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">
                     ४ दशक की यात्रा
                 </span>
@@ -341,7 +375,7 @@
             </div>
 
             <div class="space-y-5 font-sans">
-                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4">
+                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4 card-glow reveal">
                     <div class="font-bold text-bjpOrange-400 shrink-0 w-28 text-base">1986 - 1996</div>
                     <div>
                         <h4 class="font-bold text-white text-lg font-title">राष्ट्रीय स्वयंसेवक संघ व ABVP दायित्व</h4>
@@ -351,7 +385,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4">
+                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4 card-glow reveal">
                     <div class="font-bold text-amber-400 shrink-0 w-28 text-base">1997 - 2002</div>
                     <div>
                         <h4 class="font-bold text-white text-lg font-title">लखनऊ महानगर संगठन मंत्री व राष्ट्रीय अधिवेशन</h4>
@@ -361,7 +395,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4">
+                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4 card-glow reveal">
                     <div class="font-bold text-bjpOrange-400 shrink-0 w-28 text-base">2005 - 2008</div>
                     <div>
                         <h4 class="font-bold text-white text-lg font-title">युवा मोर्चा जिलाध्यक्ष व डिजिटल भारत का प्रारम्भ</h4>
@@ -371,7 +405,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4">
+                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4 card-glow reveal">
                     <div class="font-bold text-amber-400 shrink-0 w-28 text-base">2010 - 2012</div>
                     <div>
                         <h4 class="font-bold text-white text-lg font-title">मायावती सरकार के 100 घोटालों का अन्वेषण</h4>
@@ -381,7 +415,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4">
+                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4 card-glow reveal">
                     <div class="font-bold text-emerald-400 shrink-0 w-28 text-base">2016 - 2026</div>
                     <div>
                         <h4 class="font-bold text-white text-lg font-title">विधिक सेवा, मालवीय मिशन व राष्ट्रीय संगठन पर्व</h4>
@@ -397,7 +431,7 @@
     <!-- Document Download & Verification -->
     <section id="document" class="py-16 bg-[#090e1a] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-3xl p-8 text-white flex flex-wrap justify-between items-center gap-6 shadow-2xl">
+            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-3xl p-8 text-white flex flex-wrap justify-between items-center gap-6 shadow-2xl reveal">
                 <div class="space-y-2">
                     <span class="text-amber-400 font-bold text-xs uppercase tracking-wider font-sans">अधिकृत दस्तावेज़ • Complete PDF Archive</span>
                     <h3 class="text-2xl sm:text-3xl font-bold font-title">मूल बायोडाटा अभिलेख (20 पृष्ठ)</h3>
@@ -420,7 +454,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-12 gap-12">
                 
-                <div class="lg:col-span-5 space-y-6">
+                <div class="lg:col-span-5 space-y-6 reveal">
                     <span class="text-bjpOrange-400 font-bold text-xs uppercase tracking-widest">सीधा संपर्क एवं संवाद</span>
                     <h2 class="text-3xl sm:text-4xl font-bold font-title">संगठन व जनसेवा हेतु सदैव तत्पर</h2>
                     <p class="text-slate-400 text-sm leading-relaxed">
@@ -461,27 +495,32 @@
                 </div>
 
                 <!-- Connect Form -->
-                <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl p-8">
-                    <form onsubmit="event.preventDefault(); alert('संदेश प्राप्त हुआ। शीघ्र संपर्क किया जाएगा।');" class="space-y-4 text-sm">
+                <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl p-8 reveal">
+                    <!-- 
+                        To make this form fully functional:
+                        1. Go to https://formspree.io and create a free form
+                        2. Replace the action URL below with your Formspree endpoint
+                    -->
+                    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-4 text-sm">
                         <div class="grid sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs text-slate-400 mb-1.5">पूरा नाम (Full Name) *</label>
-                                <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500">
+                                <input type="text" name="name" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500 transition">
                             </div>
                             <div>
                                 <label class="block text-xs text-slate-400 mb-1.5">मोबाइल नंबर (Mobile No.) *</label>
-                                <input type="tel" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500">
+                                <input type="tel" name="phone" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500 transition">
                             </div>
                         </div>
 
                         <div class="grid sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs text-slate-400 mb-1.5">विधानसभा / क्षेत्र (Constituency)</label>
-                                <input type="text" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500">
+                                <input type="text" name="constituency" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500 transition">
                             </div>
                             <div>
                                 <label class="block text-xs text-slate-400 mb-1.5">विषय (Subject)</label>
-                                <select class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500">
+                                <select name="subject" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500 transition">
                                     <option>सांगठनिक विचार-विमर्श</option>
                                     <option>विधिक सहायता / परामर्श</option>
                                     <option>जनहित समस्या निवारण</option>
@@ -492,7 +531,7 @@
 
                         <div>
                             <label class="block text-xs text-slate-400 mb-1.5">संदेश (Your Message) *</label>
-                            <textarea rows="4" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500"></textarea>
+                            <textarea name="message" rows="4" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500 transition"></textarea>
                         </div>
 
                         <button type="submit" class="w-full bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white font-bold py-4 rounded-xl shadow-lg transition">
@@ -533,7 +572,7 @@
         </div>
     </div>
 
-    <!-- Script: High-Precision PDF Crop & Render -->
+    <!-- Scripts -->
     <script>
         lucide.createIcons();
 
@@ -544,7 +583,89 @@
             mobileDrawer.classList.toggle('hidden');
         });
 
-        // Curated Image Pages (Pages 8-17 from PDF)
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobileDrawer a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileDrawer.classList.add('hidden');
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('mainHeader');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // ===== Animated Counters =====
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const isDecimal = target % 1 !== 0;
+                const duration = 1800; // ms
+                const startTime = performance.now();
+
+                function update(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Ease out cubic
+                    const ease = 1 - Math.pow(1 - progress, 3);
+                    const current = target * ease;
+
+                    if (isDecimal) {
+                        counter.innerText = current.toFixed(1) + 'L+';
+                    } else {
+                        counter.innerText = Math.floor(current) + (target >= 40 ? '+' : '');
+                    }
+
+                    if (progress < 1) {
+                        requestAnimationFrame(update);
+                    } else {
+                        // Final value
+                        if (isDecimal) {
+                            counter.innerText = target + 'L+';
+                        } else {
+                            counter.innerText = target + (target >= 40 ? '+' : '');
+                        }
+                    }
+                }
+                requestAnimationFrame(update);
+            });
+        }
+
+        // Trigger counters when hero is visible
+        const heroObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                animateCounters();
+                heroObserver.disconnect();
+            }
+        }, { threshold: 0.35 });
+
+        const heroSection = document.querySelector('.hero-mesh');
+        if (heroSection) heroObserver.observe(heroSection);
+
+        // ===== Scroll Reveal =====
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { 
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== PDF Gallery Logic (Original + small improvements) =====
         const photoGalleryItems = [
             {
                 pageNum: 16,
@@ -599,7 +720,7 @@
 
             if (!pdfDocument) {
                 document.getElementById('galleryLoader').innerHTML = 
-                    `<div class="text-amber-400 text-xs font-sans">PDF लोड करने में असमर्थ। कृपया सुनिश्चित करें कि 'biodata.pdf' फाइल रूट में उपस्थित है।</div>`;
+                    `<div class="text-amber-400 text-xs font-sans text-center px-4">PDF लोड करने में असमर्थ। कृपया सुनिश्चित करें कि 'biodata.pdf' फाइल रूट में उपस्थित है।</div>`;
                 return;
             }
 
@@ -629,7 +750,7 @@
             for (let i = 0; i < photoGalleryItems.length; i++) {
                 const item = photoGalleryItems[i];
                 const card = document.createElement('div');
-                card.className = "group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden card-glow transition duration-300 cursor-pointer flex flex-col";
+                card.className = "group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden card-glow transition duration-300 cursor-pointer flex flex-col reveal";
                 card.onclick = () => openModal(item.pageNum, item.title, item.desc);
 
                 card.innerHTML = `
@@ -663,6 +784,8 @@
                 renderThumb(item.pageNum, `thumb_canvas_${i}`);
             }
 
+            // Re-observe newly added reveal elements
+            document.querySelectorAll('#photosGrid .reveal').forEach(el => revealObserver.observe(el));
             lucide.createIcons();
         }
 
@@ -703,6 +826,16 @@
         function closeModal() {
             document.getElementById('photoModal').classList.add('hidden');
         }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('photoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'photoModal') closeModal();
+        });
 
         window.addEventListener('DOMContentLoaded', loadAndProcessPDF);
     </script>
