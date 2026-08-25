@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>चौ० सोमेश वर्धन सिंह | Somesh Vardhan Singh - Official Portal</title>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rozha+One&family=Yantramanav:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rozha+One&family=Yantramanav:wght@400;500;700;900&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- PDF.js Engine -->
+    <!-- PDF.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
     <script>
@@ -20,20 +20,23 @@
             theme: {
                 extend: {
                     colors: {
-                        saffron: {
-                            50: '#fff7ed',
-                            100: '#ffedd5',
+                        bjpOrange: {
+                            400: '#fb923c',
                             500: '#f97316',
                             600: '#ea580c',
                             700: '#c2410c',
+                            800: '#9a3412',
                         },
-                        bjpNavy: '#0c1b33',
-                        vedicGold: '#d4af37',
+                        bjpGreen: '#138808',
+                        navySlate: '#0a0f1d',
+                        darkCard: '#111827',
+                        goldAccent: '#d4af37'
                     },
                     fontFamily: {
-                        hindiTitle: ['Rozha One', 'serif'],
-                        hindiBody: ['Yantramanav', 'sans-serif'],
+                        title: ['Rozha One', 'serif'],
+                        body: ['Yantramanav', 'sans-serif'],
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Cinzel', 'serif']
                     }
                 }
             }
@@ -41,121 +44,159 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
     <style>
-        .hero-pattern {
-            background-color: #0b1329;
-            background-image: radial-gradient(rgba(234, 88, 12, 0.18) 1px, transparent 0);
-            background-size: 24px 24px;
+        .hero-mesh {
+            background-color: #080d1a;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(234, 88, 12, 0.22) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(19, 136, 8, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(212, 175, 55, 0.08) 0px, transparent 60%);
         }
-        .photo-card-canvas {
+        .gold-shimmer {
+            background: linear-gradient(90deg, #d4af37 0%, #fff2b2 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-glow:hover {
+            box-shadow: 0 10px 30px -10px rgba(234, 88, 12, 0.3);
+            border-color: rgba(234, 88, 12, 0.6);
+        }
+        .pdf-canvas-thumb {
             width: 100% !important;
-            height: 240px !important;
-            object-fit: cover;
+            height: auto !important;
             display: block;
         }
     </style>
 </head>
-<body class="bg-stone-50 text-slate-800 font-hindiBody antialiased selection:bg-orange-600 selection:text-white">
+<body class="bg-[#0c1222] text-slate-100 font-body antialiased selection:bg-bjpOrange-600 selection:text-white">
 
-    <!-- Top Identity Ribbon -->
-    <div class="bg-gradient-to-r from-orange-600 via-amber-500 to-orange-700 text-white text-xs py-2 px-4 shadow-sm font-sans">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2 font-semibold">
-            <div class="flex items-center gap-2">
-                <span class="bg-white/20 px-2 py-0.5 rounded text-[10px] tracking-wider uppercase">निष्ठा एवं संगठन</span>
-                <span>४ दशक का अनवरत राष्ट्र सेवा संकल्प (1986 - 2026)</span>
+    <!-- Top Credential Ticker -->
+    <div class="bg-gradient-to-r from-bjpOrange-700 via-bjpOrange-600 to-amber-600 text-white text-xs py-2 px-4 shadow-md font-sans border-b border-orange-500/30">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-2 font-bold tracking-wide">
+                <span class="bg-black/30 px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider text-amber-200">राष्ट्रहित • संगठन • अंत्योदय</span>
+                <span class="hidden sm:inline">| ४ दशक का अनवरत निष्ठावान सेवा संकल्प (1986 - 2026)</span>
             </div>
-            <div class="flex items-center gap-4 text-xs">
+            <div class="flex items-center gap-4 text-xs text-orange-100 font-medium">
                 <span>📍 लखनऊ / सीतापुर, उत्तर प्रदेश</span>
-                <span class="hidden sm:inline">|</span>
-                <span class="hidden sm:inline">अधिवक्ता, उच्च न्यायालय लखनऊ</span>
+                <span>•</span>
+                <span>अधिवक्ता, उच्च न्यायालय लखनऊ</span>
             </div>
         </div>
     </div>
 
-    <!-- Navigation Bar -->
-    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-orange-100 shadow-sm">
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-orange-600 to-amber-500 p-0.5 shadow">
-                    <div class="w-full h-full bg-white rounded-full flex items-center justify-center font-hindiTitle text-orange-600 text-xl font-bold">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-bjpOrange-600 via-amber-400 to-bjpOrange-500 p-0.5 shadow-lg">
+                    <div class="w-full h-full bg-[#0a0f1d] rounded-full flex items-center justify-center font-title text-amber-400 text-2xl font-bold">
                         सो
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-xl md:text-2xl font-bold font-hindiTitle text-bjpNavy leading-none">चौ० सोमेश वर्धन सिंह</h1>
-                    <p class="text-[10px] text-orange-600 font-semibold tracking-wider font-sans mt-0.5">ADVOCATE, HIGH COURT LUCKNOW | SENIOR BJP LEADER</p>
+                    <h1 class="text-xl sm:text-2xl font-bold font-title text-white tracking-wide leading-none">चौ० सोमेश वर्धन सिंह</h1>
+                    <p class="text-[10px] sm:text-xs text-bjpOrange-400 font-bold tracking-widest font-sans mt-1">ADVOCATE, HIGH COURT LUCKNOW | SENIOR BJP LEADER</p>
                 </div>
             </div>
 
-            <nav class="hidden lg:flex items-center gap-6 font-semibold text-slate-700 text-sm">
-                <a href="#about" class="hover:text-orange-600 transition">परिचय</a>
-                <a href="#micro-booth" class="hover:text-orange-600 transition">माइक्रो बूथ प्रबंधन</a>
-                <a href="#gallery" class="hover:text-orange-600 transition">चित्र दीर्घा</a>
-                <a href="#timeline" class="hover:text-orange-600 transition">कार्यकाल यात्रा</a>
-                <a href="#document" class="hover:text-orange-600 transition">मूल अभिलेख</a>
-                <a href="#contact" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg shadow text-xs font-sans flex items-center gap-1.5 transition">
-                    <i data-lucide="mail" class="w-3.5 h-3.5"></i> संपर्क
+            <nav class="hidden lg:flex items-center gap-7 font-sans text-sm font-semibold text-slate-300">
+                <a href="#about" class="hover:text-amber-400 transition">परिचय</a>
+                <a href="#micro-booth" class="hover:text-amber-400 transition">माइक्रो बूथ रणनीति</a>
+                <a href="#gallery" class="hover:text-amber-400 transition">चित्र दीर्घा</a>
+                <a href="#timeline" class="hover:text-amber-400 transition">कार्यकाल यात्रा</a>
+                <a href="#document" class="hover:text-amber-400 transition">अभिलेख (PDF)</a>
+                <a href="#contact" class="bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white px-5 py-2.5 rounded-lg shadow-lg font-bold transition flex items-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4"></i> संपर्क सूत्र
                 </a>
             </nav>
+
+            <button id="mobileNavToggle" class="lg:hidden p-2 text-slate-300 hover:text-white">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <div id="mobileDrawer" class="hidden lg:hidden bg-slate-900 border-b border-slate-800 px-6 py-4 space-y-3 font-sans text-sm">
+            <a href="#about" class="block py-1 hover:text-amber-400">परिचय</a>
+            <a href="#micro-booth" class="block py-1 hover:text-amber-400">माइक्रो बूथ रणनीति</a>
+            <a href="#gallery" class="block py-1 hover:text-amber-400">चित्र दीर्घा</a>
+            <a href="#timeline" class="block py-1 hover:text-amber-400">कार्यकाल यात्रा</a>
+            <a href="#document" class="block py-1 hover:text-amber-400">अभिलेख (PDF)</a>
+            <a href="#contact" class="block py-2 text-center bg-bjpOrange-600 text-white font-bold rounded-lg">संपर्क सूत्र</a>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-pattern relative text-white pt-14 pb-20 border-b-4 border-orange-500">
+    <section class="hero-mesh relative pt-12 pb-20 border-b border-slate-800 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid lg:grid-cols-12 gap-10 items-center">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
                 
-                <div class="lg:col-span-7 space-y-5 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 bg-orange-500/20 border border-orange-400/40 px-3.5 py-1 rounded-full text-orange-300 text-xs font-sans">
-                        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-orange-400"></i>
-                        <span>राष्ट्र प्रथम • संगठन सर्वोपरि • अंत्योदय संकल्प</span>
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-bjpOrange-500/10 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full text-bjpOrange-400 text-xs font-sans font-bold">
+                        <i data-lucide="award" class="w-4 h-4 text-amber-400"></i>
+                        <span>राष्ट्र प्रथम • वैचारिक निष्ठा • पन्ना प्रमुख व बूथ शिल्पी</span>
                     </div>
 
-                    <h2 class="text-3xl sm:text-5xl font-bold font-hindiTitle leading-tight text-white">
-                        ज़मीनी संगठन, कुशल चुनावी रणनीति एवं जनसेवा को समर्पित जीवन
+                    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold font-title leading-tight text-white">
+                        ज़मीनी संगठन, कुशल रणनीति एवं <span class="gold-shimmer">निष्ठावान जनसेवा</span>
                     </h2>
 
-                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed font-sans max-w-2xl">
-                        छात्र राजनीति (ABVP) से लेकर उच्च न्यायालय की वकालत तक, तथा राष्ट्रीय स्वयंसेवक संघ के संस्कारों से लेकर भाजपा के 
-                        <strong class="text-amber-400 font-semibold">"माइक्रो बूथ मैनेजमेंट"</strong> व पन्ना प्रमुख योजना के प्रणेता तक — 40 वर्षों का निष्ठावान योगदान।
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed font-sans max-w-2xl">
+                        1986 से राष्ट्रीय स्वयंसेवक संघ व ABVP के सिपाही से लेकर उच्च न्यायालय की वकालत तक, तथा भाजपा के ऐतिहासिक 
+                        <strong class="text-amber-300">"माइक्रो बूथ मैनेजमेंट"</strong> के प्रणेता — ४ दशकों का निष्कलंक सांगठनिक इतिहास।
                     </p>
 
-                    <!-- Trust Metrics Grid -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                        <div class="bg-white/10 backdrop-blur border border-white/10 p-3 rounded-xl text-center">
-                            <div class="text-2xl font-bold font-sans text-amber-400">40+</div>
-                            <div class="text-[11px] text-slate-300 font-sans mt-0.5">वर्षों का संगठन अनुभव</div>
+                    <!-- Strategic Impact Metrics -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-sans">
+                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center">
+                            <div class="text-3xl font-extrabold text-amber-400">40+</div>
+                            <div class="text-xs text-slate-400 mt-1 font-medium">वर्षों का संगठन अनुभव</div>
                         </div>
-                        <div class="bg-white/10 backdrop-blur border border-white/10 p-3 rounded-xl text-center">
-                            <div class="text-2xl font-bold font-sans text-amber-400">403</div>
-                            <div class="text-[11px] text-slate-300 font-sans mt-0.5">विधानसभाओं में प्रत्यक्ष कार्य</div>
+                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center">
+                            <div class="text-3xl font-extrabold text-amber-400">403</div>
+                            <div class="text-xs text-slate-400 mt-1 font-medium">विधानसभाओं में प्रवास</div>
                         </div>
-                        <div class="bg-white/10 backdrop-blur border border-white/10 p-3 rounded-xl text-center">
-                            <div class="text-2xl font-bold font-sans text-amber-400">1826</div>
-                            <div class="text-[11px] text-slate-300 font-sans mt-0.5">बूथों पर विधिक टीम प्रबंधन</div>
+                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center">
+                            <div class="text-3xl font-extrabold text-amber-400">1826</div>
+                            <div class="text-xs text-slate-400 mt-1 font-medium">बूथों पर विधिक टीम</div>
                         </div>
-                        <div class="bg-white/10 backdrop-blur border border-white/10 p-3 rounded-xl text-center">
-                            <div class="text-2xl font-bold font-sans text-amber-400">3.5L+</div>
-                            <div class="text-[11px] text-slate-300 font-sans mt-0.5">लखनऊ लोकसभा विजय अन्तर</div>
+                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center">
+                            <div class="text-3xl font-extrabold text-amber-400">3.5L+</div>
+                            <div class="text-xs text-slate-400 mt-1 font-medium">लखनऊ जीत अंतर</div>
                         </div>
+                    </div>
+
+                    <div class="pt-2 flex flex-wrap justify-center lg:justify-start gap-4 font-sans text-sm">
+                        <a href="#gallery" class="bg-bjpOrange-600 hover:bg-bjpOrange-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg transition flex items-center gap-2">
+                            <span>शीर्ष नेतृत्व दीर्घा देखें</span>
+                            <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#about" class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold px-6 py-3.5 rounded-xl transition">
+                            सम्पूर्ण बायोडाटा विवरण
+                        </a>
                     </div>
                 </div>
 
-                <!-- Profile Portrait -->
+                <!-- Leader Portrait Card -->
                 <div class="lg:col-span-5 flex justify-center">
-                    <div class="w-full max-w-sm bg-slate-900 border border-white/20 rounded-2xl p-4 shadow-2xl relative text-center">
-                        <div class="relative w-56 h-56 mx-auto rounded-full overflow-hidden border-4 border-amber-400/80 shadow-xl bg-slate-950 flex items-center justify-center">
+                    <div class="relative w-full max-w-md bg-gradient-to-b from-slate-800 to-slate-950 border-2 border-amber-500/40 rounded-3xl p-6 shadow-2xl text-center">
+                        <div class="relative w-60 h-60 mx-auto rounded-full overflow-hidden border-4 border-bjpOrange-500 shadow-2xl bg-slate-900 flex items-center justify-center">
                             <canvas id="portraitCanvas" class="w-full h-full object-cover"></canvas>
-                            <div id="portraitLoader" class="absolute inset-0 flex flex-col items-center justify-center text-orange-400 text-xs">
-                                <i data-lucide="loader-2" class="w-6 h-6 animate-spin"></i>
+                            <div id="portraitLoader" class="absolute inset-0 flex flex-col items-center justify-center text-amber-400 text-xs font-sans">
+                                <i data-lucide="loader" class="w-8 h-8 animate-spin mb-2"></i>
+                                <span>चित्र लोड हो रहा है...</span>
                             </div>
                         </div>
-                        <div class="mt-4 space-y-1">
-                            <h3 class="text-xl font-bold font-hindiTitle text-white">चौ० सोमेश वर्धन सिंह</h3>
-                            <p class="text-xs text-amber-400 font-sans font-semibold">अधिवक्ता - उच्च न्यायालय लखनऊ</p>
-                            <p class="text-[11px] text-slate-300 font-sans">महामंत्री - महामना मालवीय मिशन (अवध क्षेत्र)</p>
-                            <div class="pt-2">
-                                <span class="inline-block bg-orange-600/30 border border-orange-500/50 text-orange-300 px-3 py-0.5 rounded-full text-[10px] font-sans">
-                                    सक्रिय सदस्य, भा०ज०पा० (2005 से निरंतर)
+
+                        <div class="mt-5 space-y-1.5 font-sans">
+                            <h3 class="text-2xl font-bold font-title text-white">चौ० सोमेश वर्धन सिंह</h3>
+                            <p class="text-sm font-semibold text-amber-400">अधिवक्ता - उच्च न्यायालय लखनऊ</p>
+                            <p class="text-xs text-slate-300">महामंत्री - महामना मालवीय मिशन (अवध क्षेत्र)</p>
+                            <div class="pt-3 flex justify-center gap-2">
+                                <span class="bg-bjpOrange-500/20 border border-bjpOrange-500/40 text-orange-300 px-3 py-1 rounded-full text-xs font-medium">
+                                    सक्रिय सदस्य, भा०ज०पा०
+                                </span>
+                                <span class="bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 px-3 py-1 rounded-full text-xs font-medium">
+                                    रूल ऑफ लॉ सोसाइटी
                                 </span>
                             </div>
                         </div>
@@ -166,167 +207,206 @@
         </div>
     </section>
 
-    <!-- Verified Credentials & Biodata -->
-    <section id="about" class="py-14 bg-white border-b border-stone-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-stone-50 rounded-2xl border border-stone-200 p-6 sm:p-8 shadow-sm">
-                <div class="flex items-center gap-2 text-orange-600 font-bold text-xs uppercase font-sans mb-4">
-                    <i data-lucide="badge-check" class="w-4 h-4"></i>
-                    <span>प्रामाणिक विवरण | Verified Credentials</span>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-6 text-sm">
-                    <div class="space-y-1.5">
-                        <div class="text-xs font-semibold text-slate-400 uppercase">व्यक्तिगत जानकारी</div>
-                        <div class="font-bold text-slate-900 text-base">चौ० सोमेश वर्धन सिंह</div>
-                        <div class="text-xs text-slate-600"><strong>पिता:</strong> स्व. चौ० रमेश सिंह (तालुकेदार / वरिष्ठ अधिवक्ता)</div>
-                        <div class="text-xs text-slate-600"><strong>जाति:</strong> कायस्थ (श्रीवास्तव)</div>
-                        <div class="text-xs text-slate-600"><strong>मूल निवास:</strong> रामपुर कला, बिसवाँ, सीतापुर (उ०प्र०)</div>
-                        <div class="text-xs text-slate-600"><strong>वर्तमान निवास:</strong> ई-2322 राजाजीपुरम, लखनऊ (उ०प्र०)</div>
-                    </div>
-
-                    <div class="space-y-1.5">
-                        <div class="text-xs font-semibold text-slate-400 uppercase">शैक्षणिक एवं विधिक पृष्ठभूमि</div>
-                        <div class="font-bold text-slate-900 text-base">B.A., LL.B., M.J.M.C. (ल०वि०वि०)</div>
-                        <div class="text-xs text-slate-600"><strong>व्यवसाय:</strong> अधिवक्ता (उच्च न्यायालय लखनऊ), कृषि, समाजसेवा</div>
-                        <div class="text-xs text-slate-600"><strong>संघ शिक्षा वर्ग:</strong> प्रथम वर्ष (1995), द्वितीय वर्ष (1996), तृतीय वर्ष (नागपुर 2000)</div>
-                    </div>
-
-                    <div class="space-y-1.5">
-                        <div class="text-xs font-semibold text-slate-400 uppercase">सांगठनिक दायित्व</div>
-                        <div class="font-bold text-orange-600 text-base">महामंत्री - महामना मालवीय मिशन (अवध)</div>
-                        <div class="text-xs text-slate-700"><strong>महामंत्री:</strong> रूल ऑफ लॉ सोसाइटी (अवध क्षेत्र)</div>
-                        <div class="text-xs text-slate-700"><strong>प्राथमिक सदस्यता क्र०:</strong> 7008337255</div>
-                        <div class="text-xs text-slate-700"><strong>सक्रिय सदस्यता क्र०:</strong> 2986 (बिसवां देहात मण्डल)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Strategic Pillars: Micro Booth Management -->
-    <section id="micro-booth" class="py-16 bg-stone-100 border-b border-stone-200">
+    <section id="micro-booth" class="py-20 bg-[#090e1a] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-12">
-                <span class="text-orange-600 font-bold text-xs uppercase font-sans bg-orange-100 px-3 py-1 rounded-full">चुनावी नवाचार एवं संगठन क्षमता</span>
-                <h2 class="text-3xl font-bold font-hindiTitle text-bjpNavy mt-3">माइक्रो बूथ मैनेजमेंट रणनीति के प्रणेता</h2>
-                <p class="text-slate-600 text-sm mt-2">सन 2007 में भाजपा प्रदेश चुनाव प्रबंधन प्रकोष्ठ के संगठन मंत्री रहते हुए 'पन्ना प्रमुख' व बूथ प्रबंधन का वैज्ञानिक मॉडल तैयार किया।</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm hover:shadow-md transition">
-                    <div class="w-10 h-10 bg-orange-600 text-white rounded-lg flex items-center justify-center mb-4">
-                        <i data-lucide="file-text" class="w-5 h-5"></i>
-                    </div>
-                    <h3 class="font-bold text-base text-bjpNavy mb-2">2007: पन्ना प्रमुख व बूथ मॉडल</h3>
-                    <p class="text-slate-600 text-xs leading-relaxed">प्रत्येक बूथ पर 100-150 समर्पित कार्यकर्ताओं की संरचना व वरिष्ठ कार्यकर्ताओं के सम्मान का वैज्ञानिक प्रारूप प्रदेश स्तर पर तैयार किया।</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm hover:shadow-md transition">
-                    <div class="w-10 h-10 bg-amber-500 text-white rounded-lg flex items-center justify-center mb-4">
-                        <i data-lucide="award" class="w-5 h-5"></i>
-                    </div>
-                    <h3 class="font-bold text-base text-bjpNavy mb-2">2019: लखनऊ में 1826 अधिवक्ता</h3>
-                    <p class="text-slate-600 text-xs leading-relaxed">लखनऊ लोकसभा के प्रत्येक बूथ पर एक अधिवक्ता कार्यकर्ता तैनात कर माननीय राजनाथ सिंह जी को 3,50,000 मतों के भारी अंतर से जीत दिलाई।</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm hover:shadow-md transition">
-                    <div class="w-10 h-10 bg-blue-900 text-white rounded-lg flex items-center justify-center mb-4">
-                        <i data-lucide="trophy" class="w-5 h-5"></i>
-                    </div>
-                    <h3 class="font-bold text-base text-bjpNavy mb-2">2022: ऐतिहासिक रिकॉर्ड विजय</h3>
-                    <p class="text-slate-600 text-xs leading-relaxed">महमूदाबाद नगर मण्डल प्रभारी रहते हुए बूथ प्रबंधन के बल पर 40 साल बाद और सिधौली में 35 साल बाद ऐतिहासिक जीत दर्ज कराई।</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Visual Photo Gallery (Actual Pictures Only) -->
-    <section id="gallery" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-12">
-                <span class="text-orange-600 font-bold text-xs uppercase font-sans bg-orange-100 px-3 py-1 rounded-full">ऐतिहासिक एवं प्रेरक क्षण</span>
-                <h2 class="text-3xl sm:text-4xl font-bold font-hindiTitle text-bjpNavy mt-3">शीर्ष नेतृत्व एवं संगठनात्मक चित्र दीर्घा</h2>
-                <p class="text-slate-500 text-sm mt-2 font-sans">
-                    श्रद्धेय अटल जी, मा० नरेंद्र मोदी जी, मा० योगी आदित्यनाथ जी, मा० राजनाथ सिंह जी एवं पूज्य सरसंघचालक जी के साथ स्मृतियाँ
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">
+                    चुनावी नवाचार एवं बूथ इंजीनियरिंग
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-4">
+                    माइक्रो बूथ मैनेजमेंट के जनक
+                </h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-3 font-sans leading-relaxed">
+                    सन 2007 में भाजपा उत्तर प्रदेश चुनाव प्रबंधन प्रकोष्ठ के संगठन मंत्री रहते हुए चौ० सोमेश वर्धन सिंह ने 'पन्ना प्रमुख' व 'माइक्रो बूथ मैनेजमेंट' का ऐतिहासिक शोध पत्र तैयार किया।
                 </p>
             </div>
 
-            <!-- Dynamic Extracted Photo Cards Grid -->
-            <div id="photosGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-            <div id="galleryLoader" class="py-12 flex flex-col items-center justify-center gap-3 text-slate-500 text-sm font-sans bg-stone-50 rounded-2xl border border-stone-200">
-                <i data-lucide="loader-2" class="w-8 h-8 animate-spin text-orange-600"></i>
-                <span class="font-semibold text-slate-700">बायोडाटा से चित्र निकाले जा रहे हैं...</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Timeline Journey -->
-    <section id="timeline" class="py-16 bg-stone-50 border-t border-stone-200">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <span class="text-orange-600 font-bold text-xs uppercase font-sans">निष्ठावान इतिहास</span>
-                <h2 class="text-3xl font-bold font-hindiTitle text-bjpNavy mt-2">प्रमुख सांगठनिक मील के पत्थर</h2>
-            </div>
-
-            <div class="space-y-4 font-sans text-sm">
-                <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex gap-4">
-                    <div class="font-bold text-orange-600 shrink-0 w-24">1986 - 1996</div>
-                    <div>
-                        <h4 class="font-bold text-slate-900 font-hindiBody text-base">राष्ट्रीय स्वयंसेवक संघ व ABVP प्रवेश</h4>
-                        <p class="text-xs text-slate-600 mt-1">15 वर्ष की आयु में संघ प्रवेश। राम जन्मभूमि शिला पूजन व कारसेवा में सक्रिय योगदान। सीतापुर में विद्यार्थी परिषद का सशक्त विस्तार।</p>
+            <div class="grid md:grid-cols-3 gap-6 font-sans">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow transition duration-300">
+                    <div class="w-12 h-12 bg-bjpOrange-600 text-white rounded-xl flex items-center justify-center mb-5 shadow-lg">
+                        <i data-lucide="file-check" class="w-6 h-6"></i>
                     </div>
+                    <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">2007 • नवाचार</span>
+                    <h3 class="text-xl font-bold font-title text-white mt-1 mb-2">पन्ना प्रमुख व बूथ मॉडल</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        प्रत्येक बूथ पर 100-150 समर्पित कार्यकर्ताओं की तैनाती, पन्ना प्रमुख प्रणाली और वरिष्ठ कार्यकर्ताओं के सम्मान का वैज्ञानिक प्रारूप प्रदेश स्तर पर तैयार किया।
+                    </p>
                 </div>
 
-                <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex gap-4">
-                    <div class="font-bold text-orange-600 shrink-0 w-24">1997 - 2002</div>
-                    <div>
-                        <h4 class="font-bold text-slate-900 font-hindiBody text-base">लखनऊ महानगर संगठन मंत्री (ABVP) व राष्ट्रीय अधिवेशन</h4>
-                        <p class="text-xs text-slate-600 mt-1">15,000 रिकॉर्ड सदस्यता कराकर देश में तीसरा स्थान। 1999 में लखनऊ में ऐतिहासिक राष्ट्रीय अधिवेशन व श्रद्धेय अटल जी के चुनाव में 325 बूथों का प्रबंधन।</p>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow transition duration-300">
+                    <div class="w-12 h-12 bg-amber-500 text-slate-950 rounded-xl flex items-center justify-center mb-5 shadow-lg font-bold">
+                        <i data-lucide="scale" class="w-6 h-6"></i>
                     </div>
+                    <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">2019 • लखनऊ लोकसभा</span>
+                    <h3 class="text-xl font-bold font-title text-white mt-1 mb-2">1,826 बूथों पर विधिक टीम</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        रूल ऑफ लॉ सोसाइटी के तहत प्रत्येक बूथ पर एक-एक अधिवक्ता कार्यकर्ता लगाकर माननीय राजनाथ सिंह जी की जीत का अंतर रिकॉर्ड 3,50,000 मतों तक पहुंचाया।
+                    </p>
                 </div>
 
-                <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex gap-4">
-                    <div class="font-bold text-orange-600 shrink-0 w-24">2005 - 2008</div>
-                    <div>
-                        <h4 class="font-bold text-slate-900 font-hindiBody text-base">BJYM जिलाध्यक्ष, किसान यात्रा व माइक्रो बूथ मॉडल</h4>
-                        <p class="text-xs text-slate-600 mt-1">सीतापुर में किसान संकल्प यात्रा का सफल नेतृत्व। सन 2007 में भाजपा प्रदेश चुनाव प्रबंधन प्रकोष्ठ में 'माइक्रो बूथ मैनेजमेंट' का शोध पत्र तैयार किया।</p>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow transition duration-300">
+                    <div class="w-12 h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center mb-5 shadow-lg">
+                        <i data-lucide="trophy" class="w-6 h-6"></i>
                     </div>
-                </div>
-
-                <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex gap-4">
-                    <div class="font-bold text-orange-600 shrink-0 w-24">2010 - 2012</div>
-                    <div>
-                        <h4 class="font-bold text-slate-900 font-hindiBody text-base">भ्रष्टाचार अन्वेषण व 100 घोटालों की रिपोर्ट</h4>
-                        <p class="text-xs text-slate-600 mt-1">पूर्णकालिक सदस्य के रूप में प्रदेश की सभी 403 विधानसभाओं का सघन दौरा कर मायावती सरकार के 100 घोटालों की रिपोर्ट तैयार की और राष्ट्रपति को सौंपी।</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex gap-4">
-                    <div class="font-bold text-orange-600 shrink-0 w-24">2016 - 2026</div>
-                    <div>
-                        <h4 class="font-bold text-slate-900 font-hindiBody text-base">विधिक सेवा, मालवीय मिशन व पूज्य सरसंघचालक जी का मार्गदर्शन</h4>
-                        <p class="text-xs text-slate-600 mt-1">रूल ऑफ लॉ सोसाइटी एवं महामना मालवीय मिशन का नेतृत्व, 1826 बूथों पर विधिक समन्वय, तथा 2026 में पूज्य सरसंघचालक डॉ० मोहन भागवत जी का सपरिवार आशीर्वाद।</p>
-                    </div>
+                    <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">2022 • ऐतिहासिक विजय</span>
+                    <h3 class="text-xl font-bold font-title text-white mt-1 mb-2">40 वर्षों का रिकॉर्ड तोड़ा</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        महमूदाबाद विधानसभा में मण्डल प्रभारी रहते हुए 40 साल बाद एवं सिधौली में 35 साल बाद भाजपा को ऐतिहासिक जीत दर्ज कराई।
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Dedicated Full Official Document Section -->
-    <section id="document" class="py-14 bg-white border-t border-stone-200">
+    <!-- Curated Leadership & Action Photo Gallery -->
+    <section id="gallery" class="py-20 bg-[#0c1222] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-gradient-to-r from-slate-900 to-bjpNavy rounded-2xl p-6 sm:p-8 text-white flex flex-wrap justify-between items-center gap-6 shadow-xl">
+            <div class="flex flex-wrap justify-between items-end mb-12">
+                <div>
+                    <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">
+                        ऐतिहासिक दस्तावेज एवं चित्र
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-4">
+                        शीर्ष नेतृत्व एवं संगठनात्मक स्मृतियाँ
+                    </h2>
+                </div>
+                <div class="text-xs text-slate-400 font-sans mt-3 sm:mt-0">
+                    * मूल अधिकृत अभिलेख से उच्च-रिज़ॉल्यूशन में प्रदर्शित
+                </div>
+            </div>
+
+            <!-- Dynamic Photo Cards Grid -->
+            <div id="photosGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 font-sans"></div>
+
+            <div id="galleryLoader" class="py-16 flex flex-col items-center justify-center gap-3 text-slate-400 text-sm font-sans bg-slate-900/50 rounded-2xl border border-slate-800">
+                <i data-lucide="loader" class="w-8 h-8 animate-spin text-bjpOrange-500"></i>
+                <span class="font-semibold text-slate-200">बायोडाटा से मूल चित्र निकाले जा रहे हैं...</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Verified Credentials & Biodata -->
+    <section id="about" class="py-20 bg-[#090e1a] border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-slate-800 p-8 sm:p-10 shadow-xl">
+                <div class="flex items-center gap-2 text-bjpOrange-400 font-bold text-xs uppercase font-sans mb-4">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
+                    <span>प्रामाणिक विवरण | Verified Credentials</span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-bold font-title text-white mb-8">व्यक्तिगत एवं सांगठनिक परिचय</h3>
+                
+                <div class="grid md:grid-cols-3 gap-8 font-sans text-sm">
+                    <div class="space-y-3 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
+                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">व्यक्तिगत जानकारी</div>
+                        <div class="font-bold text-white text-base">चौ० सोमेश वर्धन सिंह</div>
+                        <div class="text-xs text-slate-300"><strong>पिता:</strong> स्व. चौ० रमेश सिंह (तालुकेदार / वरिष्ठ अधिवक्ता)</div>
+                        <div class="text-xs text-slate-300"><strong>जाति:</strong> कायस्थ (श्रीवास्तव)</div>
+                        <div class="text-xs text-slate-300"><strong>जन्म तिथि:</strong> 01.07.1972</div>
+                        <div class="text-xs text-slate-300"><strong>मूल निवास:</strong> रामपुर कला, बिसवाँ, सीतापुर (उ०प्र०)</div>
+                        <div class="text-xs text-slate-300"><strong>वर्तमान पता:</strong> ई-2322 राजाजीपुरम, लखनऊ</div>
+                    </div>
+
+                    <div class="space-y-3 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
+                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">शैक्षणिक व विधिक योग्यता</div>
+                        <div class="font-bold text-white text-base">B.A., LL.B., M.J.M.C. (ल०वि०वि०)</div>
+                        <div class="text-xs text-slate-300"><strong>वकालत:</strong> उच्च न्यायालय लखनऊ खंडपीठ</div>
+                        <div class="text-xs text-slate-300"><strong>व्यवसाय:</strong> वकालत, कृषि, समाजसेवा</div>
+                        <div class="text-xs text-slate-300"><strong>संघ शिक्षा वर्ग:</strong> प्रथम वर्ष (कानपुर 1995), द्वितीय वर्ष (हरदोई 1996), तृतीय वर्ष (नागपुर 2000)</div>
+                    </div>
+
+                    <div class="space-y-3 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
+                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">सांगठनिक दायित्व</div>
+                        <div class="font-bold text-bjpOrange-400 text-base">महामंत्री - महामना मालवीय मिशन (अवध)</div>
+                        <div class="text-xs text-slate-300"><strong>महामंत्री:</strong> रूल ऑफ लॉ सोसाइटी (अवध क्षेत्र)</div>
+                        <div class="text-xs text-slate-300"><strong>प्राथमिक सदस्यता:</strong> 7008337255</div>
+                        <div class="text-xs text-slate-300"><strong>सक्रिय सदस्यता:</strong> 2986 (बिसवां देहात मण्डल)</div>
+                        <div class="text-xs text-slate-300"><strong>सदस्य:</strong> ब्रिटिश इंडियन एसोसिएशन अवध</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chronological Service Timeline -->
+    <section id="timeline" class="py-20 bg-[#0c1222] border-b border-slate-800">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">
+                    ४ दशक की यात्रा
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-4">
+                    प्रमुख सांगठनिक मील के पत्थर
+                </h2>
+            </div>
+
+            <div class="space-y-5 font-sans">
+                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4">
+                    <div class="font-bold text-bjpOrange-400 shrink-0 w-28 text-base">1986 - 1996</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg font-title">राष्ट्रीय स्वयंसेवक संघ व ABVP दायित्व</h4>
+                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                            15 वर्ष की आयु में RSS प्रवेश। 1989 राम जन्मभूमि शिला पूजन व कारसेवा में सक्रिय सहभागिता। ABVP जिला प्रमुख सीतापुर रहते हुए छात्र आंदोलन का नेतृत्व।
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4">
+                    <div class="font-bold text-amber-400 shrink-0 w-28 text-base">1997 - 2002</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg font-title">लखनऊ महानगर संगठन मंत्री व राष्ट्रीय अधिवेशन</h4>
+                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                            15,000 सदस्यता कराकर देश में तीसरा स्थान प्राप्त किया। 1999 में लखनऊ में ऐतिहासिक राष्ट्रीय अधिवेशन का सफल संयोजन। अटल जी के चुनाव में 325 बूथों का प्रबंधन।
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4">
+                    <div class="font-bold text-bjpOrange-400 shrink-0 w-28 text-base">2005 - 2008</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg font-title">युवा मोर्चा जिलाध्यक्ष व डिजिटल भारत का प्रारम्भ</h4>
+                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                            सीतापुर में किसान संकल्प यात्रा। 2005 में सहज जन सेवा केंद्र के माध्यम से प्रदेश का प्रथम डिजिटल निवास प्रमाण पत्र जारी कराया। 2007 में माइक्रो बूथ मैनेजमेंट पेपर तैयार किया।
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4">
+                    <div class="font-bold text-amber-400 shrink-0 w-28 text-base">2010 - 2012</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg font-title">मायावती सरकार के 100 घोटालों का अन्वेषण</h4>
+                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                            भ्रष्टाचार अन्वेषण समिति के पूर्णकालिक सदस्य के रूप में उत्तर प्रदेश की सभी 403 विधानसभाओं का सघन दौरा कर 100 घोटालों की रिपोर्ट राष्ट्रपति महोदया को सौंपी।
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row gap-4">
+                    <div class="font-bold text-emerald-400 shrink-0 w-28 text-base">2016 - 2026</div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg font-title">विधिक सेवा, मालवीय मिशन व राष्ट्रीय संगठन पर्व</h4>
+                        <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                            रूल ऑफ लॉ सोसाइटी एवं महामना मालवीय मिशन (अवध) का नेतृत्व। 2026 में पूज्य सरसंघचालक डॉ० मोहन भागवत जी का सपरिवार आशीर्वाद प्राप्त।
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Document Download & Verification -->
+    <section id="document" class="py-16 bg-[#090e1a] border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-3xl p-8 text-white flex flex-wrap justify-between items-center gap-6 shadow-2xl">
                 <div class="space-y-2">
-                    <span class="text-amber-400 font-bold text-xs uppercase tracking-wider font-sans">आधिकारिक अभिलेख • PDF Archive</span>
-                    <h3 class="text-2xl font-bold font-hindiTitle">मूल बायोडाटा अभिलेख (20 पृष्ठ)</h3>
+                    <span class="text-amber-400 font-bold text-xs uppercase tracking-wider font-sans">अधिकृत दस्तावेज़ • Complete PDF Archive</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold font-title">मूल बायोडाटा अभिलेख (20 पृष्ठ)</h3>
                     <p class="text-slate-300 text-xs font-sans max-w-xl">
-                        संपूर्ण राजनीतिक, सांगठनिक, विधिक एवं सामाजिक गतिविधियों का 20 पृष्ठीय अधिकृत दस्तावेज़ डाउनलोड करें।
+                        संपूर्ण राजनीतिक, सांगठनिक, विधिक एवं सामाजिक गतिविधियों का अधिकृत प्रमाणित दस्तावेज़ डाउनलोड करें।
                     </p>
                 </div>
                 <div>
-                    <a href="biodata.pdf" download class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-xl flex items-center gap-2 transition text-sm shadow-lg font-sans">
+                    <a href="biodata.pdf" download class="bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white font-bold py-3.5 px-8 rounded-xl flex items-center gap-2.5 transition shadow-xl font-sans text-sm">
                         <i data-lucide="download" class="w-4 h-4"></i>
                         <span>पीडीएफ डाउनलोड करें</span>
                     </a>
@@ -335,63 +415,148 @@
         </div>
     </section>
 
-    <!-- Direct Contact -->
-    <section id="contact" class="py-16 bg-stone-900 text-white font-sans">
+    <!-- Direct Contact Section -->
+    <section id="contact" class="py-20 bg-[#060a12] text-white font-sans">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-10 items-center">
-                <div class="space-y-4">
-                    <span class="text-orange-400 font-bold text-xs uppercase">सीधा संवाद</span>
-                    <h2 class="text-3xl font-bold font-hindiTitle text-white">संगठन व जनसेवा हेतु संपर्क करें</h2>
-                    <div class="space-y-2.5 text-sm text-slate-300 pt-2">
-                        <div>📍 <strong class="text-white">कार्यालय:</strong> ई-2322, राजाजीपुरम, लखनऊ (उ०प्र०)</div>
-                        <div>📞 <strong class="text-white">दूरभाष:</strong> 7007750815 / 9453023077</div>
-                        <div>✉️ <strong class="text-white">ई-मेल:</strong> singh.someshvardhan@gmail.com</div>
+            <div class="grid lg:grid-cols-12 gap-12">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-bjpOrange-400 font-bold text-xs uppercase tracking-widest">सीधा संपर्क एवं संवाद</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-title">संगठन व जनसेवा हेतु सदैव तत्पर</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        सांगठनिक विचार-विमर्श, विधिक परामर्श अथवा जनहित समस्याओं हेतु संपर्क करें।
+                    </p>
+
+                    <div class="space-y-4 pt-2 text-sm text-slate-300">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-500">कार्यालय पता</div>
+                                <div class="font-medium text-white">ई-2322, राजाजीपुरम, लखनऊ, उत्तर प्रदेश</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 shrink-0">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-500">दूरभाष / संपर्क</div>
+                                <div class="font-medium text-white">7007750815 / 9453023077</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 shrink-0">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-500">ई-मेल</div>
+                                <div class="font-medium text-white">singh.someshvardhan@gmail.com</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white/5 border border-white/10 p-6 rounded-2xl text-center">
-                    <h4 class="text-sm font-bold text-white mb-2 font-hindiTitle">राष्ट्राय स्वाहा, इदं न मम</h4>
-                    <p class="text-xs text-slate-400">भारतीय जनता पार्टी, उत्तर प्रदेश</p>
+
+                <!-- Connect Form -->
+                <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl p-8">
+                    <form onsubmit="event.preventDefault(); alert('संदेश प्राप्त हुआ। शीघ्र संपर्क किया जाएगा।');" class="space-y-4 text-sm">
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1.5">पूरा नाम (Full Name) *</label>
+                                <input type="text" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1.5">मोबाइल नंबर (Mobile No.) *</label>
+                                <input type="tel" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500">
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1.5">विधानसभा / क्षेत्र (Constituency)</label>
+                                <input type="text" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1.5">विषय (Subject)</label>
+                                <select class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500">
+                                    <option>सांगठनिक विचार-विमर्श</option>
+                                    <option>विधिक सहायता / परामर्श</option>
+                                    <option>जनहित समस्या निवारण</option>
+                                    <option>अन्य</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1.5">संदेश (Your Message) *</label>
+                            <textarea rows="4" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white font-bold py-4 rounded-xl shadow-lg transition">
+                            संदेश प्रेषित करें (Submit Message)
+                        </button>
+                    </form>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <footer class="bg-black text-slate-500 py-6 text-xs text-center font-sans border-t border-slate-800">
-        © 2026 चौ० सोमेश वर्धन सिंह | सर्वाधिकार सुरक्षित
+    <!-- Footer -->
+    <footer class="bg-black text-slate-500 py-8 text-xs text-center font-sans border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-between items-center gap-4">
+            <div>© 2026 चौ० सोमेश वर्धन सिंह | सर्वाधिकार सुरक्षित</div>
+            <div class="flex gap-4">
+                <span>राष्ट्राय स्वाहा, इदं न मम</span>
+                <span>•</span>
+                <span>भारतीय जनता पार्टी, उत्तर प्रदेश</span>
+            </div>
+        </div>
     </footer>
 
-    <!-- Lightbox Modal for Photo Zoom -->
-    <div id="photoModal" class="fixed inset-0 z-50 bg-black/90 hidden flex items-center justify-center p-4">
+    <!-- Full-Screen Lightbox Modal -->
+    <div id="photoModal" class="fixed inset-0 z-50 bg-black/95 hidden flex items-center justify-center p-4">
         <div class="relative max-w-4xl w-full bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-white bg-black/50 hover:bg-orange-600 p-2 rounded-full transition z-10">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-white bg-black/60 hover:bg-bjpOrange-600 p-2.5 rounded-full transition z-10">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             <div class="p-2 bg-black flex justify-center max-h-[75vh] overflow-hidden">
                 <canvas id="modalCanvas" class="max-h-[70vh] w-auto h-auto object-contain"></canvas>
             </div>
-            <div class="p-4 bg-slate-900 text-white font-sans">
-                <h4 id="modalTitle" class="font-bold text-base text-amber-400 font-hindiTitle"></h4>
-                <p id="modalDesc" class="text-xs text-slate-300 mt-1"></p>
+            <div class="p-5 bg-slate-900 text-white font-sans">
+                <h4 id="modalTitle" class="font-bold text-lg text-amber-400 font-title"></h4>
+                <p id="modalDesc" class="text-xs text-slate-300 mt-1.5"></p>
             </div>
         </div>
     </div>
 
-    <!-- Targeted Image Extraction & Rendering Logic -->
+    <!-- Script: High-Precision PDF Crop & Render -->
     <script>
         lucide.createIcons();
 
+        // Mobile Nav Toggle
+        const mobileToggle = document.getElementById('mobileNavToggle');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        mobileToggle.addEventListener('click', () => {
+            mobileDrawer.classList.toggle('hidden');
+        });
+
+        // Curated Image Pages (Pages 8-17 from PDF)
         const photoGalleryItems = [
             {
                 pageNum: 16,
-                title: "यशस्वी प्रधानमंत्री मा० नरेंद्र मोदी जी एवं शीर्ष नेतृत्व",
+                title: "मा० नरेंद्र मोदी जी एवं शीर्ष नेतृत्व",
                 category: "शीर्ष नेतृत्व",
-                desc: "मा० प्रधानमंत्री नरेंद्र मोदी जी, मा० योगी आदित्यनाथ जी, मा० राजनाथ सिंह जी एवं जे०पी० नड्डा जी के साथ स्मृतियाँ।"
+                desc: "यशस्वी प्रधानमंत्री नरेंद्र मोदी जी, मा० योगी आदित्यनाथ जी, मा० राजनाथ सिंह जी एवं जे०पी० नड्डा जी के साथ।"
             },
             {
                 pageNum: 11,
-                title: "श्रद्धेय अटल बिहारी वाजपेई जी के आवास पर भेंट",
+                title: "श्रद्धेय अटल बिहारी वाजपेई जी के आवास पर",
                 category: "ऐतिहासिक क्षण",
-                desc: "7 RCR नई दिल्ली प्रधानमंत्री आवास पर वरिष्ठजनों के साथ महत्वपूर्ण भेंट एवं राष्ट्रीय कार्यकारिणी देहरादून।"
+                desc: "7 RCR प्रधानमंत्री आवास पर वरिष्ठजनों के साथ महत्वपूर्ण भेंट एवं राष्ट्रीय कार्यकारिणी देहरादून।"
             },
             {
                 pageNum: 13,
@@ -403,11 +568,11 @@
                 pageNum: 10,
                 title: "ABVP स्वर्ण जयंती अधिवेशन मुम्बई (1998)",
                 category: "संघ व ABVP",
-                desc: "मा० राजनाथ सिंह जी, मा० योगी आदित्यनाथ जी एवं मा० पुष्कर सिंह धामी जी के साथ यादगार चित्र।"
+                desc: "मा० राजनाथ सिंह जी, मा० योगी आदित्यनाथ जी एवं मा० पुष्कर सिंह धामी जी के साथ ऐतिहासिक पल।"
             },
             {
                 pageNum: 9,
-                title: "संघ शिक्षा वर्ग तृतीय वर्ष (नागपुर) व राम जन्मभूमि आंदोलन",
+                title: "संघ शिक्षा वर्ग तृतीय वर्ष (नागपुर) व राम जन्मभूमि",
                 category: "संघ व ABVP",
                 desc: "प.पू. डॉ. हेडगेवार समाधि रेशमबाग नागपुर एवं 1989-1992 राम जन्मभूमि आंदोलन शिला पूजन स्मृतियाँ।"
             },
@@ -415,34 +580,16 @@
                 pageNum: 12,
                 title: "प्रदेश का प्रथम डिजिटल केंद्र व मा० पुष्कर सिंह धामी जी",
                 category: "नवाचार",
-                desc: "2005 में सहज जन सेवा केंद्र का उद्घाटन एवं किसान बचाओ यात्रा 2007 (कलराज मिश्र जी के नेतृत्व में)।"
-            },
-            {
-                pageNum: 14,
-                title: "लोकसभा चुनाव सीतापुर दौरा एवं जनसम्पर्क",
-                category: "अभियान",
-                desc: "2014 लोकसभा चुनाव में माननीय राधा मोहन सिंह जी का सीतापुर दौरा व लखनऊ पश्चिम में कार्यक्रम।"
-            },
-            {
-                pageNum: 15,
-                title: "2019 राजनाथ सिंह जी नामांकन व मा० दत्तात्रेय होसबाले जी",
-                category: "शीर्ष नेतृत्व",
-                desc: "लखनऊ लोकसभा नामांकन कार्यक्रम एवं 2025 में मा० दत्तात्रेय होसबाले जी का लखनऊ प्रवास।"
-            },
-            {
-                pageNum: 17,
-                title: "2017 परिवर्तन रैली एवं उच्चतम न्यायालय न्यायाधीश संगोष्ठी",
-                category: "विधिक व सामाजिक",
-                desc: "रूल ऑफ लॉ सोसाइटी के तत्वाधान में सुप्रीम कोर्ट व हाईकोर्ट न्यायाधीशों की गरिमामयी उपस्थिति।"
+                desc: "2005 में सहज जन सेवा केंद्र का उद्घाटन एवं किसान बचाओ यात्रा (कलराज मिश्र जी के नेतृत्व में)।"
             }
         ];
 
         let pdfDocument = null;
 
-        async function initVisualPortal() {
-            const pdfPaths = ['biodata.pdf', 'Somesh Vardhan Singh BJP Biodata final 14-8-2026.pdf', './biodata.pdf'];
+        async function loadAndProcessPDF() {
+            const candidatePaths = ['biodata.pdf', 'Somesh Vardhan Singh BJP Biodata final 14-8-2026.pdf', './biodata.pdf'];
 
-            for (const path of pdfPaths) {
+            for (const path of candidatePaths) {
                 try {
                     const task = pdfjsLib.getDocument(path);
                     pdfDocument = await task.promise;
@@ -452,14 +599,14 @@
 
             if (!pdfDocument) {
                 document.getElementById('galleryLoader').innerHTML = 
-                    `<div class="text-orange-600 text-xs">PDF लोड करने में त्रुटि। कृपया सुनिश्चित करें कि 'biodata.pdf' फाइल रूट में मौजूद है।</div>`;
+                    `<div class="text-amber-400 text-xs font-sans">PDF लोड करने में असमर्थ। कृपया सुनिश्चित करें कि 'biodata.pdf' फाइल रूट में उपस्थित है।</div>`;
                 return;
             }
 
-            // 1. Render Hero Portrait (Circular Focus from Page 2)
+            // 1. Crop Circle Leader Avatar from Page 2
             try {
                 const p2 = await pdfDocument.getPage(2);
-                const viewport = p2.getViewport({ scale: 2 });
+                const viewport = p2.getViewport({ scale: 2.2 });
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = viewport.width;
                 tempCanvas.height = viewport.height;
@@ -472,54 +619,54 @@
                 pctx.drawImage(tempCanvas, viewport.width * 0.08, viewport.height * 0.08, viewport.width * 0.35, viewport.height * 0.30, 0, 0, 400, 400);
                 document.getElementById('portraitLoader').classList.add('hidden');
             } catch (err) {
-                console.error("Portrait crop error:", err);
+                console.error("Avatar crop error:", err);
             }
 
-            // 2. Render Curated Photo Cards Only
+            // 2. Render Curated Photo Cards
             const grid = document.getElementById('photosGrid');
             document.getElementById('galleryLoader').classList.add('hidden');
 
             for (let i = 0; i < photoGalleryItems.length; i++) {
                 const item = photoGalleryItems[i];
                 const card = document.createElement('div');
-                card.className = "group bg-white rounded-xl border border-stone-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col";
+                card.className = "group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden card-glow transition duration-300 cursor-pointer flex flex-col";
                 card.onclick = () => openModal(item.pageNum, item.title, item.desc);
 
                 card.innerHTML = `
                     <div class="relative overflow-hidden bg-slate-950 aspect-[4/3] flex items-center justify-center">
-                        <canvas id="photo_thumb_${i}" class="photo-card-canvas group-hover:scale-105 transition duration-500"></canvas>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition"></div>
-                        <span class="absolute top-3 left-3 bg-orange-600/90 text-white text-[10px] font-sans font-semibold px-2 py-0.5 rounded shadow">
+                        <canvas id="thumb_canvas_${i}" class="pdf-canvas-thumb group-hover:scale-105 transition duration-500"></canvas>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition"></div>
+                        <span class="absolute top-3 left-3 bg-bjpOrange-600/90 text-white text-[10px] font-sans font-bold px-2.5 py-0.5 rounded shadow">
                             ${item.category}
                         </span>
-                        <div class="absolute bottom-3 right-3 text-white bg-black/60 p-1.5 rounded-full">
+                        <div class="absolute bottom-3 right-3 text-white bg-black/60 p-2 rounded-full">
                             <i data-lucide="zoom-in" class="w-4 h-4"></i>
                         </div>
                     </div>
-                    <div class="p-4 flex-1 flex flex-col justify-between">
+                    <div class="p-5 flex-1 flex flex-col justify-between">
                         <div>
-                            <h4 class="font-bold text-sm text-bjpNavy font-hindiTitle group-hover:text-orange-600 transition leading-snug">
+                            <h4 class="font-bold text-base text-white font-title group-hover:text-amber-400 transition leading-snug">
                                 ${item.title}
                             </h4>
-                            <p class="text-xs text-slate-500 mt-1.5 line-clamp-2 font-sans">
+                            <p class="text-xs text-slate-400 mt-2 font-sans line-clamp-2 leading-relaxed">
                                 ${item.desc}
                             </p>
                         </div>
-                        <div class="mt-3 pt-2 border-t border-slate-100 flex justify-between items-center text-[11px] text-orange-600 font-semibold font-sans">
-                            <span>चित्र विस्तार देखें</span>
-                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs text-bjpOrange-400 font-bold font-sans">
+                            <span>विस्तृत चित्र देखें</span>
+                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </div>
                     </div>
                 `;
                 grid.appendChild(card);
 
-                renderPhotoCard(item.pageNum, `photo_thumb_${i}`);
+                renderThumb(item.pageNum, `thumb_canvas_${i}`);
             }
 
             lucide.createIcons();
         }
 
-        async function renderPhotoCard(pageNum, canvasId) {
+        async function renderThumb(pageNum, canvasId) {
             try {
                 const page = await pdfDocument.getPage(pageNum);
                 const viewport = page.getViewport({ scale: 1.5 });
@@ -528,16 +675,14 @@
                 tempCanvas.height = viewport.height;
                 await page.render({ canvasContext: tempCanvas.getContext('2d'), viewport }).promise;
 
-                const targetCanvas = document.getElementById(canvasId);
-                if (targetCanvas) {
-                    targetCanvas.width = 600;
-                    targetCanvas.height = 450;
-                    const ctx = targetCanvas.getContext('2d');
+                const target = document.getElementById(canvasId);
+                if (target) {
+                    target.width = 600;
+                    target.height = 450;
+                    const ctx = target.getContext('2d');
                     ctx.drawImage(tempCanvas, 0, viewport.height * 0.12, viewport.width, viewport.height * 0.78, 0, 0, 600, 450);
                 }
-            } catch (e) {
-                console.error("Photo render error:", e);
-            }
+            } catch (e) {}
         }
 
         async function openModal(pageNum, title, desc) {
@@ -559,7 +704,7 @@
             document.getElementById('photoModal').classList.add('hidden');
         }
 
-        window.addEventListener('DOMContentLoaded', initVisualPortal);
+        window.addEventListener('DOMContentLoaded', loadAndProcessPDF);
     </script>
 </body>
 </html>
