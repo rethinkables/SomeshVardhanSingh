@@ -21,6 +21,8 @@
                 extend: {
                     colors: {
                         saffron: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
                             500: '#f97316',
                             600: '#ea580c',
                             700: '#c2410c',
@@ -138,7 +140,7 @@
                     </div>
                 </div>
 
-                <!-- Profile Portrait (Cropped Leader Photo from PDF) -->
+                <!-- Profile Portrait -->
                 <div class="lg:col-span-5 flex justify-center">
                     <div class="w-full max-w-sm bg-slate-900 border border-white/20 rounded-2xl p-4 shadow-2xl relative text-center">
                         <div class="relative w-56 h-56 mx-auto rounded-full overflow-hidden border-4 border-amber-400/80 shadow-xl bg-slate-950 flex items-center justify-center">
@@ -251,9 +253,7 @@
             </div>
 
             <!-- Dynamic Extracted Photo Cards Grid -->
-            <div id="photosGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Javascript will inject cropped photo canvases here -->
-            </div>
+            <div id="photosGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
             <div id="galleryLoader" class="py-12 flex flex-col items-center justify-center gap-3 text-slate-500 text-sm font-sans bg-stone-50 rounded-2xl border border-stone-200">
                 <i data-lucide="loader-2" class="w-8 h-8 animate-spin text-orange-600"></i>
@@ -380,7 +380,6 @@
     <script>
         lucide.createIcons();
 
-        // Curated mapping of actual photo pages (Pages 8 to 17)
         const photoGalleryItems = [
             {
                 pageNum: 16,
@@ -466,7 +465,6 @@
                 tempCanvas.height = viewport.height;
                 await p2.render({ canvasContext: tempCanvas.getContext('2d'), viewport }).promise;
 
-                // Crop the circular avatar area (top-left of Page 2)
                 const portraitCanvas = document.getElementById('portraitCanvas');
                 portraitCanvas.width = 400;
                 portraitCanvas.height = 400;
@@ -515,7 +513,6 @@
                 `;
                 grid.appendChild(card);
 
-                // Render photo crop onto thumb canvas
                 renderPhotoCard(item.pageNum, `photo_thumb_${i}`);
             }
 
@@ -536,7 +533,6 @@
                     targetCanvas.width = 600;
                     targetCanvas.height = 450;
                     const ctx = targetCanvas.getContext('2d');
-                    // Crop middle photo zone (excluding PDF header & footer text)
                     ctx.drawImage(tempCanvas, 0, viewport.height * 0.12, viewport.width, viewport.height * 0.78, 0, 0, 600, 450);
                 }
             } catch (e) {
