@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>चौ० सोमेश वर्धन सिंह | Somesh Vardhan Singh - Official Portal</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rozha+One&family=Yantramanav:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
     <script>
         tailwind.config = {
             theme: {
@@ -33,89 +30,105 @@
                 }
             }
         }
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
-
     <style>
-        .hero-mesh {
-            background-color: #080d1a;
-            position: relative;
-            overflow: hidden;
-        }
-        #three-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 10;
-        }
+        .hero-mesh { background-color: #080d1a; position: relative; overflow: hidden; }
+        #three-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .hero-content { position: relative; z-index: 10; }
         .gold-shimmer {
             background: linear-gradient(90deg, #d4af37 0%, #fff2b2 50%, #d4af37 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-        .card-glow {
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .card-glow { transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
         .card-glow:hover {
             box-shadow: 0 12px 32px -10px rgba(234, 88, 12, 0.35);
             border-color: rgba(234, 88, 12, 0.55);
             transform: translateY(-4px);
         }
-        .pdf-canvas-thumb {
-            width: 100% !important;
-            height: auto !important;
-            display: block;
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .stat-number { font-variant-numeric: tabular-nums; }
+        header.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
+        .timeline-line { position: absolute; left: 1.25rem; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #ea580c, #d4af37, #138808); }
+        @media (min-width: 640px) { .timeline-line { left: 50%; transform: translateX(-50%); } }
+        .timeline-dot { width: 14px; height: 14px; border-radius: 50%; background: #ea580c; border: 3px solid #0c1222; box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.4); flex-shrink: 0; z-index: 2; }
+        .timeline-item:hover .timeline-content { border-color: rgba(234, 88, 12, 0.5); background: rgba(15, 23, 42, 0.95); }
+
+        /* ===== GALLERY: CSS Columns Masonry ===== */
+        .gallery-masonry { column-count: 1; column-gap: 1.25rem; }
+        @media (min-width: 640px) { .gallery-masonry { column-count: 2; } }
+        @media (min-width: 1024px) { .gallery-masonry { column-count: 3; } }
+        @media (min-width: 1280px) { .gallery-masonry { column-count: 4; } }
+        .gallery-item {
+            break-inside: avoid; margin-bottom: 1.25rem;
+            position: relative; border-radius: 1rem; overflow: hidden;
+            cursor: pointer; border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .reveal {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.75s ease, transform 0.75s ease;
+        .gallery-item:hover {
+            border-color: rgba(234, 88, 12, 0.6);
+            box-shadow: 0 20px 40px -12px rgba(234, 88, 12, 0.25);
+            transform: translateY(-4px) scale(1.01);
+            z-index: 10;
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        .gallery-item img { width: 100%; height: auto; display: block; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .gallery-item:hover img { transform: scale(1.06); }
+        .gallery-item .gallery-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.15) 50%, transparent 80%);
+            opacity: 0.6; transition: opacity 0.4s ease;
         }
-        .stat-number {
-            font-variant-numeric: tabular-nums;
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-item .gallery-content {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem;
+            transform: translateY(6px); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        header.scrolled {
-            box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+        .gallery-item:hover .gallery-content { transform: translateY(0); }
+        .gallery-item .gallery-badge {
+            position: absolute; top: 0.75rem; left: 0.75rem;
+            background: rgba(234, 88, 12, 0.9); color: white; font-size: 0.65rem;
+            font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px;
+            text-transform: uppercase; letter-spacing: 0.05em; backdrop-filter: blur(4px); z-index: 5;
         }
-        .timeline-line {
-            position: absolute;
-            left: 1.25rem;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, #ea580c, #d4af37, #138808);
+        .gallery-item .gallery-zoom {
+            position: absolute; top: 0.75rem; right: 0.75rem; width: 2rem; height: 2rem;
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; opacity: 0; transform: scale(0.8); transition: all 0.3s ease; z-index: 5;
         }
-        @media (min-width: 640px) {
-            .timeline-line {
-                left: 50%;
-                transform: translateX(-50%);
-            }
+        .gallery-item:hover .gallery-zoom { opacity: 1; transform: scale(1); }
+        .filter-tab {
+            position: relative; padding: 0.5rem 1.25rem; font-size: 0.8rem; font-weight: 600;
+            color: #94a3b8; background: transparent; border: 1px solid transparent;
+            border-radius: 9999px; cursor: pointer; transition: all 0.3s ease; white-space: nowrap;
         }
-        .timeline-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #ea580c;
-            border: 3px solid #0c1222;
-            box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.4);
-            flex-shrink: 0;
-            z-index: 2;
+        .filter-tab:hover { color: #fbbf24; background: rgba(251, 191, 36, 0.08); }
+        .filter-tab.active {
+            color: white; background: linear-gradient(135deg, #ea580c, #d97706);
+            border-color: rgba(234, 88, 12, 0.5); box-shadow: 0 4px 15px -3px rgba(234, 88, 12, 0.3);
         }
-        .timeline-item:hover .timeline-content {
-            border-color: rgba(234, 88, 12, 0.5);
-            background: rgba(15, 23, 42, 0.95);
+        .filter-scroll::-webkit-scrollbar { height: 4px; }
+        .filter-scroll::-webkit-scrollbar-track { background: transparent; }
+        .filter-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        .filter-scroll { scrollbar-width: thin; scrollbar-color: #334155 transparent; }
+
+        /* Lightbox */
+        #lightbox { opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+        #lightbox.open { opacity: 1; pointer-events: auto; }
+        #lightbox .lightbox-img-wrap { transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        #lightbox.open .lightbox-img-wrap { transform: scale(1); }
+        .lightbox-nav {
+            position: absolute; top: 50%; transform: translateY(-50%); width: 3rem; height: 3rem;
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white;
+            cursor: pointer; transition: all 0.25s ease; backdrop-filter: blur(8px); z-index: 60;
+        }
+        .lightbox-nav:hover { background: rgba(234, 88, 12, 0.8); border-color: rgba(234, 88, 12, 0.6); transform: translateY(-50%) scale(1.1); }
+        .lightbox-counter {
+            position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.35rem 1rem; border-radius: 9999px; font-size: 0.75rem; color: #cbd5e1;
+            backdrop-filter: blur(8px); z-index: 60;
         }
     </style>
 </head>
@@ -148,7 +161,6 @@
                     <p class="text-[10px] sm:text-xs text-bjpOrange-400 font-bold tracking-widest font-sans mt-1">ADVOCATE, HIGH COURT LUCKNOW | SENIOR BJP LEADER</p>
                 </div>
             </div>
-
             <nav class="hidden lg:flex items-center gap-7 font-sans text-sm font-semibold text-slate-300">
                 <a href="#about" class="hover:text-amber-400 transition">परिचय</a>
                 <a href="#micro-booth" class="hover:text-amber-400 transition">माइक्रो बूथ रणनीति</a>
@@ -159,12 +171,10 @@
                     <i data-lucide="send" class="w-4 h-4"></i> संपर्क सूत्र
                 </a>
             </nav>
-
             <button id="mobileNavToggle" class="lg:hidden p-2 text-slate-300 hover:text-white transition">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
-
         <div id="mobileDrawer" class="hidden lg:hidden bg-slate-900 border-b border-slate-800 px-6 py-4 space-y-3 font-sans text-sm">
             <a href="#about" class="block py-1.5 hover:text-amber-400 transition">परिचय</a>
             <a href="#micro-booth" class="block py-1.5 hover:text-amber-400 transition">माइक्रो बूथ रणनीति</a>
@@ -178,7 +188,6 @@
     <!-- Hero with Three.js -->
     <section class="hero-mesh relative pt-12 pb-20 border-b border-slate-800">
         <canvas id="three-canvas"></canvas>
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative hero-content">
             <div class="grid lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
@@ -186,16 +195,13 @@
                         <i data-lucide="award" class="w-4 h-4 text-amber-400"></i>
                         <span>राष्ट्र प्रथम • वैचारिक निष्ठा • पन्ना प्रमुख व बूथ शिल्पी</span>
                     </div>
-
                     <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold font-title leading-tight text-white reveal">
                         ज़मीनी संगठन, कुशल रणनीति एवं <span class="gold-shimmer">निष्ठावान जनसेवा</span>
                     </h2>
-
                     <p class="text-slate-300 text-base sm:text-lg leading-relaxed font-sans max-w-2xl reveal">
                         1986 से राष्ट्रीय स्वयंसेवक संघ व ABVP के सिपाही से लेकर उच्च न्यायालय की वकालत तक, तथा भाजपा के ऐतिहासिक 
                         <strong class="text-amber-300">"माइक्रो बूथ मैनेजमेंट"</strong> के प्रणेता — ४ दशकों का निष्कलंक सांगठनिक इतिहास।
                     </p>
-
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-sans reveal">
                         <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center card-glow backdrop-blur-sm">
                             <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="40">0</div>
@@ -214,7 +220,6 @@
                             <div class="text-xs text-slate-400 mt-1 font-medium">लखनऊ जीत अंतर (लाख)</div>
                         </div>
                     </div>
-
                     <div class="pt-2 flex flex-wrap justify-center lg:justify-start gap-4 font-sans text-sm reveal">
                         <a href="#gallery" class="bg-bjpOrange-600 hover:bg-bjpOrange-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg transition flex items-center gap-2">
                             <span>शीर्ष नेतृत्व दीर्घा देखें</span>
@@ -225,16 +230,10 @@
                         </a>
                     </div>
                 </div>
-
-                <!-- Portrait -->
                 <div class="lg:col-span-5 flex justify-center reveal">
                     <div class="relative w-full max-w-md bg-gradient-to-b from-slate-800/90 to-slate-950/90 border-2 border-amber-500/40 rounded-3xl p-6 shadow-2xl text-center backdrop-blur-md">
                         <div class="relative w-60 h-60 mx-auto rounded-full overflow-hidden border-4 border-bjpOrange-500 shadow-2xl bg-slate-900">
-                            <img src="portrait.jpg" 
-                                 alt="चौ० सोमेश वर्धन सिंह" 
-                                 class="w-full h-full object-cover"
-                                 style="object-position: center 30%;"
-                                 loading="eager">
+                            <img src="portrait.jpg" alt="चौ० सोमेश वर्धन सिंह" class="w-full h-full object-cover" style="object-position: center 30%;" loading="eager">
                         </div>
                         <div class="mt-5 space-y-1.5 font-sans">
                             <h3 class="text-2xl font-bold font-title text-white">चौ० सोमेश वर्धन सिंह</h3>
@@ -284,21 +283,23 @@
         </div>
     </section>
 
-    <!-- Gallery -->
+    <!-- ===== IMAGE GALLERY ===== -->
     <section id="gallery" class="py-20 bg-[#0c1222] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-wrap justify-between items-end mb-12 reveal">
+            <div class="flex flex-wrap justify-between items-end mb-10 reveal">
                 <div>
                     <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">ऐतिहासिक दस्तावेज एवं चित्र</span>
                     <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-4">शीर्ष नेतृत्व एवं संगठनात्मक स्मृतियाँ</h2>
                 </div>
-                <div class="text-xs text-slate-400 font-sans mt-3 sm:mt-0">* प्रत्येक खंड अलग-अलग प्रदर्शित</div>
             </div>
-            <div id="photosGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 font-sans"></div>
-            <div id="galleryLoader" class="py-16 flex flex-col items-center justify-center gap-3 text-slate-400 text-sm font-sans bg-slate-900/50 rounded-2xl border border-slate-800">
-                <i data-lucide="loader" class="w-8 h-8 animate-spin text-bjpOrange-500"></i>
-                <span class="font-semibold text-slate-200">चित्र लोड हो रहे हैं...</span>
+            <div class="flex gap-2 mb-8 overflow-x-auto filter-scroll pb-2 reveal" id="galleryFilters">
+                <button class="filter-tab active" data-filter="all">सभी चित्र</button>
+                <button class="filter-tab" data-filter="चुनावी कार्य">चुनावी कार्य</button>
+                <button class="filter-tab" data-filter="संघ व ABVP">संघ व ABVP</button>
+                <button class="filter-tab" data-filter="शीर्ष नेतृत्व">शीर्ष नेतृत्व</button>
+                <button class="filter-tab" data-filter="सामाजिक एवं विधिक">सामाजिक एवं विधिक</button>
             </div>
+            <div class="gallery-masonry" id="galleryGrid"></div>
         </div>
     </section>
 
@@ -513,44 +514,42 @@
     </footer>
 
     <!-- Lightbox -->
-    <div id="photoModal" class="fixed inset-0 z-50 bg-black/95 hidden flex items-center justify-center p-4">
-        <div class="relative max-w-4xl w-full bg-slate-900 rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-white bg-black/60 hover:bg-bjpOrange-600 p-2.5 rounded-full transition z-10">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-            <div class="p-2 bg-black flex justify-center max-h-[75vh] overflow-hidden">
-                <canvas id="modalCanvas" class="max-h-[70vh] w-auto h-auto object-contain"></canvas>
+    <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 hidden flex items-center justify-center p-4">
+        <button onclick="closeLightbox()" class="absolute top-5 right-5 text-white bg-black/60 hover:bg-bjpOrange-600 p-3 rounded-full transition z-50">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <button onclick="prevImage()" class="lightbox-nav left-4 sm:left-8">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <button onclick="nextImage()" class="lightbox-nav right-4 sm:right-8">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </button>
+        <div class="relative max-w-5xl w-full flex flex-col items-center lightbox-img-wrap">
+            <img id="lightboxImg" src="" alt="" class="max-h-[78vh] w-auto rounded-xl shadow-2xl border border-slate-700">
+            <div class="mt-4 text-center max-w-2xl px-4">
+                <h4 id="lightboxTitle" class="font-bold text-lg text-amber-400 font-title"></h4>
+                <p id="lightboxDesc" class="text-xs text-slate-300 mt-1"></p>
             </div>
-            <div class="p-5 bg-slate-900 text-white font-sans">
-                <h4 id="modalTitle" class="font-bold text-lg text-amber-400 font-title"></h4>
-                <p id="modalDesc" class="text-xs text-slate-300 mt-1.5"></p>
-            </div>
+        </div>
+        <div class="lightbox-counter font-sans">
+            <span id="lightboxCounter">1 / 8</span>
         </div>
     </div>
 
     <script>
-        // ========== THREE.JS ==========
+        // ========== THREE.JS HERO ==========
         (function() {
             const canvas = document.getElementById('three-canvas');
             if (!canvas) return;
-
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 5;
-
             const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
             scene.add(new THREE.AmbientLight(0x404040, 0.6));
-            const p1 = new THREE.PointLight(0xea580c, 1.2, 20);
-            p1.position.set(2, 2, 3);
-            scene.add(p1);
-            const p2 = new THREE.PointLight(0xd4af37, 0.8, 15);
-            p2.position.set(-3, -1, 2);
-            scene.add(p2);
-
-            // Particles
+            const p1 = new THREE.PointLight(0xea580c, 1.2, 20); p1.position.set(2, 2, 3); scene.add(p1);
+            const p2 = new THREE.PointLight(0xd4af37, 0.8, 15); p2.position.set(-3, -1, 2); scene.add(p2);
             const particlesGeometry = new THREE.BufferGeometry();
             const count = 450;
             const pos = new Float32Array(count * 3);
@@ -560,8 +559,6 @@
                 size: 0.035, color: 0xf97316, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending
             }));
             scene.add(particles);
-
-            // Floating form
             const group = new THREE.Group();
             const core = new THREE.Mesh(
                 new THREE.IcosahedronGeometry(0.45, 1),
@@ -579,7 +576,6 @@
             }
             group.position.set(3.2, 0.3, 0);
             scene.add(group);
-
             let t = 0;
             function animate() {
                 requestAnimationFrame(animate);
@@ -594,7 +590,6 @@
                 renderer.render(scene, camera);
             }
             animate();
-
             window.addEventListener('resize', () => {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
@@ -602,19 +597,16 @@
             });
         })();
 
-        // ========== EXISTING LOGIC ==========
+        // ========== UI LOGIC ==========
         lucide.createIcons();
-
         const mobileToggle = document.getElementById('mobileNavToggle');
         const mobileDrawer = document.getElementById('mobileDrawer');
         if (mobileToggle) {
             mobileToggle.addEventListener('click', () => mobileDrawer.classList.toggle('hidden'));
             document.querySelectorAll('#mobileDrawer a').forEach(l => l.addEventListener('click', () => mobileDrawer.classList.add('hidden')));
         }
-
         const header = document.getElementById('mainHeader');
         window.addEventListener('scroll', () => header && header.classList.toggle('scrolled', window.scrollY > 40));
-
         function animateCounters() {
             document.querySelectorAll('.stat-number').forEach(counter => {
                 const target = parseFloat(counter.dataset.target);
@@ -632,117 +624,135 @@
             });
         }
         new IntersectionObserver(e => { if (e[0].isIntersecting) { animateCounters(); } }, { threshold: 0.35 }).observe(document.querySelector('.hero-mesh'));
-
         const revealObs = new IntersectionObserver(entries => {
             entries.forEach(e => e.isIntersecting && e.target.classList.add('active'));
         }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
         document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-        // Gallery items with crops
-        const photoGalleryItems = [
-            { pageNum: 14, title: "श्रद्धेय अटल बिहारी वाजपेई जी के आवास पर", category: "ऐतिहासिक क्षण", desc: "मा० प्रधानमंत्री अटल बिहारी वाजपेई जी के आवास पर वरिष्ठजनों की भेंट।", crop: { x: 0.05, y: 0.58, w: 0.90, h: 0.32 } },
-            { pageNum: 14, title: "भाजपा राष्ट्रीय कार्यकारिणी देहरादून", category: "ऐतिहासिक क्षण", desc: "भाजपा राष्ट्रीय कार्यकारिणी देहरादून की यादें।", crop: { x: 0.05, y: 0.32, w: 0.90, h: 0.24 } },
-            { pageNum: 13, title: "ABVP स्वर्ण जयंती अधिवेशन मुम्बई (1998)", category: "संघ व ABVP", desc: "सन 1998 में अ.भा. विद्यार्थी परिषद के ‘स्वर्ण जयंती’ अधिवेशन मुम्बई में सहभाग।", crop: { x: 0.05, y: 0.12, w: 0.90, h: 0.38 } },
-            { pageNum: 13, title: "मा० राजनाथ सिंह, योगी आदित्यनाथ एवं पुष्कर सिंह धामी जी के साथ", category: "संघ व ABVP", desc: "मा० राजनाथ सिंह, मा० भगत सिंह कोश्यारी, माननीय योगी आदित्यनाथ एवं मा० पुष्कर सिंह धामी जी के साथ।", crop: { x: 0.05, y: 0.52, w: 0.90, h: 0.38 } },
-            { pageNum: 12, title: "संघ शिक्षा तृतीय वर्ष - नागपुर (2000)", category: "संघ व ABVP", desc: "संघ शिक्षा तृतीय वर्ष-2000 नागपुर।", crop: { x: 0.05, y: 0.10, w: 0.90, h: 0.28 } },
-            { pageNum: 12, title: "राम जन्मभूमि आंदोलन की स्मृतियाँ", category: "संघ व ABVP", desc: "राम जन्मभूमि आंदोलन के दौरान की स्मृतियाँ।", crop: { x: 0.05, y: 0.40, w: 0.90, h: 0.28 } },
-            { pageNum: 12, title: "ABVP प्रतिभा सम्मान समारोह 1997", category: "संघ व ABVP", desc: "अखिल भारतीय विद्यार्थी परिषद लखनऊ महानगर द्वारा आयोजित प्रतिभा सम्मान समारोह-1997।", crop: { x: 0.05, y: 0.70, w: 0.90, h: 0.22 } },
-            { pageNum: 11, title: "1986 से 1992 तक की गतिविधियाँ", category: "प्रारंभिक यात्रा", desc: "1986 से 1992 तक की गतिविधियाँ।", crop: { x: 0.05, y: 0.10, w: 0.90, h: 0.28 } },
-            { pageNum: 11, title: "1992 से 1998 तक ABVP राष्ट्रीय अधिवेशन", category: "प्रारंभिक यात्रा", desc: "1992 से 1998 तक अ.भा. विद्यार्थी परिषद के विभिन्न राष्ट्रीय अधिवेशनों में भाग लिया।", crop: { x: 0.05, y: 0.40, w: 0.90, h: 0.50 } },
-            { pageNum: 15, title: "प्रदेश का प्रथम डिजिटल केंद्र (2005)", category: "नवाचार", desc: "सन 2005 में सहज जन सेवा केन्द्र के माध्यम से प्रदेश का प्रथम डिजिटल निवास प्रमाण पत्र।", crop: { x: 0.05, y: 0.10, w: 0.90, h: 0.28 } },
-            { pageNum: 15, title: "किसान बचाओ यात्रा (2007)", category: "नवाचार", desc: "2007 में किसान बचाओ यात्रा।", crop: { x: 0.05, y: 0.40, w: 0.90, h: 0.28 } },
-            { pageNum: 15, title: "मा० पुष्कर सिंह धामी जी का लखनऊ आगमन", category: "नवाचार", desc: "मा० मुख्यमंत्री पुष्कर सिंह धामी जी का लखनऊ आगमन।", crop: { x: 0.05, y: 0.70, w: 0.90, h: 0.22 } },
-            { pageNum: 16, title: "युवा मोर्चा प्रदेश कार्यालय उद्घाटन", category: "संगठन", desc: "युवा मोर्चा प्रदेश कार्यालय के उद्घाटन समारोह।", crop: { x: 0.05, y: 0.08, w: 0.90, h: 0.25 } },
-            { pageNum: 16, title: "मा० लालकृष्ण आडवाणी जी की सभा (2008)", category: "संगठन", desc: "2008 में छत्तीसगढ़ में मा० लालकृष्ण आडवाणी जी की सभा।", crop: { x: 0.05, y: 0.35, w: 0.90, h: 0.30 } },
-            { pageNum: 16, title: "मायावती सरकार के 100 घोटालों की रिपोर्ट", category: "अभियान", desc: "मायावती सरकार के 100 घोटालों की रिपोर्ट।", crop: { x: 0.05, y: 0.68, w: 0.90, h: 0.25 } },
-            { pageNum: 17, title: "उपभोक्ता संरक्षण एवं सर्व शिक्षा अभियान", category: "चुनावी कार्य", desc: "उपभोक्ता संरक्षण व सर्व शिक्षा अभियान।", crop: { x: 0.05, y: 0.08, w: 0.90, h: 0.28 } },
-            { pageNum: 17, title: "लोकसभा चुनाव 2014 - मा० राधा मोहन सिंह", category: "चुनावी कार्य", desc: "2014 लोकसभा चुनाव में मा० राधा मोहन सिंह का सीतापुर दौरा।", crop: { x: 0.05, y: 0.38, w: 0.90, h: 0.28 } },
-            { pageNum: 17, title: "2017 लखनऊ पश्चिम विधानसभा", category: "चुनावी कार्य", desc: "2017 लखनऊ पश्चिम विधानसभा में माइक्रो बूथ मैनेजमेंट।", crop: { x: 0.05, y: 0.68, w: 0.90, h: 0.25 } }
+        // ========== GALLERY DATA ==========
+        function expand(base, count, title, desc, category) {
+            const items = [];
+            for (let i = 1; i <= count; i++) {
+                items.push({ src: `images/gallery/${base}-${i}.jpg`, title, desc, category });
+            }
+            return items;
+        }
+        const galleryData = [
+            ...expand("lucknow-election-2019", 3, "2019 लखनऊ लोकसभा चुनाव", "2019 लखनऊ लोकसभा चुनाव में सभी 1826 बूथों पर सहयोगी अधिवक्ता कार्यकर्ताओं को लगा कर 3,50,000 मतों के अंतर से जीत दिलाई।", "चुनावी कार्य"),
+            ...expand("seal-2025", 4, "सील कार्यक्रम के यादगार पल 2025", "सील कार्यक्रम के कुछ यादगार पल 2025।", "सामाजिक एवं विधिक"),
+            { src: "images/gallery/high-court-2025.jpg", title: "पर्यावरण दिवस - उच्च न्यायालय", desc: "पर्यावरण 5 जून 2025 लखनऊ उच्च न्यायालय के वरिष्ठ न्यायाधीश घुलिया जी मुख्य अतिथि रहे।", category: "सामाजिक एवं विधिक" },
+            ...expand("1986", 3, "1986 से 1992 तक की गतिविधियाँ", "1986 से 1992 तक की गतिविधियाँ।", "संघ व ABVP"),
+            ...expand("1992", 6, "अ.भा.वि.प. राष्ट्रीय अधिवेशन", "1992 से 1998 तक अ.भा. विद्यार्थी परिषद के विभिन्न राष्ट्रीय अधिवेशनों में भाग लिया।", "संघ व ABVP"),
+            ...expand("2000", 3, "संघ शिक्षा तृतीय वर्ष - नागपुर", "संघ शिक्षा तृतीय वर्ष-2000 नागपुर।", "संघ व ABVP"),
+            ...expand("ram", 2, "राम जन्मभूमि आंदोलन की स्मृतियाँ", "राम जन्मभूमि आंदोलन के दौरान की स्मृतियाँ।", "संघ व ABVP"),
+            ...expand("akhil", 3, "ABVP प्रतिभा सम्मान समारोह 1997", "अखिल भारतीय विद्यार्थी परिषद लखनऊ महानगर द्वारा आयोजित प्रतिभा सम्मान समारोह-1997।", "संघ व ABVP"),
+            ...expand("mumbai", 5, "ABVP स्वर्ण जयंती अधिवेशन मुंबई 1998", "सन 1998 में अ.भा. विद्यार्थी परिषद के स्वर्ण जयंती अधिवेशन मुंबई में सहभाग।", "संघ व ABVP"),
+            ...expand("rj", 3, "शीर्ष नेतृत्व के साथ", "मा० राजनाथ सिंह, मा० भगत सिंह कोश्यारी, माननीय योगी आदित्यनाथ एवं मा० पुष्कर सिंह धामी जी के साथ।", "शीर्ष नेतृत्व"),
+            ...expand("jeevan", 4, "जीवन के यादगार एवं ऐतिहासिक पल", "जीवन के कुछ यादगार एवं ऐतिहासिक पल।", "शीर्ष नेतृत्व"),
+            ...expand("bjp-dun", 3, "भाजपा राष्ट्रीय कार्यकारिणी देहरादून", "भाजपा राष्ट्रीय कार्यकारिणी देहरादून की यादें।", "शीर्ष नेतृत्व"),
+            ...expand("atal", 3, "अटल बिहारी वाजपेई जी के आवास पर", "मा० प्रधानमंत्री अटल बिहारी वाजपेई जी के आवास पर वरिष्ठजनों की भेंट।", "शीर्ष नेतृत्व"),
+            ...expand("cp", 3, "प्रदेश का प्रथम डिजिटल निवास प्रमाण पत्र", "सन 2005 में सहज जन सेवा केंद्र के माध्यम से प्रदेश का प्रथम डिजिटल निवास प्रमाण पत्र।", "सामाजिक एवं विधिक"),
+            ...expand("kal", 3, "किसान बचाओ यात्रा 2007", "2007 में किसान बचाओ यात्रा में माननीय कलराज मिश्रा जी के नेतृत्व में भाग लिया।", "सामाजिक एवं विधिक"),
+            ...expand("pkd", 4, "मुख्यमंत्री पुष्कर सिंह धामी जी का लखनऊ आगमन", "माननीय मुख्यमंत्री पुष्कर सिंह धामी जी का प्रथम बार मुख्यमंत्री बनने के बाद लखनऊ आगमन।", "शीर्ष नेतृत्व"),
+            ...expand("yuva", 4, "युवा मोर्चा प्रदेश कार्यालय उद्घाटन", "युवा मोर्चा प्रदेश कार्यालय के उद्घाटन समारोह।", "सामाजिक एवं विधिक"),
+            ...expand("ch", 3, "माइक्रोबूथ मैनेजमेंट - छत्तीसगढ़", "2007 में छत्तीसगढ़ विधान सभा भाटापार में माइक्रोबूथ मैनेजमेंट पर कार्य करने के दौरान माननीय उप प्रधानमंत्री लालकृष्ण आडवाणी जी की सभा को संबोधित करने का अवसर प्राप्त हुआ।", "चुनावी कार्य"),
+            ...expand("mw", 3, "100 घोटालों की रिपोर्ट", "मायावती सरकार के 100 घोटालों की रिपोर्ट तैयार करने में मुख्य भूमिका निभाई।", "सामाजिक एवं विधिक"),
+            ...expand("up", 3, "उपभोक्ता संरक्षण एवं शिक्षा अभियान", "उपभोक्ता संरक्षण, सर्व शिक्षा अभियान के विभिन्न कार्यक्रमों का आयोजन।", "सामाजिक एवं विधिक"),
+            ...expand("radha", 3, "राधा मोहन सिंह का सीतापुर दौरा", "सन 2014 के लोक सभा चुनावों के सह प्रभारी माननीय राधा मोहन सिंह का सीतापुर दौरा।", "चुनावी कार्य"),
+            ...expand("raju", 3, "लखनऊ पश्चिम - माइक्रो बूथ मैनेजमेंट", "2017 के चुनाव में लखनऊ पश्चिम विधानसभा में हास्य कलाकार राजू श्रीवास्तव जी का कार्यक्रम तथा 149 बूथों पर माइक्रो बूथ मैनेजमेंट का कार्य किया।", "चुनावी कार्य"),
+            ...expand("2019-lok", 2, "राजनाथ सिंह जी के नामांकन में", "2019 के लोकसभा चुनाव के लिए माननीय राजनाथ सिंह के नामांकन में आए पुष्कर सिंह धामी एवं अन्य।", "चुनावी कार्य"),
+            ...expand("dutta-tre", 3, "दत्ता त्रे जी का लखनऊ कार्यक्रम", "20 अप्रैल 2025 के माननीय दत्ता त्रे जी का लखनऊ कार्यक्रम।", "सामाजिक एवं विधिक"),
+            ...expand("lucknow-17", 4, "परिवर्तन रैली लखनऊ 2017", "2017 माननीय प्रधानमंत्री श्री नरेन्द्र मोदी जी की परिवर्तन रैली, लखनऊ।", "चुनावी कार्य"),
+            ...expand("pr", 10, "प्रमुख फोटोग्राफ", "प्रमुख फोटोग्राफ।", "शीर्ष नेतृत्व")
         ];
 
-        let pdfDocument = null;
+        let currentFilter = 'all';
+        let currentIndex = 0;
+        let filteredItems = [...galleryData];
 
-        async function loadAndProcessPDF() {
-            try {
-                pdfDocument = await pdfjsLib.getDocument('biodata.pdf').promise;
-            } catch (e) {
-                document.getElementById('galleryLoader').innerHTML = `<div class="text-amber-400 text-xs text-center">PDF लोड नहीं हो सका</div>`;
-                return;
-            }
-
-            const grid = document.getElementById('photosGrid');
-            document.getElementById('galleryLoader').classList.add('hidden');
-
-            for (let i = 0; i < photoGalleryItems.length; i++) {
-                const item = photoGalleryItems[i];
-                const card = document.createElement('div');
-                card.className = "group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden card-glow cursor-pointer flex flex-col reveal";
-                card.onclick = () => openModal(item);
-                card.innerHTML = `
-                    <div class="relative overflow-hidden bg-slate-950 aspect-[4/3]">
-                        <canvas id="thumb_${i}" class="pdf-canvas-thumb group-hover:scale-105 transition duration-500"></canvas>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition"></div>
-                        <span class="absolute top-3 left-3 bg-bjpOrange-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded">${item.category}</span>
-                        <div class="absolute bottom-3 right-3 text-white bg-black/60 p-2 rounded-full"><i data-lucide="zoom-in" class="w-4 h-4"></i></div>
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+            filteredItems.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item reveal';
+                div.setAttribute('data-category', item.category);
+                div.onclick = () => openLightbox(idx);
+                div.innerHTML = `
+                    <img src="${item.src}" alt="${item.title}" loading="lazy" onerror="this.style.display='none'">
+                    <div class="gallery-overlay"></div>
+                    <span class="gallery-badge font-sans">${item.category}</span>
+                    <div class="gallery-zoom"><i data-lucide="zoom-in" class="w-4 h-4"></i></div>
+                    <div class="gallery-content">
+                        <h4 class="font-bold text-white text-sm sm:text-base font-title leading-snug">${item.title}</h4>
+                        <p class="text-xs text-slate-300 mt-1 line-clamp-2 leading-relaxed">${item.desc}</p>
                     </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between">
-                        <div>
-                            <h4 class="font-bold text-base text-white font-title group-hover:text-amber-400 transition">${item.title}</h4>
-                            <p class="text-xs text-slate-400 mt-2 line-clamp-2">${item.desc}</p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs text-bjpOrange-400 font-bold">
-                            <span>विस्तृत चित्र देखें</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                        </div>
-                    </div>`;
-                grid.appendChild(card);
-                renderThumb(item, `thumb_${i}`);
-            }
-            document.querySelectorAll('#photosGrid .reveal').forEach(el => revealObs.observe(el));
+                `;
+                grid.appendChild(div);
+            });
+            document.querySelectorAll('#galleryGrid .reveal').forEach(el => revealObs.observe(el));
             lucide.createIcons();
         }
 
-        async function renderThumb(item, id) {
-            try {
-                const page = await pdfDocument.getPage(item.pageNum);
-                const vp = page.getViewport({ scale: 2 });
-                const temp = document.createElement('canvas');
-                temp.width = vp.width; temp.height = vp.height;
-                await page.render({ canvasContext: temp.getContext('2d'), viewport: vp }).promise;
-                const target = document.getElementById(id);
-                if (target && item.crop) {
-                    const c = item.crop;
-                    target.width = 600; target.height = 420;
-                    target.getContext('2d').drawImage(temp, vp.width*c.x, vp.height*c.y, vp.width*c.w, vp.height*c.h, 0, 0, 600, 420);
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.dataset.filter;
+                if (currentFilter === 'all') {
+                    filteredItems = [...galleryData];
+                } else {
+                    filteredItems = galleryData.filter(item => item.category === currentFilter);
                 }
-            } catch(e) {}
-        }
+                renderGallery();
+            });
+        });
 
-        async function openModal(item) {
-            document.getElementById('modalTitle').innerText = item.title;
-            document.getElementById('modalDesc').innerText = item.desc;
-            document.getElementById('photoModal').classList.remove('hidden');
-            const page = await pdfDocument.getPage(item.pageNum);
-            const vp = page.getViewport({ scale: 2.2 });
-            const temp = document.createElement('canvas');
-            temp.width = vp.width; temp.height = vp.height;
-            await page.render({ canvasContext: temp.getContext('2d'), viewport: vp }).promise;
-            const canvas = document.getElementById('modalCanvas');
-            if (item.crop) {
-                const c = item.crop;
-                canvas.width = 900; canvas.height = 650;
-                canvas.getContext('2d').drawImage(temp, vp.width*c.x, vp.height*c.y, vp.width*c.w, vp.height*c.h, 0, 0, 900, 650);
-            }
+        function openLightbox(index) {
+            currentIndex = index;
+            updateLightbox();
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('hidden');
+            void lb.offsetWidth;
+            lb.classList.add('open');
+            document.body.style.overflow = 'hidden';
             lucide.createIcons();
         }
-
-        function closeModal() {
-            document.getElementById('photoModal').classList.add('hidden');
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('open');
+            setTimeout(() => {
+                lb.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 350);
         }
-        document.addEventListener('keydown', e => e.key === 'Escape' && closeModal());
-        document.getElementById('photoModal').addEventListener('click', e => e.target.id === 'photoModal' && closeModal());
+        function updateLightbox() {
+            const item = filteredItems[currentIndex];
+            document.getElementById('lightboxImg').src = item.src;
+            document.getElementById('lightboxTitle').innerText = item.title;
+            document.getElementById('lightboxDesc').innerText = item.desc;
+            document.getElementById('lightboxCounter').innerText = `${currentIndex + 1} / ${filteredItems.length}`;
+        }
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % filteredItems.length;
+            updateLightbox();
+        }
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
+            updateLightbox();
+        }
+        document.addEventListener('keydown', e => {
+            if (document.getElementById('lightbox').classList.contains('open')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'ArrowLeft') prevImage();
+            }
+        });
+        document.getElementById('lightbox').addEventListener('click', e => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
 
-        window.addEventListener('DOMContentLoaded', loadAndProcessPDF);
+        renderGallery();
     </script>
 </body>
 </html>
