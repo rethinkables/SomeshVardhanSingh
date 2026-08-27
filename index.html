@@ -32,113 +32,103 @@
         }
     </script>
     <style>
-        .hero-mesh { background-color: #080d1a; position: relative; overflow: hidden; }
+
+        :root { --glow-x: 50%; --glow-y: 50%; }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Yantramanav', sans-serif; background: #0c1222; color: #f1f5f9; overflow-x: hidden; }
+        .hero-mesh { background: radial-gradient(ellipse at 30% 20%, #1a1005 0%, #080d1a 50%, #050810 100%); position: relative; overflow: hidden; }
         #three-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
         .hero-content { position: relative; z-index: 10; }
-        .gold-shimmer {
-            background: linear-gradient(90deg, #d4af37 0%, #fff2b2 50%, #d4af37 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        .card-glow { transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
-        .card-glow:hover {
-            box-shadow: 0 12px 32px -10px rgba(234, 88, 12, 0.35);
-            border-color: rgba(234, 88, 12, 0.55);
-            transform: translateY(-4px);
-        }
-        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .stat-number { font-variant-numeric: tabular-nums; }
-        header.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
-        .timeline-line { position: absolute; left: 1.25rem; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #ea580c, #d4af37, #138808); }
-        @media (min-width: 640px) { .timeline-line { left: 50%; transform: translateX(-50%); } }
-        .timeline-dot { width: 14px; height: 14px; border-radius: 50%; background: #ea580c; border: 3px solid #0c1222; box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.4); flex-shrink: 0; z-index: 2; }
-        .timeline-item:hover .timeline-content { border-color: rgba(234, 88, 12, 0.5); background: rgba(15, 23, 42, 0.95); }
-
-        /* ===== GALLERY: CSS Columns Masonry ===== */
+        .gold-shimmer { background: linear-gradient(90deg, #d4af37 0%, #fff2b2 35%, #d4af37 50%, #fff2b2 65%, #d4af37 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer 4s linear infinite; }
+        @keyframes shimmer { to { background-position: 200% center; } }
+        .card-glow { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+        .card-glow:hover { box-shadow: 0 20px 50px -12px rgba(234, 88, 12, 0.4), 0 0 30px -5px rgba(234, 88, 12, 0.15); border-color: rgba(234, 88, 12, 0.6); transform: translateY(-6px) scale(1.02); }
+        .reveal { opacity: 0; transform: translateY(40px) scale(0.96); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
+        header.scrolled { box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); }
+        .timeline-line { position: absolute; left: 1.25rem; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, #ea580c, #d4af37, #138808); border-radius: 2px; box-shadow: 0 0 15px rgba(234, 88, 12, 0.3); }
+        @media(min-width: 640px) { .timeline-line { left: 50%; transform: translateX(-50%); } }
+        .timeline-dot { width: 16px; height: 16px; border-radius: 50%; background: linear-gradient(135deg, #ea580c, #f59e0b); border: 3px solid #0c1222; box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.3), 0 0 20px rgba(234, 88, 12, 0.4); flex-shrink: 0; z-index: 2; animation: pulse-dot 2s ease-in-out infinite; }
+        @keyframes pulse-dot { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        .timeline-item:hover .timeline-content { border-color: rgba(234, 88, 12, 0.6); background: rgba(15, 23, 42, 0.95); box-shadow: 0 20px 40px -10px rgba(234, 88, 12, 0.2); transform: translateY(-4px) scale(1.01); }
+        .timeline-content { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .gallery-masonry { column-count: 1; column-gap: 1.25rem; }
-        @media (min-width: 640px) { .gallery-masonry { column-count: 2; } }
-        @media (min-width: 1024px) { .gallery-masonry { column-count: 3; } }
-        @media (min-width: 1280px) { .gallery-masonry { column-count: 4; } }
-        .gallery-item {
-            break-inside: avoid; margin-bottom: 1.25rem;
-            position: relative; border-radius: 1rem; overflow: hidden;
-            cursor: pointer; border: 1px solid rgba(51, 65, 85, 0.5);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .gallery-item:hover {
-            border-color: rgba(234, 88, 12, 0.6);
-            box-shadow: 0 20px 40px -12px rgba(234, 88, 12, 0.25);
-            transform: translateY(-4px) scale(1.01);
-            z-index: 10;
-        }
-        .gallery-item img { width: 100%; height: auto; display: block; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        .gallery-item:hover img { transform: scale(1.06); }
-        .gallery-item .gallery-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.15) 50%, transparent 80%);
-            opacity: 0.6; transition: opacity 0.4s ease;
-        }
+        @media(min-width: 640px) { .gallery-masonry { column-count: 2; } }
+        @media(min-width: 1024px) { .gallery-masonry { column-count: 3; } }
+        @media(min-width: 1280px) { .gallery-masonry { column-count: 4; } }
+        .gallery-item { break-inside: avoid; margin-bottom: 1.25rem; position: relative; border-radius: 1rem; overflow: hidden; cursor: pointer; border: 1px solid rgba(51, 65, 85, 0.5); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+        .gallery-item:hover { border-color: rgba(234, 88, 12, 0.7); box-shadow: 0 25px 50px -12px rgba(234, 88, 12, 0.3), 0 0 40px -10px rgba(234, 88, 12, 0.15); transform: translateY(-6px) scale(1.02); z-index: 10; }
+        .gallery-item img { width: 100%; height: auto; display: block; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+        .gallery-item:hover img { transform: scale(1.08); }
+        .gallery-item .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 80%); opacity: 0.5; transition: opacity 0.5s ease; }
         .gallery-item:hover .gallery-overlay { opacity: 1; }
-        .gallery-item .gallery-content {
-            position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem;
-            transform: translateY(6px); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .gallery-item .gallery-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; transform: translateY(10px); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .gallery-item:hover .gallery-content { transform: translateY(0); }
-        .gallery-item .gallery-badge {
-            position: absolute; top: 0.75rem; left: 0.75rem;
-            background: rgba(234, 88, 12, 0.9); color: white; font-size: 0.65rem;
-            font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px;
-            text-transform: uppercase; letter-spacing: 0.05em; backdrop-filter: blur(4px); z-index: 5;
-        }
-        .gallery-item .gallery-zoom {
-            position: absolute; top: 0.75rem; right: 0.75rem; width: 2rem; height: 2rem;
-            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; opacity: 0; transform: scale(0.8); transition: all 0.3s ease; z-index: 5;
-        }
-        .gallery-item:hover .gallery-zoom { opacity: 1; transform: scale(1); }
-        .filter-tab {
-            position: relative; padding: 0.5rem 1.25rem; font-size: 0.8rem; font-weight: 600;
-            color: #94a3b8; background: transparent; border: 1px solid transparent;
-            border-radius: 9999px; cursor: pointer; transition: all 0.3s ease; white-space: nowrap;
-        }
+        .gallery-item .gallery-badge { position: absolute; top: 0.75rem; left: 0.75rem; background: linear-gradient(135deg, #ea580c, #d97706); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em; backdrop-filter: blur(4px); z-index: 5; box-shadow: 0 4px 15px -3px rgba(234, 88, 12, 0.4); }
+        .gallery-item .gallery-zoom { position: absolute; top: 0.75rem; right: 0.75rem; width: 2.25rem; height: 2.25rem; background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; opacity: 0; transform: scale(0.7) rotate(-15deg); transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 5; }
+        .gallery-item:hover .gallery-zoom { opacity: 1; transform: scale(1) rotate(0); }
+        .filter-tab { position: relative; padding: 0.6rem 1.4rem; font-size: 0.82rem; font-weight: 600; color: #94a3b8; background: transparent; border: 1px solid transparent; border-radius: 9999px; cursor: pointer; transition: all 0.35s ease; white-space: nowrap; overflow: hidden; }
+        .filter-tab::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, #ea580c, #d97706); border-radius: 9999px; opacity: 0; transform: scale(0.8); transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .filter-tab:hover { color: #fbbf24; background: rgba(251, 191, 36, 0.08); }
-        .filter-tab.active {
-            color: white; background: linear-gradient(135deg, #ea580c, #d97706);
-            border-color: rgba(234, 88, 12, 0.5); box-shadow: 0 4px 15px -3px rgba(234, 88, 12, 0.3);
-        }
+        .filter-tab.active { color: #fff; border-color: rgba(234, 88, 12, 0.5); box-shadow: 0 4px 20px -3px rgba(234, 88, 12, 0.35); }
+        .filter-tab.active::before { opacity: 1; transform: scale(1); }
+        .filter-tab span { position: relative; z-index: 1; }
         .filter-scroll::-webkit-scrollbar { height: 4px; }
         .filter-scroll::-webkit-scrollbar-track { background: transparent; }
         .filter-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         .filter-scroll { scrollbar-width: thin; scrollbar-color: #334155 transparent; }
-
-        /* Lightbox */
-        #lightbox { opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+        #lightbox { opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
         #lightbox.open { opacity: 1; pointer-events: auto; }
-        #lightbox .lightbox-img-wrap { transform: scale(0.92); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        #lightbox.open .lightbox-img-wrap { transform: scale(1); }
-        .lightbox-nav {
-            position: absolute; top: 50%; transform: translateY(-50%); width: 3rem; height: 3rem;
-            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: white;
-            cursor: pointer; transition: all 0.25s ease; backdrop-filter: blur(8px); z-index: 60;
-        }
-        .lightbox-nav:hover { background: rgba(234, 88, 12, 0.8); border-color: rgba(234, 88, 12, 0.6); transform: translateY(-50%) scale(1.1); }
-        .lightbox-counter {
-            position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.35rem 1rem; border-radius: 9999px; font-size: 0.75rem; color: #cbd5e1;
-            backdrop-filter: blur(8px); z-index: 60;
-        }
+        #lightbox .lightbox-img-wrap { transform: scale(0.88) translateY(20px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        #lightbox.open .lightbox-img-wrap { transform: scale(1) translateY(0); }
+        .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 3.5rem; height: 3.5rem; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(8px); z-index: 60; }
+        .lightbox-nav:hover { background: linear-gradient(135deg, #ea580c, #d97706); border-color: rgba(234, 88, 12, 0.6); transform: translateY(-50%) scale(1.15); box-shadow: 0 0 30px rgba(234, 88, 12, 0.4); }
+        .lightbox-counter { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); padding: 0.4rem 1.2rem; border-radius: 9999px; font-size: 0.8rem; color: #cbd5e1; backdrop-filter: blur(8px); z-index: 60; }
+        .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, #ea580c, #d4af37, #138808); z-index: 9999; transition: width 0.1s linear; box-shadow: 0 0 15px rgba(234, 88, 12, 0.5); }
+        .cursor-glow { position: fixed; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(234, 88, 12, 0.08) 0%, transparent 70%); pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: opacity 0.3s ease; }
+        .spotlight-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 9997; background: radial-gradient(600px circle at var(--glow-x) var(--glow-y), rgba(234, 88, 12, 0.06), transparent 40%); opacity: 0; transition: opacity 0.5s ease; }
+        .spotlight-overlay.active { opacity: 1; }
+        .img-skeleton { background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%); background-size: 200% 100%; animation: skeleton 1.5s ease-in-out infinite; border-radius: 0.75rem; min-height: 200px; }
+        .img-skeleton.loaded { background: none; animation: none; min-height: auto; }
+        @keyframes skeleton { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .float-animation { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-15px) rotate(1deg); } }
+        .gradient-border { position: relative; }
+        .gradient-border::before { content: ''; position: absolute; inset: -2px; border-radius: inherit; padding: 2px; background: linear-gradient(135deg, #ea580c, #d4af37, #138808, #ea580c); background-size: 300% 300%; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: gradient-rotate 4s ease infinite; opacity: 0.6; transition: opacity 0.3s ease; }
+        .gradient-border:hover::before { opacity: 1; }
+        @keyframes gradient-rotate { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .shine-effect { position: relative; overflow: hidden; }
+        .shine-effect::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent); transition: left 0.6s ease; }
+        .shine-effect:hover::after { left: 150%; }
+        .magnetic-btn { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .tilt-card { transform-style: preserve-3d; transition: transform 0.3s ease; }
+        .tilt-card .tilt-content { transform: translateZ(30px); }
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, #ea580c, #d4af37); transition: width 0.3s ease; border-radius: 2px; }
+        .nav-link:hover::after { width: 100%; }
+        .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.3), rgba(212, 175, 55, 0.3), rgba(19, 136, 8, 0.3), transparent); margin: 0 auto; max-width: 80%; }
+        .glow-text { text-shadow: 0 0 20px rgba(234, 88, 12, 0.3), 0 0 40px rgba(234, 88, 12, 0.1); }
+        .pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px -5px rgba(234, 88, 12, 0.3); } 50% { box-shadow: 0 0 40px -5px rgba(234, 88, 12, 0.6); } }
+        .gallery-img-wrap { position: relative; background: #1e293b; border-radius: 1rem 1rem 0 0; overflow: hidden; }
+        .gallery-img-wrap img { opacity: 0; transition: opacity 0.5s ease; }
+        .gallery-img-wrap img.loaded { opacity: 1; }
+        .gallery-img-wrap .skeleton { position: absolute; inset: 0; background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%); background-size: 200% 100%; animation: skeleton 1.5s ease-in-out infinite; }
+        .gallery-img-wrap img.loaded + .skeleton { display: none; }
     </style>
 </head>
-<body class="bg-[#0c1222] text-slate-100 font-body antialiased selection:bg-bjpOrange-600 selection:text-white">
+
+<body class="bg-[#0c1222] text-slate-100 antialiased selection:bg-bjpOrange-600 selection:text-white">
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <div class="spotlight-overlay" id="spotlightOverlay"></div>
 
     <!-- Top Ticker -->
-    <div class="bg-gradient-to-r from-bjpOrange-700 via-bjpOrange-600 to-amber-600 text-white text-xs py-2 px-4 shadow-md font-sans border-b border-orange-500/30 relative z-50">
+    <div class="bg-gradient-to-r from-bjpOrange-700 via-bjpOrange-600 to-amber-600 text-white text-xs py-2.5 px-4 shadow-lg font-sans border-b border-orange-500/30 relative z-50">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-bold tracking-wide">
-                <span class="bg-black/30 px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wider text-amber-200">राष्ट्रहित • संगठन • अंत्योदय</span>
+                <span class="bg-black/30 px-3 py-1 rounded-full text-[11px] uppercase tracking-wider text-amber-200">राष्ट्रहित • संगठन • अंत्योदय</span>
                 <span class="hidden sm:inline">| ४ दशक का अनवरत निष्ठावान सेवा संकल्प (1986 - 2026)</span>
             </div>
             <div class="flex items-center gap-4 text-xs text-orange-100 font-medium">
@@ -150,10 +140,10 @@
     </div>
 
     <!-- Header -->
-    <header id="mainHeader" class="sticky top-0 z-50 bg-[#0a0f1d]/90 backdrop-blur-md border-b border-slate-800">
+    <header id="mainHeader" class="sticky top-0 z-50 bg-[#0a0f1d]/90 backdrop-blur-xl border-b border-slate-800 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-bjpOrange-600 via-amber-400 to-bjpOrange-500 p-0.5 shadow-lg">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-bjpOrange-600 via-amber-400 to-bjpOrange-500 p-0.5 shadow-lg pulse-glow">
                     <div class="w-full h-full bg-[#0a0f1d] rounded-full flex items-center justify-center font-title text-amber-400 text-2xl font-bold">सो</div>
                 </div>
                 <div>
@@ -161,13 +151,13 @@
                     <p class="text-[10px] sm:text-xs text-bjpOrange-400 font-bold tracking-widest font-sans mt-1">ADVOCATE, HIGH COURT LUCKNOW | SENIOR BJP LEADER</p>
                 </div>
             </div>
-            <nav class="hidden lg:flex items-center gap-7 font-sans text-sm font-semibold text-slate-300">
-                <a href="#about" class="hover:text-amber-400 transition">परिचय</a>
-                <a href="#micro-booth" class="hover:text-amber-400 transition">माइक्रो बूथ रणनीति</a>
-                <a href="#gallery" class="hover:text-amber-400 transition">चित्र दीर्घा</a>
-                <a href="#timeline" class="hover:text-amber-400 transition">कार्यकाल यात्रा</a>
-                <a href="#document" class="hover:text-amber-400 transition">अभिलेख (PDF)</a>
-                <a href="#contact" class="bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white px-5 py-2.5 rounded-lg shadow-lg font-bold transition flex items-center gap-2">
+            <nav class="hidden lg:flex items-center gap-8 font-sans text-sm font-semibold text-slate-300">
+                <a href="#about" class="nav-link hover:text-amber-400 transition">परिचय</a>
+                <a href="#micro-booth" class="nav-link hover:text-amber-400 transition">माइक्रो बूथ रणनीति</a>
+                <a href="#gallery" class="nav-link hover:text-amber-400 transition">चित्र दीर्घा</a>
+                <a href="#timeline" class="nav-link hover:text-amber-400 transition">कार्यकाल यात्रा</a>
+                <a href="#document" class="nav-link hover:text-amber-400 transition">अभिलेख (PDF)</a>
+                <a href="#contact" class="magnetic-btn bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white px-6 py-2.5 rounded-xl shadow-lg font-bold transition flex items-center gap-2 shine-effect" id="contactBtn">
                     <i data-lucide="send" class="w-4 h-4"></i> संपर्क सूत्र
                 </a>
             </nav>
@@ -175,73 +165,82 @@
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
-        <div id="mobileDrawer" class="hidden lg:hidden bg-slate-900 border-b border-slate-800 px-6 py-4 space-y-3 font-sans text-sm">
-            <a href="#about" class="block py-1.5 hover:text-amber-400 transition">परिचय</a>
-            <a href="#micro-booth" class="block py-1.5 hover:text-amber-400 transition">माइक्रो बूथ रणनीति</a>
-            <a href="#gallery" class="block py-1.5 hover:text-amber-400 transition">चित्र दीर्घा</a>
-            <a href="#timeline" class="block py-1.5 hover:text-amber-400 transition">कार्यकाल यात्रा</a>
-            <a href="#document" class="block py-1.5 hover:text-amber-400 transition">अभिलेख (PDF)</a>
-            <a href="#contact" class="block py-2.5 text-center bg-bjpOrange-600 text-white font-bold rounded-lg mt-2">संपर्क सूत्र</a>
+        <div id="mobileDrawer" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 px-6 py-4 space-y-3 font-sans text-sm">
+            <a href="#about" class="block py-2 hover:text-amber-400 transition">परिचय</a>
+            <a href="#micro-booth" class="block py-2 hover:text-amber-400 transition">माइक्रो बूथ रणनीति</a>
+            <a href="#gallery" class="block py-2 hover:text-amber-400 transition">चित्र दीर्घा</a>
+            <a href="#timeline" class="block py-2 hover:text-amber-400 transition">कार्यकाल यात्रा</a>
+            <a href="#document" class="block py-2 hover:text-amber-400 transition">अभिलेख (PDF)</a>
+            <a href="#contact" class="block py-3 text-center bg-gradient-to-r from-bjpOrange-600 to-amber-500 text-white font-bold rounded-xl mt-2 shadow-lg">संपर्क सूत्र</a>
         </div>
     </header>
 
     <!-- Hero with Three.js -->
-    <section class="hero-mesh relative pt-12 pb-20 border-b border-slate-800">
+    <section class="hero-mesh relative pt-14 pb-24 border-b border-slate-800">
         <canvas id="three-canvas"></canvas>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative hero-content">
             <div class="grid lg:grid-cols-12 gap-12 items-center">
-                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 bg-bjpOrange-500/10 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full text-bjpOrange-400 text-xs font-sans font-bold reveal">
+                <div class="lg:col-span-7 space-y-7 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-bjpOrange-500/10 border border-bjpOrange-500/30 px-5 py-2 rounded-full text-bjpOrange-400 text-xs font-sans font-bold reveal">
                         <i data-lucide="award" class="w-4 h-4 text-amber-400"></i>
                         <span>राष्ट्र प्रथम • वैचारिक निष्ठा • पन्ना प्रमुख व बूथ शिल्पी</span>
                     </div>
-                    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold font-title leading-tight text-white reveal">
+                    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold font-title leading-tight text-white reveal" id="scrambleHeading">
                         ज़मीनी संगठन, कुशल रणनीति एवं <span class="gold-shimmer">निष्ठावान जनसेवा</span>
                     </h2>
                     <p class="text-slate-300 text-base sm:text-lg leading-relaxed font-sans max-w-2xl reveal">
                         1986 से राष्ट्रीय स्वयंसेवक संघ व ABVP के सिपाही से लेकर उच्च न्यायालय की वकालत तक, तथा भाजपा के ऐतिहासिक 
                         <strong class="text-amber-300">"माइक्रो बूथ मैनेजमेंट"</strong> के प्रणेता — ४ दशकों का निष्कलंक सांगठनिक इतिहास।
                     </p>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-sans reveal">
-                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center card-glow backdrop-blur-sm">
-                            <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="40">0</div>
-                            <div class="text-xs text-slate-400 mt-1 font-medium">वर्षों का संगठन अनुभव</div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-3 font-sans reveal">
+                        <div class="tilt-card bg-slate-900/80 border border-slate-800 p-5 rounded-2xl text-center card-glow backdrop-blur-sm relative overflow-hidden" data-tilt>
+                            <div class="tilt-content">
+                                <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="40" id="counter1">0</div>
+                                <div class="text-xs text-slate-400 mt-1.5 font-medium">वर्षों का संगठन अनुभव</div>
+                            </div>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center card-glow backdrop-blur-sm">
-                            <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="403">0</div>
-                            <div class="text-xs text-slate-400 mt-1 font-medium">विधानसभाओं में प्रवास</div>
+                        <div class="tilt-card bg-slate-900/80 border border-slate-800 p-5 rounded-2xl text-center card-glow backdrop-blur-sm" data-tilt>
+                            <div class="tilt-content">
+                                <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="403" id="counter2">0</div>
+                                <div class="text-xs text-slate-400 mt-1.5 font-medium">विधानसभाओं में प्रवास</div>
+                            </div>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center card-glow backdrop-blur-sm">
-                            <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="1826">0</div>
-                            <div class="text-xs text-slate-400 mt-1 font-medium">बूथों पर विधिक टीम</div>
+                        <div class="tilt-card bg-slate-900/80 border border-slate-800 p-5 rounded-2xl text-center card-glow backdrop-blur-sm" data-tilt>
+                            <div class="tilt-content">
+                                <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="1826" id="counter3">0</div>
+                                <div class="text-xs text-slate-400 mt-1.5 font-medium">बूथों पर विधिक टीम</div>
+                            </div>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-center card-glow backdrop-blur-sm">
-                            <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="3.5">0</div>
-                            <div class="text-xs text-slate-400 mt-1 font-medium">लखनऊ जीत अंतर (लाख)</div>
+                        <div class="tilt-card bg-slate-900/80 border border-slate-800 p-5 rounded-2xl text-center card-glow backdrop-blur-sm" data-tilt>
+                            <div class="tilt-content">
+                                <div class="text-3xl font-extrabold text-amber-400 stat-number" data-target="3.5" id="counter4">0</div>
+                                <div class="text-xs text-slate-400 mt-1.5 font-medium">लखनऊ जीत अंतर (लाख)</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="pt-2 flex flex-wrap justify-center lg:justify-start gap-4 font-sans text-sm reveal">
-                        <a href="#gallery" class="bg-bjpOrange-600 hover:bg-bjpOrange-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg transition flex items-center gap-2">
+                    <div class="pt-3 flex flex-wrap justify-center lg:justify-start gap-4 font-sans text-sm reveal">
+                        <a href="#gallery" class="magnetic-btn bg-bjpOrange-600 hover:bg-bjpOrange-700 text-white font-bold px-7 py-4 rounded-xl shadow-xl transition flex items-center gap-2 shine-effect" id="galleryBtn">
                             <span>शीर्ष नेतृत्व दीर्घा देखें</span>
                             <i data-lucide="arrow-down" class="w-4 h-4"></i>
                         </a>
-                        <a href="#about" class="bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold px-6 py-3.5 rounded-xl transition backdrop-blur-sm">
-                            सम्पूर्ण बायोडाटा विवरण
-                        </a>
+                        <a href="#about" class="magnetic-btn bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold px-7 py-4 rounded-xl transition backdrop-blur-sm" id="bioBtn">सम्पूर्ण बायोडाटा विवरण</a>
                     </div>
                 </div>
                 <div class="lg:col-span-5 flex justify-center reveal">
-                    <div class="relative w-full max-w-md bg-gradient-to-b from-slate-800/90 to-slate-950/90 border-2 border-amber-500/40 rounded-3xl p-6 shadow-2xl text-center backdrop-blur-md">
-                        <div class="relative w-60 h-60 mx-auto rounded-full overflow-hidden border-4 border-bjpOrange-500 shadow-2xl bg-slate-900">
-                            <img src="portrait.jpg" alt="चौ० सोमेश वर्धन सिंह" class="w-full h-full object-cover" style="object-position: center 30%;" loading="eager">
-                        </div>
-                        <div class="mt-5 space-y-1.5 font-sans">
-                            <h3 class="text-2xl font-bold font-title text-white">चौ० सोमेश वर्धन सिंह</h3>
-                            <p class="text-sm font-semibold text-amber-400">अधिवक्ता - उच्च न्यायालय लखनऊ</p>
-                            <p class="text-xs text-slate-300">महामंत्री - महामना मालवीय मिशन (अवध क्षेत्र)</p>
-                            <div class="pt-3 flex justify-center gap-2 flex-wrap">
-                                <span class="bg-bjpOrange-500/20 border border-bjpOrange-500/40 text-orange-300 px-3 py-1 rounded-full text-xs font-medium">सक्रिय सदस्य, भा०ज०पा०</span>
-                                <span class="bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 px-3 py-1 rounded-full text-xs font-medium">रूल ऑफ लॉ सोसाइटी</span>
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-bjpOrange-600 via-amber-500 to-bjpGreen rounded-3xl blur-lg opacity-40 animate-pulse"></div>
+                        <div class="relative w-full bg-gradient-to-b from-slate-800/95 to-slate-950/95 border-2 border-amber-500/40 rounded-3xl p-7 shadow-2xl text-center backdrop-blur-xl float-animation">
+                            <div class="relative w-64 h-64 mx-auto rounded-full overflow-hidden border-4 border-bjpOrange-500 shadow-2xl bg-slate-900">
+                                <img src="portrait.png" alt="चौ० सोमेश वर्धन सिंह" class="w-full h-full object-cover" style="object-position: center 30%;" loading="eager" onerror="this.onerror=null;this.src='portrait.jpg';this.onerror=()=>this.style.display='none'">
+                            </div>
+                            <div class="mt-6 space-y-2 font-sans">
+                                <h3 class="text-2xl font-bold font-title text-white glow-text">चौ० सोमेश वर्धन सिंह</h3>
+                                <p class="text-sm font-semibold text-amber-400">अधिवक्ता - उच्च न्यायालय लखनऊ</p>
+                                <p class="text-xs text-slate-300">महामंत्री - महामना मालवीय मिशन (अवध क्षेत्र)</p>
+                                <div class="pt-4 flex justify-center gap-2 flex-wrap">
+                                    <span class="bg-bjpOrange-500/20 border border-bjpOrange-500/40 text-orange-300 px-3 py-1.5 rounded-full text-xs font-medium">सक्रिय सदस्य, भा०ज०पा०</span>
+                                    <span class="bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 px-3 py-1.5 rounded-full text-xs font-medium">रूल ऑफ लॉ सोसाइटी</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -250,161 +249,176 @@
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- Micro Booth -->
-    <section id="micro-booth" class="py-20 bg-[#090e1a] border-b border-slate-800">
+    <section id="micro-booth" class="py-24 bg-[#090e1a] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
                 <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">चुनावी नवाचार एवं बूथ इंजीनियरिंग</span>
-                <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-4">माइक्रो बूथ मैनेजमेंट के जनक</h2>
-                <p class="text-slate-400 text-sm sm:text-base mt-3 font-sans leading-relaxed">
+                <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-5">माइक्रो बूथ मैनेजमेंट के जनक</h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-4 font-sans leading-relaxed">
                     सन 2007 में भाजपा उत्तर प्रदेश चुनाव प्रबंधन प्रकोष्ठ के संगठन मंत्री रहते हुए चौ० सोमेश वर्धन सिंह ने 'पन्ना प्रमुख' व 'माइक्रो बूथ मैनेजमेंट' का ऐतिहासिक शोध पत्र तैयार किया।
                 </p>
             </div>
-            <div class="grid md:grid-cols-3 gap-6 font-sans">
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow reveal">
-                    <div class="w-12 h-12 bg-bjpOrange-600 text-white rounded-xl flex items-center justify-center mb-5 shadow-lg"><i data-lucide="file-check" class="w-6 h-6"></i></div>
+            <div class="grid md:grid-cols-3 gap-7 font-sans">
+                <div class="tilt-card bg-slate-900 border border-slate-800 rounded-2xl p-7 card-glow reveal" data-tilt>
+                    <div class="w-14 h-14 bg-gradient-to-br from-bjpOrange-500 to-bjpOrange-700 text-white rounded-2xl flex items-center justify-center mb-6 shadow-xl">
+                        <i data-lucide="file-check" class="w-7 h-7"></i>
+                    </div>
                     <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">2007 • नवाचार</span>
-                    <h3 class="text-xl font-bold font-title text-white mt-1 mb-2">पन्ना प्रमुख व बूथ मॉडल</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">प्रत्येक बूथ पर 100-150 समर्पित कार्यकर्ताओं की तैनाती, पन्ना प्रमुख प्रणाली और वरिष्ठ कार्यकर्ताओं के सम्मान का वैज्ञानिक प्रारूप प्रदेश स्तर पर तैयार किया।</p>
+                    <h3 class="text-xl font-bold font-title text-white mt-2 mb-3">पन्ना प्रमुख व बूथ मॉडल</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">प्रत्येक बूथ पर 100-150 समर्पित कार्यकर्ताओं की तैनाती, पन्ना प्रमुख प्रणाली और वरिष्ठ कार्यकर्ताओं के सम्मान का वैज्ञानिक प्रारूप प्रदेश स्तर पर तैयार किया।</p>
                 </div>
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow reveal">
-                    <div class="w-12 h-12 bg-amber-500 text-slate-950 rounded-xl flex items-center justify-center mb-5 shadow-lg"><i data-lucide="scale" class="w-6 h-6"></i></div>
+                <div class="tilt-card bg-slate-900 border border-slate-800 rounded-2xl p-7 card-glow reveal" data-tilt>
+                    <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 rounded-2xl flex items-center justify-center mb-6 shadow-xl">
+                        <i data-lucide="scale" class="w-7 h-7"></i>
+                    </div>
                     <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">2019 • लखनऊ लोकसभा</span>
-                    <h3 class="text-xl font-bold font-title text-white mt-1 mb-2">1,826 बूथों पर विधिक टीम</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">रूल ऑफ लॉ सोसाइटी के तहत प्रत्येक बूथ पर एक-एक अधिवक्ता कार्यकर्ता लगाकर माननीय राजनाथ सिंह जी की जीत का अंतर रिकॉर्ड 3,50,000 मतों तक पहुंचाया।</p>
+                    <h3 class="text-xl font-bold font-title text-white mt-2 mb-3">1,826 बूथों पर विधिक टीम</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">रूल ऑफ लॉ सोसाइटी के तहत प्रत्येक बूथ पर एक-एक अधिवक्ता कार्यकर्ता लगाकर माननीय राजनाथ सिंह जी की जीत का अंतर रिकॉर्ड 3,50,000 मतों तक पहुंचाया।</p>
                 </div>
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 card-glow reveal">
-                    <div class="w-12 h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center mb-5 shadow-lg"><i data-lucide="trophy" class="w-6 h-6"></i></div>
+                <div class="tilt-card bg-slate-900 border border-slate-800 rounded-2xl p-7 card-glow reveal" data-tilt>
+                    <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-700 text-white rounded-2xl flex items-center justify-center mb-6 shadow-xl">
+                        <i data-lucide="trophy" class="w-7 h-7"></i>
+                    </div>
                     <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">2022 • ऐतिहासिक विजय</span>
-                    <h3 class="text-xl font-bold font-title text-white mt-1 mb-2">40 वर्षों का रिकॉर्ड तोड़ा</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">महमूदाबाद विधानसभा में मण्डल प्रभारी रहते हुए 40 साल बाद एवं सिधौली में 35 साल बाद भाजपा को ऐतिहासिक जीत दर्ज कराई।</p>
+                    <h3 class="text-xl font-bold font-title text-white mt-2 mb-3">40 वर्षों का रिकॉर्ड तोड़ा</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">महमूदाबाद विधानसभा में मण्डल प्रभारी रहते हुए 40 साल बाद एवं सिधौली में 35 साल बाद भाजपा को ऐतिहासिक जीत दर्ज कराई।</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== IMAGE GALLERY ===== -->
-    <section id="gallery" class="py-20 bg-[#0c1222] border-b border-slate-800">
+    <div class="section-divider"></div>
+
+    <!-- Image Gallery -->
+    <section id="gallery" class="py-24 bg-[#0c1222] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-wrap justify-between items-end mb-10 reveal">
+            <div class="flex flex-wrap justify-between items-end mb-12 reveal">
                 <div>
                     <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">ऐतिहासिक दस्तावेज एवं चित्र</span>
-                    <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-4">शीर्ष नेतृत्व एवं संगठनात्मक स्मृतियाँ</h2>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-5">शीर्ष नेतृत्व एवं संगठनात्मक स्मृतियाँ</h2>
                 </div>
+                <div class="text-slate-500 text-sm font-sans" id="galleryCount"></div>
             </div>
-            <div class="flex gap-2 mb-8 overflow-x-auto filter-scroll pb-2 reveal" id="galleryFilters">
-                <button class="filter-tab active" data-filter="all">सभी चित्र</button>
-                <button class="filter-tab" data-filter="चुनावी कार्य">चुनावी कार्य</button>
-                <button class="filter-tab" data-filter="संघ व ABVP">संघ व ABVP</button>
-                <button class="filter-tab" data-filter="शीर्ष नेतृत्व">शीर्ष नेतृत्व</button>
-                <button class="filter-tab" data-filter="सामाजिक एवं विधिक">सामाजिक एवं विधिक</button>
+            <div class="flex gap-3 mb-10 overflow-x-auto filter-scroll pb-2 reveal" id="galleryFilters">
+                <button class="filter-tab active" data-filter="all"><span>सभी चित्र</span></button>
+                <button class="filter-tab" data-filter="चुनावी कार्य"><span>चुनावी कार्य</span></button>
+                <button class="filter-tab" data-filter="संघ व ABVP"><span>संघ व ABVP</span></button>
+                <button class="filter-tab" data-filter="शीर्ष नेतृत्व"><span>शीर्ष नेतृत्व</span></button>
+                <button class="filter-tab" data-filter="सामाजिक एवं विधिक"><span>सामाजिक एवं विधिक</span></button>
             </div>
             <div class="gallery-masonry" id="galleryGrid"></div>
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- About -->
-    <section id="about" class="py-20 bg-[#090e1a] border-b border-slate-800">
+    <section id="about" class="py-24 bg-[#090e1a] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-slate-800 p-8 sm:p-10 shadow-xl reveal">
-                <div class="flex items-center gap-2 text-bjpOrange-400 font-bold text-xs uppercase font-sans mb-4">
+            <div class="gradient-border bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-slate-800 p-8 sm:p-12 shadow-2xl reveal">
+                <div class="flex items-center gap-2 text-bjpOrange-400 font-bold text-xs uppercase font-sans mb-5">
                     <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
                     <span>प्रामाणिक विवरण | Verified Credentials</span>
                 </div>
-                <h3 class="text-2xl sm:text-3xl font-bold font-title text-white mb-8">व्यक्तिगत एवं सांगठनिक परिचय</h3>
+                <h3 class="text-2xl sm:text-3xl font-bold font-title text-white mb-10">व्यक्तिगत एवं सांगठनिक परिचय</h3>
                 <div class="grid md:grid-cols-3 gap-8 font-sans text-sm">
-                    <div class="space-y-3 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
-                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">व्यक्तिगत जानकारी</div>
-                        <div class="font-bold text-white text-base">चौ० सोमेश वर्धन सिंह</div>
-                        <div class="text-xs text-slate-300"><strong>पिता:</strong> स्व. चौ० रमेश सिंह (तालुकेदार / वरिष्ठ अधिवक्ता)</div>
-                        <div class="text-xs text-slate-300"><strong>जाति:</strong> कायस्थ (श्रीवास्तव)</div>
-                        <div class="text-xs text-slate-300"><strong>जन्म तिथि:</strong> 01.07.1972</div>
-                        <div class="text-xs text-slate-300"><strong>मूल निवास:</strong> रामपुर कला, बिसवाँ, सीतापुर (उ०प्र०)</div>
-                        <div class="text-xs text-slate-300"><strong>वर्तमान पता:</strong> ई-2322 राजाजीपुरम, लखनऊ</div>
+                    <div class="tilt-card space-y-4 bg-slate-900/70 p-6 rounded-2xl border border-slate-800/80 hover:border-bjpOrange-500/40 transition" data-tilt>
+                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">व्यक्तिगत जानकारी</div>
+                        <div class="font-bold text-white text-lg">चौ० सोमेश वर्धन सिंह</div>
+                        <div class="text-sm text-slate-300"><strong>पिता:</strong> स्व. चौ० रमेश सिंह (तालुकेदार / वरिष्ठ अधिवक्ता)</div>
+                        <div class="text-sm text-slate-300"><strong>जाति:</strong> कायस्थ (श्रीवास्तव)</div>
+                        <div class="text-sm text-slate-300"><strong>जन्म तिथि:</strong> 01.07.1972</div>
+                        <div class="text-sm text-slate-300"><strong>मूल निवास:</strong> रामपुर कला, बिसवाँ, सीतापुर (उ०प्र०)</div>
+                        <div class="text-sm text-slate-300"><strong>वर्तमान पता:</strong> ई-2322 राजाजीपुरम, लखनऊ</div>
                     </div>
-                    <div class="space-y-3 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
-                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">शैक्षणिक व विधिक योग्यता</div>
-                        <div class="font-bold text-white text-base">B.A., LL.B., M.J.M.C. (ल०वि०वि०)</div>
-                        <div class="text-xs text-slate-300"><strong>वकालत:</strong> उच्च न्यायालय लखनऊ खंडपीठ</div>
-                        <div class="text-xs text-slate-300"><strong>व्यवसाय:</strong> वकालत, कृषि, समाजसेवा</div>
-                        <div class="text-xs text-slate-300"><strong>संघ शिक्षा वर्ग:</strong> प्रथम वर्ष (कानपुर 1995), द्वितीय वर्ष (हरदोई 1996), तृतीय वर्ष (नागपुर 2000)</div>
+                    <div class="tilt-card space-y-4 bg-slate-900/70 p-6 rounded-2xl border border-slate-800/80 hover:border-amber-500/40 transition" data-tilt>
+                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">शैक्षणिक व विधिक योग्यता</div>
+                        <div class="font-bold text-white text-lg">B.A., LL.B., M.J.M.C. (ल०वि०वि०)</div>
+                        <div class="text-sm text-slate-300"><strong>वकालत:</strong> उच्च न्यायालय लखनऊ खंडपीठ</div>
+                        <div class="text-sm text-slate-300"><strong>व्यवसाय:</strong> वकालत, कृषि, समाजसेवा</div>
+                        <div class="text-sm text-slate-300"><strong>संघ शिक्षा वर्ग:</strong> प्रथम वर्ष (कानपुर 1995), द्वितीय वर्ष (हरदोई 1996), तृतीय वर्ष (नागपुर 2000)</div>
                     </div>
-                    <div class="space-y-3 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
-                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">सांगठनिक दायित्व</div>
-                        <div class="font-bold text-bjpOrange-400 text-base">महामंत्री - महामना मालवीय मिशन (अवध)</div>
-                        <div class="text-xs text-slate-300"><strong>महामंत्री:</strong> रूल ऑफ लॉ सोसाइटी (अवध क्षेत्र)</div>
-                        <div class="text-xs text-slate-300"><strong>प्राथमिक सदस्यता:</strong> 7008337255</div>
-                        <div class="text-xs text-slate-300"><strong>सक्रिय सदस्यता:</strong> 2986 (बिसवां देहात मण्डल)</div>
-                        <div class="text-xs text-slate-300"><strong>सदस्य:</strong> ब्रिटिश इंडियन एसोसिएशन अवध</div>
+                    <div class="tilt-card space-y-4 bg-slate-900/70 p-6 rounded-2xl border border-slate-800/80 hover:border-emerald-500/40 transition" data-tilt>
+                        <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">सांगठनिक दायित्व</div>
+                        <div class="font-bold text-bjpOrange-400 text-lg">महामंत्री - महामना मालवीय मिशन (अवध)</div>
+                        <div class="text-sm text-slate-300"><strong>महामंत्री:</strong> रूल ऑफ लॉ सोसाइटी (अवध क्षेत्र)</div>
+                        <div class="text-sm text-slate-300"><strong>प्राथमिक सदस्यता:</strong> 7008337255</div>
+                        <div class="text-sm text-slate-300"><strong>सक्रिय सदस्यता:</strong> 2986 (बिसवां देहात मण्डल)</div>
+                        <div class="text-sm text-slate-300"><strong>सदस्य:</strong> ब्रिटिश इंडियन एसोसिएशन अवध</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- Timeline -->
-    <section id="timeline" class="py-20 bg-[#0c1222] border-b border-slate-800">
+    <section id="timeline" class="py-24 bg-[#0c1222] border-b border-slate-800">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
+            <div class="text-center mb-20 reveal">
                 <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">४ दशक की यात्रा</span>
-                <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-4">प्रमुख सांगठनिक मील के पत्थर</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-5">प्रमुख सांगठनिक मील के पत्थर</h2>
             </div>
             <div class="relative">
                 <div class="timeline-line hidden sm:block"></div>
-                <div class="space-y-10">
-                    <div class="timeline-item relative flex flex-col sm:flex-row gap-6 sm:gap-10 reveal">
+                <div class="space-y-14">
+                    <div class="timeline-item relative flex flex-col sm:flex-row gap-8 sm:gap-14 reveal">
                         <div class="sm:w-1/2 flex sm:justify-end">
-                            <div class="timeline-content bg-slate-900/90 border border-slate-800 rounded-2xl p-6 max-w-md w-full">
-                                <div class="text-bjpOrange-400 font-bold text-sm mb-1">1986 – 1996</div>
-                                <h4 class="font-bold text-white text-lg font-title mb-2">राष्ट्रीय स्वयंसेवक संघ व ABVP</h4>
-                                <p class="text-xs text-slate-400 leading-relaxed">15 वर्ष की आयु में RSS प्रवेश। 1989 राम जन्मभूमि शिला पूजन व कारसेवा में सक्रिय सहभागिता। ABVP जिला प्रमुख सीतापुर रहते हुए छात्र आंदोलन का नेतृत्व।</p>
+                            <div class="timeline-content bg-slate-900/90 border border-slate-800 rounded-2xl p-7 max-w-md w-full">
+                                <div class="text-bjpOrange-400 font-bold text-sm mb-2">1986 – 1996</div>
+                                <h4 class="font-bold text-white text-lg font-title mb-3">राष्ट्रीय स्वयंसेवक संघ व ABVP</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">15 वर्ष की आयु में RSS प्रवेश। 1989 राम जन्मभूमि शिला पूजन व कारसेवा में सक्रिय सहभागिता। ABVP जिला प्रमुख सीतापुर रहते हुए छात्र आंदोलन का नेतृत्व।</p>
                             </div>
                         </div>
-                        <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-6"><div class="timeline-dot"></div></div>
+                        <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-7"><div class="timeline-dot"></div></div>
                         <div class="sm:w-1/2"></div>
                     </div>
-                    <div class="timeline-item relative flex flex-col sm:flex-row gap-6 sm:gap-10 reveal">
+                    <div class="timeline-item relative flex flex-col sm:flex-row gap-8 sm:gap-14 reveal">
                         <div class="sm:w-1/2"></div>
-                        <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-6"><div class="timeline-dot bg-amber-500" style="box-shadow:0 0 0 3px rgba(245,158,11,0.4)"></div></div>
+                        <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-7"><div class="timeline-dot"></div></div>
                         <div class="sm:w-1/2">
-                            <div class="timeline-content bg-slate-900/90 border border-slate-800 rounded-2xl p-6 max-w-md w-full">
-                                <div class="text-amber-400 font-bold text-sm mb-1">1997 – 2002</div>
-                                <h4 class="font-bold text-white text-lg font-title mb-2">लखनऊ महानगर संगठन मंत्री</h4>
-                                <p class="text-xs text-slate-400 leading-relaxed">15,000 सदस्यता कराकर देश में तीसरा स्थान प्राप्त किया। 1999 में लखनऊ में ऐतिहासिक राष्ट्रीय अधिवेशन का सफल संयोजन। अटल जी के चुनाव में 325 बूथों का प्रबंधन।</p>
+                            <div class="timeline-content bg-slate-900/90 border border-slate-800 rounded-2xl p-7 max-w-md w-full">
+                                <div class="text-amber-400 font-bold text-sm mb-2">1997 – 2002</div>
+                                <h4 class="font-bold text-white text-lg font-title mb-3">लखनऊ महानगर संगठन मंत्री</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">15,000 सदस्यता कराकर देश में तीसरा स्थान प्राप्त किया। 1999 में लखनऊ में ऐतिहासिक राष्ट्रीय अधिवेशन का सफल संयोजन। अटल जी के चुनाव में 325 बूथों का प्रबंधन।</p>
                             </div>
                         </div>
                     </div>
-                    <div class="timeline-item relative flex flex-col sm:flex-row gap-6 sm:gap-10 reveal">
+                    <div class="timeline-item relative flex flex-col sm:flex-row gap-8 sm:gap-14 reveal">
                         <div class="sm:w-1/2 flex sm:justify-end">
-                            <div class="timeline-content bg-slate-900/90 border border-slate-800 rounded-2xl p-6 max-w-md w-full">
-                                <div class="text-bjpOrange-400 font-bold text-sm mb-1">2005 – 2008</div>
-                                <h4 class="font-bold text-white text-lg font-title mb-2">युवा मोर्चा व माइक्रो बूथ का जन्म</h4>
-                                <p class="text-xs text-slate-400 leading-relaxed">सीतापुर में किसान संकल्प यात्रा। 2005 में सहज जन सेवा केंद्र के माध्यम से प्रदेश का प्रथम डिजिटल निवास प्रमाण पत्र। 2007 में माइक्रो बूथ मैनेजमेंट पेपर तैयार किया।</p>
+                            <div class="timeline-content bg-slate-900/90 border border-slate-800 rounded-2xl p-7 max-w-md w-full">
+                                <div class="text-bjpOrange-400 font-bold text-sm mb-2">2005 – 2008</div>
+                                <h4 class="font-bold text-white text-lg font-title mb-3">युवा मोर्चा व माइक्रो बूथ का जन्म</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">सीतापुर में किसान संकल्प यात्रा। 2005 में सहज जन सेवा केंद्र के माध्यम से प्रदेश का प्रथम डिजिटल निवास प्रमाण पत्र। 2007 में माइक्रो बूथ मैनेजमेंट पेपर तैयार किया।</p>
                             </div>
                         </div>
-                        <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-6"><div class="timeline-dot"></div></div>
+                        <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-7"><div class="timeline-dot"></div></div>
                         <div class="sm:w-1/2"></div>
                     </div>
-                    <div class="timeline-item relative flex flex-col sm:flex-row gap-6 sm:gap-10 reveal">
+                    <div class="timeline-item relative flex flex-col sm:flex-row gap-8 sm:gap-14 reveal">
                         <div class="sm:w-1/2"></div>
-                        <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-6"><div class="timeline-dot bg-amber-500" style="box-shadow:0 0 0 3px rgba(245,158,11,0.4)"></div></div>
+                        <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-7"><div class="timeline-dot"></div></div>
                         <div class="sm:w-1/2">
-                            <div class="timeline-content bg-slate-900/90 border border-slate-800 rounded-2xl p-6 max-w-md w-full">
-                                <div class="text-amber-400 font-bold text-sm mb-1">2010 – 2012</div>
-                                <h4 class="font-bold text-white text-lg font-title mb-2">100 घोटालों का अन्वेषण</h4>
-                                <p class="text-xs text-slate-400 leading-relaxed">भ्रष्टाचार अन्वेषण समिति के पूर्णकालिक सदस्य के रूप में उत्तर प्रदेश की सभी 403 विधानसभाओं का सघन दौरा कर 100 घोटालों की रिपोर्ट राष्ट्रपति महोदया को सौंपी।</p>
+                            <div class="timeline-content bg-slate-900/90 border border-slate-800 rounded-2xl p-7 max-w-md w-full">
+                                <div class="text-amber-400 font-bold text-sm mb-2">2010 – 2012</div>
+                                <h4 class="font-bold text-white text-lg font-title mb-3">100 घोटालों का अन्वेषण</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">भ्रष्टाचार अन्वेषण समिति के पूर्णकालिक सदस्य के रूप में उत्तर प्रदेश की सभी 403 विधानसभाओं का सघन दौरा कर 100 घोटालों की रिपोर्ट राष्ट्रपति महोदया को सौंपी।</p>
                             </div>
                         </div>
                     </div>
-                    <div class="timeline-item relative flex flex-col sm:flex-row gap-6 sm:gap-10 reveal">
+                    <div class="timeline-item relative flex flex-col sm:flex-row gap-8 sm:gap-14 reveal">
                         <div class="sm:w-1/2 flex sm:justify-end">
-                            <div class="timeline-content bg-slate-900/90 border border-slate-800 rounded-2xl p-6 max-w-md w-full">
-                                <div class="text-emerald-400 font-bold text-sm mb-1">2016 – 2026</div>
-                                <h4 class="font-bold text-white text-lg font-title mb-2">विधिक सेवा, मालवीय मिशन व राष्ट्रीय संगठन</h4>
-                                <p class="text-xs text-slate-400 leading-relaxed">रूल ऑफ लॉ सोसाइटी एवं महामना मालवीय मिशन (अवध) का नेतृत्व। 2022 में महमूदाबाद व सिधौली में ऐतिहासिक जीत। 2026 में पूज्य सरसंघचालक डॉ० मोहन भागवत जी का सपरिवार आशीर्वाद प्राप्त।</p>
+                            <div class="timeline-content bg-slate-900/90 border border-slate-800 rounded-2xl p-7 max-w-md w-full">
+                                <div class="text-emerald-400 font-bold text-sm mb-2">2016 – 2026</div>
+                                <h4 class="font-bold text-white text-lg font-title mb-3">विधिक सेवा, मालवीय मिशन व राष्ट्रीय संगठन</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">रूल ऑफ लॉ सोसाइटी एवं महामना मालवीय मिशन (अवध) का नेतृत्व। 2022 में महमूदाबाद व सिधौली में ऐतिहासिक जीत। 2026 में पूज्य सरसंघचालक डॉ० मोहन भागवत जी का सपरिवार आशीर्वाद प्राप्त।</p>
                             </div>
                         </div>
-                        <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-6"><div class="timeline-dot bg-emerald-500" style="box-shadow:0 0 0 3px rgba(16,185,129,0.4)"></div></div>
+                        <div class="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-7"><div class="timeline-dot"></div></div>
                         <div class="sm:w-1/2"></div>
                     </div>
                 </div>
@@ -412,18 +426,20 @@
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- Document -->
-    <section id="document" class="py-16 bg-[#090e1a] border-b border-slate-800">
+    <section id="document" class="py-20 bg-[#090e1a] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-3xl p-8 text-white flex flex-wrap justify-between items-center gap-6 shadow-2xl reveal">
-                <div class="space-y-2">
+            <div class="gradient-border bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-3xl p-10 text-white flex flex-wrap justify-between items-center gap-8 shadow-2xl reveal">
+                <div class="space-y-3">
                     <span class="text-amber-400 font-bold text-xs uppercase tracking-wider font-sans">अधिकृत दस्तावेज़ • Complete PDF Archive</span>
                     <h3 class="text-2xl sm:text-3xl font-bold font-title">मूल बायोडाटा अभिलेख (20 पृष्ठ)</h3>
-                    <p class="text-slate-300 text-xs font-sans max-w-xl">संपूर्ण राजनीतिक, सांगठनिक, विधिक एवं सामाजिक गतिविधियों का अधिकृत प्रमाणित दस्तावेज़ डाउनलोड करें।</p>
+                    <p class="text-slate-300 text-sm font-sans max-w-xl">संपूर्ण राजनीतिक, सांगठनिक, विधिक एवं सामाजिक गतिविधियों का अधिकृत प्रमाणित दस्तावेज़ डाउनलोड करें।</p>
                 </div>
                 <div>
-                    <a href="biodata.pdf" download class="bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white font-bold py-3.5 px-8 rounded-xl flex items-center gap-2.5 transition shadow-xl font-sans text-sm">
-                        <i data-lucide="download" class="w-4 h-4"></i>
+                    <a href="biodata.pdf" download class="magnetic-btn bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white font-bold py-4 px-10 rounded-xl flex items-center gap-3 transition shadow-2xl font-sans text-sm shine-effect" id="downloadBtn">
+                        <i data-lucide="download" class="w-5 h-5"></i>
                         <span>पीडीएफ डाउनलोड करें</span>
                     </a>
                 </div>
@@ -431,58 +447,66 @@
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- Contact -->
-    <section id="contact" class="py-20 bg-[#060a12] text-white font-sans">
+    <section id="contact" class="py-24 bg-[#060a12] text-white font-sans">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-12 gap-12">
-                <div class="lg:col-span-5 space-y-6 reveal">
+            <div class="grid lg:grid-cols-12 gap-14">
+                <div class="lg:col-span-5 space-y-7 reveal">
                     <span class="text-bjpOrange-400 font-bold text-xs uppercase tracking-widest">सीधा संपर्क एवं संवाद</span>
                     <h2 class="text-3xl sm:text-4xl font-bold font-title">संगठन व जनसेवा हेतु सदैव तत्पर</h2>
                     <p class="text-slate-400 text-sm leading-relaxed">सांगठनिक विचार-विमर्श, विधिक परामर्श अथवा जनहित समस्याओं हेतु संपर्क करें।</p>
-                    <div class="space-y-4 pt-2 text-sm text-slate-300">
+                    <div class="space-y-5 pt-3 text-sm text-slate-300">
                         <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 shrink-0"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+                            <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
                             <div>
-                                <div class="text-xs text-slate-500">कार्यालय पता</div>
+                                <div class="text-xs text-slate-500 mb-1">कार्यालय पता</div>
                                 <div class="font-medium text-white">ई-2322, राजाजीपुरम, लखनऊ, उत्तर प्रदेश</div>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 shrink-0"><i data-lucide="phone" class="w-5 h-5"></i></div>
+                            <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 shrink-0">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
+                            </div>
                             <div>
-                                <div class="text-xs text-slate-500">दूरभाष / संपर्क</div>
+                                <div class="text-xs text-slate-500 mb-1">दूरभाष / संपर्क</div>
                                 <div class="font-medium text-white">7007750815 / 9453023077</div>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 shrink-0"><i data-lucide="mail" class="w-5 h-5"></i></div>
+                            <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 shrink-0">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
                             <div>
-                                <div class="text-xs text-slate-500">ई-मेल</div>
-                                <div class="font-medium text-white">singh.someshvardhan@gmail.com</div>
+                                <div class="text-xs text-slate-500 mb-1">ई-मेल</div>
+                                <div class="font-medium text-white"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="76051f18111e5805191b13051e001704121e171836111b171f1a5815191b">[email&#160;protected]</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl p-8 reveal">
-                    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-4 text-sm">
-                        <div class="grid sm:grid-cols-2 gap-4">
+                <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl p-10 reveal">
+                    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-5 text-sm">
+                        <div class="grid sm:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-xs text-slate-400 mb-1.5">पूरा नाम *</label>
-                                <input type="text" name="name" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500 transition">
+                                <label class="block text-xs text-slate-400 mb-2">पूरा नाम *</label>
+                                <input type="text" name="name" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="आपका नाम">
                             </div>
                             <div>
-                                <label class="block text-xs text-slate-400 mb-1.5">मोबाइल नंबर *</label>
-                                <input type="tel" name="phone" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500 transition">
+                                <label class="block text-xs text-slate-400 mb-2">मोबाइल नंबर *</label>
+                                <input type="tel" name="phone" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="मोबाइल नंबर">
                             </div>
                         </div>
-                        <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="grid sm:grid-cols-2 gap-5">
                             <div>
-                                <label class="block text-xs text-slate-400 mb-1.5">विधानसभा / क्षेत्र</label>
-                                <input type="text" name="constituency" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500 transition">
+                                <label class="block text-xs text-slate-400 mb-2">विधानसभा / क्षेत्र</label>
+                                <input type="text" name="constituency" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="विधानसभा क्षेत्र">
                             </div>
                             <div>
-                                <label class="block text-xs text-slate-400 mb-1.5">विषय</label>
-                                <select name="subject" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500 transition">
+                                <label class="block text-xs text-slate-400 mb-2">विषय</label>
+                                <select name="subject" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition">
                                     <option>सांगठनिक विचार-विमर्श</option>
                                     <option>विधिक सहायता / परामर्श</option>
                                     <option>जनहित समस्या निवारण</option>
@@ -491,18 +515,17 @@
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400 mb-1.5">संदेश *</label>
-                            <textarea name="message" rows="4" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-bjpOrange-500 transition"></textarea>
+                            <label class="block text-xs text-slate-400 mb-2">संदेश *</label>
+                            <textarea name="message" rows="5" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="अपना संदेश लिखें..."></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white font-bold py-4 rounded-xl shadow-lg transition">संदेश प्रेषित करें</button>
+                        <button type="submit" class="magnetic-btn w-full bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white font-bold py-4 rounded-xl shadow-xl transition shine-effect" id="submitBtn">संदेश प्रेषित करें</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-black text-slate-500 py-8 text-xs text-center font-sans border-t border-slate-900">
+    <footer class="bg-black text-slate-500 py-10 text-xs text-center font-sans border-t border-slate-900">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-between items-center gap-4">
             <div>© 2026 चौ० सोमेश वर्धन सिंह | सर्वाधिकार सुरक्षित</div>
             <div class="flex gap-4">
@@ -515,20 +538,20 @@
 
     <!-- Lightbox -->
     <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 hidden flex items-center justify-center p-4">
-        <button onclick="closeLightbox()" class="absolute top-5 right-5 text-white bg-black/60 hover:bg-bjpOrange-600 p-3 rounded-full transition z-50">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white bg-black/60 hover:bg-bjpOrange-600 p-3 rounded-full transition z-50">
             <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <button onclick="prevImage()" class="lightbox-nav left-4 sm:left-8">
-            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        <button onclick="prevImage()" class="lightbox-nav left-4 sm:left-10">
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
         </button>
-        <button onclick="nextImage()" class="lightbox-nav right-4 sm:right-8">
-            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        <button onclick="nextImage()" class="lightbox-nav right-4 sm:right-10">
+            <i data-lucide="chevron-right" class="w-6 h-6"></i>
         </button>
         <div class="relative max-w-5xl w-full flex flex-col items-center lightbox-img-wrap">
-            <img id="lightboxImg" src="" alt="" class="max-h-[78vh] w-auto rounded-xl shadow-2xl border border-slate-700">
-            <div class="mt-4 text-center max-w-2xl px-4">
-                <h4 id="lightboxTitle" class="font-bold text-lg text-amber-400 font-title"></h4>
-                <p id="lightboxDesc" class="text-xs text-slate-300 mt-1"></p>
+            <img id="lightboxImg" src="" alt="" class="max-h-[75vh] w-auto rounded-2xl shadow-2xl border border-slate-700">
+            <div class="mt-5 text-center max-w-2xl px-4">
+                <h4 id="lightboxTitle" class="font-bold text-xl text-amber-400 font-title"></h4>
+                <p id="lightboxDesc" class="text-sm text-slate-300 mt-2"></p>
             </div>
         </div>
         <div class="lightbox-counter font-sans">
@@ -536,8 +559,142 @@
         </div>
     </div>
 
-    <script>
-        // ========== THREE.JS HERO ==========
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+        // ===== UI LOGIC =====
+        lucide.createIcons();
+        const mobileToggle = document.getElementById('mobileNavToggle');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', () => mobileDrawer.classList.toggle('hidden'));
+            document.querySelectorAll('#mobileDrawer a').forEach(l => l.addEventListener('click', () => mobileDrawer.classList.add('hidden')));
+        }
+        const header = document.getElementById('mainHeader');
+        window.addEventListener('scroll', () => header && header.classList.toggle('scrolled', window.scrollY > 40));
+
+        // Scroll progress bar
+        const scrollProgress = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // Cursor glow + spotlight
+        const cursorGlow = document.getElementById('cursorGlow');
+        const spotlightOverlay = document.getElementById('spotlightOverlay');
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorGlow.style.left = mouseX + 'px';
+            cursorGlow.style.top = mouseY + 'px';
+            document.documentElement.style.setProperty('--glow-x', mouseX + 'px');
+            document.documentElement.style.setProperty('--glow-y', mouseY + 'px');
+        });
+        document.addEventListener('mouseenter', () => { cursorGlow.style.opacity = '1'; spotlightOverlay.classList.add('active'); });
+        document.addEventListener('mouseleave', () => { cursorGlow.style.opacity = '0'; spotlightOverlay.classList.remove('active'); });
+
+        // Magnetic buttons
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+            });
+            btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+        });
+
+        // 3D Tilt cards
+        document.querySelectorAll('[data-tilt]').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                card.style.transform = `perspective(1000px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) scale(1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Counter animation with burst
+        function animateCounters() {
+            document.querySelectorAll('.stat-number').forEach((counter, i) => {
+                const target = parseFloat(counter.dataset.target);
+                const isDecimal = target % 1 !== 0;
+                const start = performance.now();
+                function update(now) {
+                    const p = Math.min((now - start) / 2000, 1);
+                    const ease = 1 - Math.pow(1 - p, 3);
+                    const val = target * ease;
+                    counter.innerText = isDecimal ? val.toFixed(1) + 'L+' : Math.floor(val) + (target >= 40 ? '+' : '');
+                    if (p < 1) requestAnimationFrame(update);
+                    else {
+                        counter.innerText = isDecimal ? target + 'L+' : target + (target >= 40 ? '+' : '');
+                        createBurst(counter);
+                    }
+                }
+                requestAnimationFrame(update);
+            });
+        }
+        function createBurst(el) {
+            const rect = el.getBoundingClientRect();
+            for (let i = 0; i < 12; i++) {
+                const p = document.createElement('div');
+                p.style.cssText = `position:fixed;width:4px;height:4px;background:#d4af37;border-radius:50%;pointer-events:none;z-index:9999;left:${rect.left + rect.width / 2}px;top:${rect.top + rect.height / 2}px;`;
+                const angle = (Math.PI * 2 * i) / 12;
+                const dist = 30 + Math.random() * 40;
+                p.animate([
+                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px) scale(0)`, opacity: 0 }
+                ], { duration: 800, easing: 'ease-out' });
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 800);
+            }
+        }
+        new IntersectionObserver(e => { if (e[0].isIntersecting) animateCounters(); }, { threshold: 0.35 }).observe(document.querySelector('.hero-mesh'));
+
+        // Reveal observer with stagger
+        const revealObs = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('active'), i * 80);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+        // Text scramble effect
+        function scrambleText(element, finalText, speed = 30) {
+            const chars = 'अआइईउऊएऐओऔकखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसहळक्षज्ञ';
+            let iteration = 0;
+            const interval = setInterval(() => {
+                element.innerText = finalText.split('').map((char, index) => {
+                    if (index < iteration) return finalText[index];
+                    if (char === ' ' || char === '<') return char;
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join('');
+                if (iteration >= finalText.length) clearInterval(interval);
+                iteration += 1 / 3;
+            }, speed);
+        }
+        const scrambleHeading = document.getElementById('scrambleHeading');
+        if (scrambleHeading) {
+            const originalHTML = scrambleHeading.innerHTML;
+            const temp = document.createElement('div');
+            temp.innerHTML = originalHTML;
+            const plainText = temp.textContent;
+            scrambleHeading.innerText = plainText;
+            setTimeout(() => {
+                scrambleText(scrambleHeading, plainText, 25);
+                setTimeout(() => scrambleHeading.innerHTML = originalHTML, 1500);
+            }, 300);
+        }
+
+        // ===== THREE.JS HERO =====
         (function() {
             const canvas = document.getElementById('three-canvas');
             if (!canvas) return;
@@ -548,44 +705,73 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             scene.add(new THREE.AmbientLight(0x404040, 0.6));
-            const p1 = new THREE.PointLight(0xea580c, 1.2, 20); p1.position.set(2, 2, 3); scene.add(p1);
-            const p2 = new THREE.PointLight(0xd4af37, 0.8, 15); p2.position.set(-3, -1, 2); scene.add(p2);
+            const p1 = new THREE.PointLight(0xea580c, 1.5, 25); p1.position.set(2, 2, 3); scene.add(p1);
+            const p2 = new THREE.PointLight(0xd4af37, 1, 18); p2.position.set(-3, -1, 2); scene.add(p2);
+            const p3 = new THREE.PointLight(0x138808, 0.8, 20); p3.position.set(0, -2, 4); scene.add(p3);
             const particlesGeometry = new THREE.BufferGeometry();
-            const count = 450;
+            const count = 700;
             const pos = new Float32Array(count * 3);
-            for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 18;
+            const velocities = new Float32Array(count * 3);
+            for (let i = 0; i < count * 3; i += 3) {
+                pos[i] = (Math.random() - 0.5) * 22;
+                pos[i + 1] = (Math.random() - 0.5) * 22;
+                pos[i + 2] = (Math.random() - 0.5) * 15;
+                velocities[i] = (Math.random() - 0.5) * 0.002;
+                velocities[i + 1] = (Math.random() - 0.5) * 0.002;
+                velocities[i + 2] = (Math.random() - 0.5) * 0.002;
+            }
             particlesGeometry.setAttribute('position', new THREE.BufferAttribute(pos, 3));
             const particles = new THREE.Points(particlesGeometry, new THREE.PointsMaterial({
-                size: 0.035, color: 0xf97316, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending
+                size: 0.04, color: 0xf97316, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending
             }));
             scene.add(particles);
             const group = new THREE.Group();
             const core = new THREE.Mesh(
-                new THREE.IcosahedronGeometry(0.45, 1),
-                new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.7, roughness: 0.3, emissive: 0xea580c, emissiveIntensity: 0.25 })
+                new THREE.IcosahedronGeometry(0.5, 2),
+                new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.8, roughness: 0.2, emissive: 0xea580c, emissiveIntensity: 0.3 })
             );
             group.add(core);
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 4; i++) {
                 const torus = new THREE.Mesh(
-                    new THREE.TorusGeometry(0.7 + i * 0.25, 0.025, 12, 60),
-                    new THREE.MeshStandardMaterial({ color: i === 0 ? 0xea580c : 0xd4af37, metalness: 0.6, roughness: 0.4, transparent: true, opacity: 0.75 })
+                    new THREE.TorusGeometry(0.65 + i * 0.22, 0.02, 16, 80),
+                    new THREE.MeshStandardMaterial({
+                        color: i === 0 ? 0xea580c : i === 1 ? 0xd4af37 : i === 2 ? 0x138808 : 0xf59e0b,
+                        metalness: 0.7, roughness: 0.3, transparent: true, opacity: 0.7
+                    })
                 );
-                torus.rotation.x = Math.PI / 2 + i * 0.3;
-                torus.rotation.y = i * 0.5;
+                torus.rotation.x = Math.PI / 2 + i * 0.4;
+                torus.rotation.y = i * 0.6;
                 group.add(torus);
             }
-            group.position.set(3.2, 0.3, 0);
+            group.position.set(3.5, 0, 0);
             scene.add(group);
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', e => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+            });
             let t = 0;
             function animate() {
                 requestAnimationFrame(animate);
                 t += 0.005;
-                particles.rotation.y = t * 0.15;
-                particles.rotation.x = t * 0.05;
-                group.rotation.y = t * 0.4;
-                group.rotation.x = Math.sin(t * 0.3) * 0.15;
-                group.position.y = Math.sin(t * 0.6) * 0.25 + 0.3;
-                camera.position.x = Math.sin(t * 0.1) * 0.3;
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < count * 3; i += 3) {
+                    positions[i] += velocities[i] + Math.sin(t + i) * 0.001;
+                    positions[i + 1] += velocities[i + 1] + Math.cos(t + i) * 0.001;
+                    positions[i + 2] += velocities[i + 2];
+                    if (Math.abs(positions[i]) > 11) velocities[i] *= -1;
+                    if (Math.abs(positions[i + 1]) > 11) velocities[i + 1] *= -1;
+                    if (Math.abs(positions[i + 2]) > 7.5) velocities[i + 2] *= -1;
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+                particles.rotation.y = t * 0.1;
+                particles.rotation.x = t * 0.03;
+                group.rotation.y = t * 0.5 + mouseX * 0.3;
+                group.rotation.x = Math.sin(t * 0.3) * 0.15 + mouseY * 0.2;
+                group.position.y = Math.sin(t * 0.7) * 0.3;
+                group.position.x = 3.5 + mouseX * 0.5;
+                camera.position.x += ((mouseX * 0.8) - camera.position.x) * 0.05;
+                camera.position.y += ((-mouseY * 0.5) - camera.position.y) * 0.05;
                 camera.lookAt(0, 0, 0);
                 renderer.render(scene, camera);
             }
@@ -597,73 +783,41 @@
             });
         })();
 
-        // ========== UI LOGIC ==========
-        lucide.createIcons();
-        const mobileToggle = document.getElementById('mobileNavToggle');
-        const mobileDrawer = document.getElementById('mobileDrawer');
-        if (mobileToggle) {
-            mobileToggle.addEventListener('click', () => mobileDrawer.classList.toggle('hidden'));
-            document.querySelectorAll('#mobileDrawer a').forEach(l => l.addEventListener('click', () => mobileDrawer.classList.add('hidden')));
-        }
-        const header = document.getElementById('mainHeader');
-        window.addEventListener('scroll', () => header && header.classList.toggle('scrolled', window.scrollY > 40));
-        function animateCounters() {
-            document.querySelectorAll('.stat-number').forEach(counter => {
-                const target = parseFloat(counter.dataset.target);
-                const isDecimal = target % 1 !== 0;
-                const start = performance.now();
-                function update(now) {
-                    const p = Math.min((now - start) / 1800, 1);
-                    const ease = 1 - Math.pow(1 - p, 3);
-                    const val = target * ease;
-                    counter.innerText = isDecimal ? val.toFixed(1) + 'L+' : Math.floor(val) + (target >= 40 ? '+' : '');
-                    if (p < 1) requestAnimationFrame(update);
-                    else counter.innerText = isDecimal ? target + 'L+' : target + (target >= 40 ? '+' : '');
-                }
-                requestAnimationFrame(update);
-            });
-        }
-        new IntersectionObserver(e => { if (e[0].isIntersecting) { animateCounters(); } }, { threshold: 0.35 }).observe(document.querySelector('.hero-mesh'));
-        const revealObs = new IntersectionObserver(entries => {
-            entries.forEach(e => e.isIntersecting && e.target.classList.add('active'));
-        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-        // ========== GALLERY DATA ==========
-        function expand(base, count, title, desc, category) {
+        // ===== GALLERY DATA with CORRECT EXTENSIONS =====
+        function expand(base, count, title, desc, category, ext) {
             const items = [];
             for (let i = 1; i <= count; i++) {
-                items.push({ src: `images/gallery/${base}-${i}.jpg`, title, desc, category });
+                items.push({ src: `images/gallery/${base}-${i}.${ext}`, title, desc, category });
             }
             return items;
         }
         const galleryData = [
-            ...expand("lucknow-election-2019", 3, "2019 लखनऊ लोकसभा चुनाव", "2019 लखनऊ लोकसभा चुनाव में सभी 1826 बूथों पर सहयोगी अधिवक्ता कार्यकर्ताओं को लगा कर 3,50,000 मतों के अंतर से जीत दिलाई।", "चुनावी कार्य"),
-            ...expand("seal-2025", 4, "सील कार्यक्रम के यादगार पल 2025", "सील कार्यक्रम के कुछ यादगार पल 2025।", "सामाजिक एवं विधिक"),
+            ...expand("lucknow-election-2019", 3, "2019 लखनऊ लोकसभा चुनाव", "2019 लखनऊ लोकसभा चुनाव में सभी 1826 बूथों पर सहयोगी अधिवक्ता कार्यकर्ताओं को लगा कर 3,50,000 मतों के अंतर से जीत दिलाई।", "चुनावी कार्य", "png"),
+            ...expand("seal-2025", 4, "सील कार्यक्रम के यादगार पल 2025", "सील कार्यक्रम के कुछ यादगार पल 2025।", "सामाजिक एवं विधिक", "png"),
             { src: "images/gallery/high-court-2025.jpg", title: "पर्यावरण दिवस - उच्च न्यायालय", desc: "पर्यावरण 5 जून 2025 लखनऊ उच्च न्यायालय के वरिष्ठ न्यायाधीश घुलिया जी मुख्य अतिथि रहे।", category: "सामाजिक एवं विधिक" },
-            ...expand("1986", 3, "1986 से 1992 तक की गतिविधियाँ", "1986 से 1992 तक की गतिविधियाँ।", "संघ व ABVP"),
-            ...expand("1992", 6, "अ.भा.वि.प. राष्ट्रीय अधिवेशन", "1992 से 1998 तक अ.भा. विद्यार्थी परिषद के विभिन्न राष्ट्रीय अधिवेशनों में भाग लिया।", "संघ व ABVP"),
-            ...expand("2000", 3, "संघ शिक्षा तृतीय वर्ष - नागपुर", "संघ शिक्षा तृतीय वर्ष-2000 नागपुर।", "संघ व ABVP"),
-            ...expand("ram", 2, "राम जन्मभूमि आंदोलन की स्मृतियाँ", "राम जन्मभूमि आंदोलन के दौरान की स्मृतियाँ।", "संघ व ABVP"),
-            ...expand("akhil", 3, "ABVP प्रतिभा सम्मान समारोह 1997", "अखिल भारतीय विद्यार्थी परिषद लखनऊ महानगर द्वारा आयोजित प्रतिभा सम्मान समारोह-1997।", "संघ व ABVP"),
-            ...expand("mumbai", 5, "ABVP स्वर्ण जयंती अधिवेशन मुंबई 1998", "सन 1998 में अ.भा. विद्यार्थी परिषद के स्वर्ण जयंती अधिवेशन मुंबई में सहभाग।", "संघ व ABVP"),
-            ...expand("rj", 3, "शीर्ष नेतृत्व के साथ", "मा० राजनाथ सिंह, मा० भगत सिंह कोश्यारी, माननीय योगी आदित्यनाथ एवं मा० पुष्कर सिंह धामी जी के साथ।", "शीर्ष नेतृत्व"),
-            ...expand("jeevan", 4, "जीवन के यादगार एवं ऐतिहासिक पल", "जीवन के कुछ यादगार एवं ऐतिहासिक पल।", "शीर्ष नेतृत्व"),
-            ...expand("bjp-dun", 3, "भाजपा राष्ट्रीय कार्यकारिणी देहरादून", "भाजपा राष्ट्रीय कार्यकारिणी देहरादून की यादें।", "शीर्ष नेतृत्व"),
-            ...expand("atal", 3, "अटल बिहारी वाजपेई जी के आवास पर", "मा० प्रधानमंत्री अटल बिहारी वाजपेई जी के आवास पर वरिष्ठजनों की भेंट।", "शीर्ष नेतृत्व"),
-            ...expand("cp", 3, "प्रदेश का प्रथम डिजिटल निवास प्रमाण पत्र", "सन 2005 में सहज जन सेवा केंद्र के माध्यम से प्रदेश का प्रथम डिजिटल निवास प्रमाण पत्र।", "सामाजिक एवं विधिक"),
-            ...expand("kal", 3, "किसान बचाओ यात्रा 2007", "2007 में किसान बचाओ यात्रा में माननीय कलराज मिश्रा जी के नेतृत्व में भाग लिया।", "सामाजिक एवं विधिक"),
-            ...expand("pkd", 4, "मुख्यमंत्री पुष्कर सिंह धामी जी का लखनऊ आगमन", "माननीय मुख्यमंत्री पुष्कर सिंह धामी जी का प्रथम बार मुख्यमंत्री बनने के बाद लखनऊ आगमन।", "शीर्ष नेतृत्व"),
-            ...expand("yuva", 4, "युवा मोर्चा प्रदेश कार्यालय उद्घाटन", "युवा मोर्चा प्रदेश कार्यालय के उद्घाटन समारोह।", "सामाजिक एवं विधिक"),
-            ...expand("ch", 3, "माइक्रोबूथ मैनेजमेंट - छत्तीसगढ़", "2007 में छत्तीसगढ़ विधान सभा भाटापार में माइक्रोबूथ मैनेजमेंट पर कार्य करने के दौरान माननीय उप प्रधानमंत्री लालकृष्ण आडवाणी जी की सभा को संबोधित करने का अवसर प्राप्त हुआ।", "चुनावी कार्य"),
-            ...expand("mw", 3, "100 घोटालों की रिपोर्ट", "मायावती सरकार के 100 घोटालों की रिपोर्ट तैयार करने में मुख्य भूमिका निभाई।", "सामाजिक एवं विधिक"),
-            ...expand("up", 3, "उपभोक्ता संरक्षण एवं शिक्षा अभियान", "उपभोक्ता संरक्षण, सर्व शिक्षा अभियान के विभिन्न कार्यक्रमों का आयोजन।", "सामाजिक एवं विधिक"),
-            ...expand("radha", 3, "राधा मोहन सिंह का सीतापुर दौरा", "सन 2014 के लोक सभा चुनावों के सह प्रभारी माननीय राधा मोहन सिंह का सीतापुर दौरा।", "चुनावी कार्य"),
-            ...expand("raju", 3, "लखनऊ पश्चिम - माइक्रो बूथ मैनेजमेंट", "2017 के चुनाव में लखनऊ पश्चिम विधानसभा में हास्य कलाकार राजू श्रीवास्तव जी का कार्यक्रम तथा 149 बूथों पर माइक्रो बूथ मैनेजमेंट का कार्य किया।", "चुनावी कार्य"),
-            ...expand("2019-lok", 2, "राजनाथ सिंह जी के नामांकन में", "2019 के लोकसभा चुनाव के लिए माननीय राजनाथ सिंह के नामांकन में आए पुष्कर सिंह धामी एवं अन्य।", "चुनावी कार्य"),
-            ...expand("dutta-tre", 3, "दत्ता त्रे जी का लखनऊ कार्यक्रम", "20 अप्रैल 2025 के माननीय दत्ता त्रे जी का लखनऊ कार्यक्रम।", "सामाजिक एवं विधिक"),
-            ...expand("lucknow-17", 4, "परिवर्तन रैली लखनऊ 2017", "2017 माननीय प्रधानमंत्री श्री नरेन्द्र मोदी जी की परिवर्तन रैली, लखनऊ।", "चुनावी कार्य"),
-            ...expand("pr", 10, "प्रमुख फोटोग्राफ", "प्रमुख फोटोग्राफ।", "शीर्ष नेतृत्व")
+            ...expand("1986", 3, "1986 से 1992 तक की गतिविधियाँ", "1986 से 1992 तक की गतिविधियाँ।", "संघ व ABVP", "png"),
+            ...expand("1992", 6, "अ.भा.वि.प. राष्ट्रीय अधिवेशन", "1992 से 1998 तक अ.भा. विद्यार्थी परिषद के विभिन्न राष्ट्रीय अधिवेशनों में भाग लिया।", "संघ व ABVP", "png"),
+            ...expand("2000", 3, "संघ शिक्षा तृतीय वर्ष - नागपुर", "संघ शिक्षा तृतीय वर्ष-2000 नागपुर।", "संघ व ABVP", "png"),
+            ...expand("ram", 2, "राम जन्मभूमि आंदोलन की स्मृतियाँ", "राम जन्मभूमि आंदोलन के दौरान की स्मृतियाँ।", "संघ व ABVP", "png"),
+            ...expand("akhil", 3, "ABVP प्रतिभा सम्मान समारोह 1997", "अखिल भारतीय विद्यार्थी परिषद लखनऊ महानगर द्वारा आयोजित प्रतिभा सम्मान समारोह-1997।", "संघ व ABVP", "png"),
+            ...expand("mumbai", 5, "ABVP स्वर्ण जयंती अधिवेशन मुंबई 1998", "सन 1998 में अ.भा. विद्यार्थी परिषद के स्वर्ण जयंती अधिवेशन मुंबई में सहभाग।", "संघ व ABVP", "png"),
+            ...expand("rj", 3, "शीर्ष नेतृत्व के साथ", "मा० राजनाथ सिंह, मा० भगत सिंह कोश्यारी, माननीय योगी आदित्यनाथ एवं मा० पुष्कर सिंह धामी जी के साथ।", "शीर्ष नेतृत्व", "png"),
+            ...expand("jeevan", 4, "जीवन के यादगार एवं ऐतिहासिक पल", "जीवन के कुछ यादगार एवं ऐतिहासिक पल।", "शीर्ष नेतृत्व", "jpg"),
+            ...expand("bjp-dun", 3, "भाजपा राष्ट्रीय कार्यकारिणी देहरादून", "भाजपा राष्ट्रीय कार्यकारिणी देहरादून की यादें।", "शीर्ष नेतृत्व", "png"),
+            ...expand("atal", 3, "अटल बिहारी वाजपेई जी के आवास पर", "मा० प्रधानमंत्री अटल बिहारी वाजपेई जी के आवास पर वरिष्ठजनों की भेंट।", "शीर्ष नेतृत्व", "png"),
+            ...expand("cp", 3, "प्रदेश का प्रथम डिजिटल निवास प्रमाण पत्र", "सन 2005 में सहज जन सेवा केंद्र के माध्यम से प्रदेश का प्रथम डिजिटल निवास प्रमाण पत्र।", "सामाजिक एवं विधिक", "png"),
+            ...expand("kal", 3, "किसान बचाओ यात्रा 2007", "2007 में किसान बचाओ यात्रा में माननीय कलराज मिश्रा जी के नेतृत्व में भाग लिया।", "सामाजिक एवं विधिक", "png"),
+            ...expand("pkd", 4, "मुख्यमंत्री पुष्कर सिंह धामी जी का लखनऊ आगमन", "माननीय मुख्यमंत्री पुष्कर सिंह धामी जी का प्रथम बार मुख्यमंत्री बनने के बाद लखनऊ आगमन।", "शीर्ष नेतृत्व", "png"),
+            ...expand("yuva", 4, "युवा मोर्चा प्रदेश कार्यालय उद्घाटन", "युवा मोर्चा प्रदेश कार्यालय के उद्घाटन समारोह।", "सामाजिक एवं विधिक", "png"),
+            ...expand("ch", 3, "माइक्रोबूथ मैनेजमेंट - छत्तीसगढ़", "2007 में छत्तीसगढ़ विधान सभा भाटापार में माइक्रोबूथ मैनेजमेंट पर कार्य करने के दौरान माननीय उप प्रधानमंत्री लालकृष्ण आडवाणी जी की सभा को संबोधित करने का अवसर प्राप्त हुआ।", "चुनावी कार्य", "png"),
+            ...expand("mw", 3, "100 घोटालों की रिपोर्ट", "मायावती सरकार के 100 घोटालों की रिपोर्ट तैयार करने में मुख्य भूमिका निभाई।", "सामाजिक एवं विधिक", "png"),
+            ...expand("up", 3, "उपभोक्ता संरक्षण एवं शिक्षा अभियान", "उपभोक्ता संरक्षण, सर्व शिक्षा अभियान के विभिन्न कार्यक्रमों का आयोजन।", "सामाजिक एवं विधिक", "png"),
+            ...expand("radha", 3, "राधा मोहन सिंह का सीतापुर दौरा", "सन 2014 के लोक सभा चुनावों के सह प्रभारी माननीय राधा मोहन सिंह का सीतापुर दौरा।", "चुनावी कार्य", "png"),
+            ...expand("raju", 3, "लखनऊ पश्चिम - माइक्रो बूथ मैनेजमेंट", "2017 के चुनाव में लखनऊ पश्चिम विधानसभा में हास्य कलाकार राजू श्रीवास्तव जी का कार्यक्रम तथा 149 बूथों पर माइक्रो बूथ मैनेजमेंट का कार्य किया।", "चुनावी कार्य", "png"),
+            ...expand("2019-lok", 2, "राजनाथ सिंह जी के नामांकन में", "2019 के लोकसभा चुनाव के लिए माननीय राजनाथ सिंह के नामांकन में आए पुष्कर सिंह धामी एवं अन्य।", "चुनावी कार्य", "png"),
+            ...expand("dutta-tre", 3, "दत्ता त्रे जी का लखनऊ कार्यक्रम", "20 अप्रैल 2025 के माननीय दत्ता त्रे जी का लखनऊ कार्यक्रम।", "सामाजिक एवं विधिक", "png"),
+            ...expand("lucknow-17", 4, "परिवर्तन रैली लखनऊ 2017", "2017 माननीय प्रधानमंत्री श्री नरेन्द्र मोदी जी की परिवर्तन रैली, लखनऊ।", "चुनावी कार्य", "png"),
+            ...expand("pr", 10, "प्रमुख फोटोग्राफ", "प्रमुख फोटोग्राफ।", "शीर्ष नेतृत्व", "png")
         ];
 
         let currentFilter = 'all';
@@ -678,8 +832,17 @@
                 div.className = 'gallery-item reveal';
                 div.setAttribute('data-category', item.category);
                 div.onclick = () => openLightbox(idx);
+                // Get the other extension for fallback
+                const basePath = item.src.replace(/\.(png|jpg|jpeg)$/i, '');
+                const currentExt = item.src.match(/\.(png|jpg|jpeg)$/i)[0];
+                const fallbackExt = currentExt === '.png' ? '.jpg' : '.png';
                 div.innerHTML = `
-                    <img src="${item.src}" alt="${item.title}" loading="lazy" onerror="this.style.display='none'">
+                    <div class="gallery-img-wrap">
+                        <img src="${item.src}" alt="${item.title}" loading="lazy"
+                            onload="this.classList.add('loaded'); this.parentElement.querySelector('.skeleton').style.display='none';"
+                            onerror="this.onerror=null; this.src='${basePath}${fallbackExt}'; this.onerror=()=>{this.style.display='none'; this.parentElement.querySelector('.skeleton').style.display='none';}">
+                        <div class="skeleton"></div>
+                    </div>
                     <div class="gallery-overlay"></div>
                     <span class="gallery-badge font-sans">${item.category}</span>
                     <div class="gallery-zoom"><i data-lucide="zoom-in" class="w-4 h-4"></i></div>
@@ -692,6 +855,7 @@
             });
             document.querySelectorAll('#galleryGrid .reveal').forEach(el => revealObs.observe(el));
             lucide.createIcons();
+            document.getElementById('galleryCount').innerText = filteredItems.length + ' चित्र';
         }
 
         document.querySelectorAll('.filter-tab').forEach(tab => {
@@ -742,7 +906,8 @@
             updateLightbox();
         }
         document.addEventListener('keydown', e => {
-            if (document.getElementById('lightbox').classList.contains('open')) {
+            const lb = document.getElementById('lightbox');
+            if (lb.classList.contains('open')) {
                 if (e.key === 'Escape') closeLightbox();
                 if (e.key === 'ArrowRight') nextImage();
                 if (e.key === 'ArrowLeft') prevImage();
