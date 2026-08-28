@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ html>
 <html lang="hi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -116,6 +116,9 @@
         .gallery-img-wrap img.loaded { opacity: 1; }
         .gallery-img-wrap .skeleton { position: absolute; inset: 0; background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%); background-size: 200% 100%; animation: skeleton 1.5s ease-in-out infinite; }
         .gallery-img-wrap img.loaded + .skeleton { display: none; }
+        .form-tab { background: transparent; border-color: rgba(51,65,85,0.5); color: #94a3b8; }
+        .form-tab.active { background: linear-gradient(135deg, #ea580c, #d97706); border-color: rgba(234,88,12,0.5); color: #fff; box-shadow: 0 4px 20px -3px rgba(234,88,12,0.35); }
+        .form-tab:hover:not(.active) { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.2); color: #fbbf24; }
     </style>
 </head>
 
@@ -152,6 +155,8 @@
                 </div>
             </div>
             <nav class="hidden lg:flex items-center gap-8 font-sans text-sm font-semibold text-slate-300">
+                <a href="#vision" class="nav-link hover:text-amber-400 transition">संकल्प</a>
+                <a href="#welfare" class="nav-link hover:text-amber-400 transition">कल्याण</a>
                 <a href="#about" class="nav-link hover:text-amber-400 transition">परिचय</a>
                 <a href="#micro-booth" class="nav-link hover:text-amber-400 transition">माइक्रो बूथ रणनीति</a>
                 <a href="#gallery" class="nav-link hover:text-amber-400 transition">चित्र दीर्घा</a>
@@ -166,6 +171,8 @@
             </button>
         </div>
         <div id="mobileDrawer" class="hidden lg:hidden bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 px-6 py-4 space-y-3 font-sans text-sm">
+            <a href="#vision" class="block py-2 hover:text-amber-400 transition">संकल्प</a>
+            <a href="#welfare" class="block py-2 hover:text-amber-400 transition">कल्याण</a>
             <a href="#about" class="block py-2 hover:text-amber-400 transition">परिचय</a>
             <a href="#micro-booth" class="block py-2 hover:text-amber-400 transition">माइक्रो बूथ रणनीति</a>
             <a href="#gallery" class="block py-2 hover:text-amber-400 transition">चित्र दीर्घा</a>
@@ -229,7 +236,7 @@
                 <div class="lg:col-span-5 flex justify-center reveal">
                     <div class="relative w-full max-w-md">
                         <div class="absolute -inset-1 bg-gradient-to-r from-bjpOrange-600 via-amber-500 to-bjpGreen rounded-3xl blur-lg opacity-40 animate-pulse"></div>
-                        <div class="relative w-full bg-gradient-to-b from-slate-800/95 to-slate-950/95 border-2 border-amber-500/40 rounded-3xl p-7 shadow-2xl text-center backdrop-blur-xl float-animation">
+                        <div class="relative w-full bg-gradient-to-b from-slate-800/95 to-slate-950/95 border-2 border-amber-500/40 rounded-3xl p-7 shadow-2xl text-center backdrop-blur-xl">
                             <div class="relative w-64 h-64 mx-auto rounded-full overflow-hidden border-4 border-bjpOrange-500 shadow-2xl bg-slate-900">
                                 <img src="portrait.png" alt="चौ० सोमेश वर्धन सिंह" class="w-full h-full object-cover" style="object-position: center 30%;" loading="eager" onerror="this.onerror=null;this.src='portrait.jpg';this.onerror=()=>this.style.display='none'">
                             </div>
@@ -315,7 +322,155 @@
 
     <div class="section-divider"></div>
 
-    <!-- About -->
+        <div class="section-divider"></div>
+
+    <!-- Vision -->
+    <section id="vision" class="py-24 bg-[#090e1a] border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-bjpOrange-400 font-bold text-xs uppercase font-sans tracking-widest bg-orange-950/60 border border-bjpOrange-500/30 px-4 py-1.5 rounded-full">लखनऊ 2027 • हमारा संकल्प</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-5">आपकी गली, आपका अधिकार</h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-4 font-sans leading-relaxed">
+                    लोग बायोडाटा नहीं, समाधान के लिए वोट देते हैं। लखनऊ के हर वार्ड, हर मोहल्ले और हर गली के लिए हमारी प्रतिबद्धता।
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 font-sans">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-7 card-glow reveal">
+                    <div class="w-14 h-14 bg-gradient-to-br from-bjpOrange-500 to-bjpOrange-700 text-white rounded-2xl flex items-center justify-center mb-5 shadow-xl">
+                        <i data-lucide="car" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-lg font-bold font-title text-white mb-2">हजरतगंज पार्किंग व स्मार्ट सिटी</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">मल्टी-लेवल पार्किंग, स्मार्ट ट्रैफिक सिग्नल और सीवरेज ओवरफ्लो की समस्या का स्थायी समाधान। पुरानी बाजारों में वाहन-मुक्त जोन।</p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-7 card-glow reveal">
+                    <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 rounded-2xl flex items-center justify-center mb-5 shadow-xl">
+                        <i data-lucide="droplets" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-lg font-bold font-title text-white mb-2">गोमती नगर जल निकासी व बाढ़ नियंत्रण</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">मॉनसून में जलजमाव से निजात — नए ड्रेनेज नेटवर्क, सीवर लाइन अपग्रेड और वार्ड-स्तरीय जल निकासी योजना।</p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-7 card-glow reveal">
+                    <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-700 text-white rounded-2xl flex items-center justify-center mb-5 shadow-xl">
+                        <i data-lucide="bus" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-lg font-bold font-title text-white mb-2">बेहतर सार्वजनिक परिवहन</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">मेट्रो एक्सटेंशन, ई-बस फ्लीट विस्तार और लास्ट-माइल कनेक्टिविटी। हर कॉलोनी तक सुरक्षित व सस्ता परिवहन।</p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-7 card-glow reveal">
+                    <div class="w-14 h-14 bg-gradient-to-br from-sky-500 to-sky-700 text-white rounded-2xl flex items-center justify-center mb-5 shadow-xl">
+                        <i data-lucide="home" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-lg font-bold font-title text-white mb-2">चौक-अमीनाबाद पुनर्विकास</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">पुरानी बस्तियों में सड़क चौड़ीकरण, पेयजल टैंकर मुक्ति और हेरिटेज वॉकवे। पारंपरिक बाजारों को आधुनिक सुविधाएं।</p>
+                </div>
+            </div>
+            <div class="mt-14 bg-gradient-to-r from-bjpOrange-600/10 via-amber-500/10 to-emerald-500/10 border border-slate-800 rounded-2xl p-8 reveal">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-bjpOrange-600 to-amber-500 flex items-center justify-center shrink-0 shadow-xl">
+                        <i data-lucide="target" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h4 class="text-xl font-bold font-title text-white">हर वार्ड, हर मोहल्ला — एक ही लक्ष्य</h4>
+                        <p class="text-sm text-slate-400 mt-2 leading-relaxed">लखनऊ को देश का सबसे साफ, सुरक्षित और समृद्ध राजधानी बनाना। यह कोई सपना नहीं, यह हमारा संकल्प है।</p>
+                    </div>
+                    <a href="#contact" class="magnetic-btn shrink-0 bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition shine-effect">
+                        <i data-lucide="hand-heart" class="w-4 h-4 inline mr-2"></i>सहभागी बनें
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Welfare -->
+    <section id="welfare" class="py-24 bg-[#0c1222] border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-emerald-400 font-bold text-xs uppercase font-sans tracking-widest bg-emerald-950/60 border border-emerald-500/30 px-4 py-1.5 rounded-full">जन कल्याण • सबका साथ, सबका विकास</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-title text-white mt-5">हर वर्ग, हर उम्र — एक ही मिशन</h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-4 font-sans leading-relaxed">
+                    लखनऊ एक ऐसा क्षेत्र है जहाँ गोमती नगर के आधुनिक पेशेवर और चौक-अमीनाबाद की ऐतिहासिक जनता दोनों का सम्मान है। हर योजना, हर नीति — सबके लिए।
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 font-sans">
+                <div class="gradient-border bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-slate-800 p-8 reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-500 to-sky-700 flex items-center justify-center shrink-0 shadow-lg">
+                            <i data-lucide="building-2" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold font-title text-white">शहरी पेशेवर वर्ग</h3>
+                            <p class="text-xs text-slate-500">गोमती नगर, हजरतगंज, इंदिरा नगर, अलीगंज</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 text-sm text-slate-300">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <span><strong class="text-white">PM Awas Yojana / CM Awas Yojana:</strong> किराएदारों और युवा पेशेवरों के लिए सस्ते आवास। ऑनलाइन आवेदन सहायता केंद्र।</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <span><strong class="text-white">Startup India / MSME सहायता:</strong> युवा उद्यमियों के लिए सीड फंड, रजिस्ट्रेशन और टैक्स सलाह केंद्र।</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <span><strong class="text-white">Skill India / Digital Literacy:</strong> ITI, कोडिंग और डिजिटल मार्केटिंग के निःशुल्क कोर्स।</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <span><strong class="text-white">मेट्रो कनेक्टिविटी:</strong> ऑफिस कॉम्प्लेक्स और रेजिडेंशियल एरिया तक लास्ट-माइल कनेक्टिविटी।</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="gradient-border bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-slate-800 p-8 reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-bjpOrange-500 to-bjpOrange-700 flex items-center justify-center shrink-0 shadow-lg">
+                            <i data-lucide="landmark" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold font-title text-white">पुरानी बस्ती व ऐतिहासिक शहर</h3>
+                            <p class="text-xs text-slate-500">चौक, अमीनाबाद, नक्खास, थानाथोपी</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 text-sm text-slate-300">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+                            <span><strong class="text-white">Ayushman Bharat / CM Jan Arogya:</strong> हर परिवार को ₹5 लाख तक का स्वास्थ्य बीमा। वार्ड-स्तरीय स्वास्थ्य शिविर।</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+                            <span><strong class="text-white">Ujjwala Yojana:</strong> हर गरीब परिवार को मुफ्त LPG कनेक्शन और सब्सिडी।</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+                            <span><strong class="text-white">PM Svanidhi / Street Vendor:</strong> ठेले-पटरी वालों के लिए ₹10,000 तक का ब्याज-मुक्त ऋण।</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
+                            <span><strong class="text-white">पेयजल व सीवरेज:</strong> पुरानी बस्तियों में RO पानी, सीवर लाइन और सड़क पक्कीकरण।</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-10 grid sm:grid-cols-3 gap-5 font-sans reveal">
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 text-center card-glow">
+                    <div class="text-2xl font-extrabold text-emerald-400">महिला सुरक्षा</div>
+                    <p class="text-xs text-slate-400 mt-2">पिंक बूथ, SHE टीम, 24x7 हेल्पलाइन और आत्मरक्षा प्रशिक्षण।</p>
+                </div>
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 text-center card-glow">
+                    <div class="text-2xl font-extrabold text-amber-400">वरिष्ठ नागरिक</div>
+                    <p class="text-xs text-slate-400 mt-2">पेंशन पोर्टल, निःशुल्क दवा वितरण और वार्ड-स्तरीय सेवा केंद्र।</p>
+                </div>
+                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 text-center card-glow">
+                    <div class="text-2xl font-extrabold text-sky-400">युवा रोजगार</div>
+                    <p class="text-xs text-slate-400 mt-2">UPPSC, SSC, Banking कोचिंग केंद्र और नौकरी मेला हर तिमाही।</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- About -->
     <section id="about" class="py-24 bg-[#090e1a] border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="gradient-border bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-slate-800 p-8 sm:p-12 shadow-2xl reveal">
@@ -482,13 +637,21 @@
                             </div>
                             <div>
                                 <div class="text-xs text-slate-500 mb-1">ई-मेल</div>
-                                <div class="font-medium text-white"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="76051f18111e5805191b13051e001704121e171836111b171f1a5815191b">[email&#160;protected]</a></div>
+                                <div class="font-medium text-white"><a href="mailto:singh.someshvardhan@gmail.com" class="hover:text-amber-400 transition">singh.someshvardhan@gmail.com</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-3xl p-10 reveal">
-                    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-5 text-sm">
+                    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-5 text-sm" id="contactForm">
+                        <div class="flex gap-3 mb-2">
+                            <button type="button" class="form-tab active flex-1 py-2.5 rounded-xl text-xs font-bold border transition" data-form="issue" onclick="switchFormTab('issue')">
+                                <i data-lucide="message-square" class="w-4 h-4 inline mr-1"></i> समस्या दर्ज करें
+                            </button>
+                            <button type="button" class="form-tab flex-1 py-2.5 rounded-xl text-xs font-bold border transition" data-form="volunteer" onclick="switchFormTab('volunteer')">
+                                <i data-lucide="users" class="w-4 h-4 inline mr-1"></i> युवा स्वयंसेवक ब्रिगेड
+                            </button>
+                        </div>
                         <div class="grid sm:grid-cols-2 gap-5">
                             <div>
                                 <label class="block text-xs text-slate-400 mb-2">पूरा नाम *</label>
@@ -505,20 +668,79 @@
                                 <input type="text" name="constituency" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="विधानसभा क्षेत्र">
                             </div>
                             <div>
-                                <label class="block text-xs text-slate-400 mb-2">विषय</label>
-                                <select name="subject" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition">
-                                    <option>सांगठनिक विचार-विमर्श</option>
-                                    <option>विधिक सहायता / परामर्श</option>
-                                    <option>जनहित समस्या निवारण</option>
-                                    <option>अन्य</option>
-                                </select>
+                                <label class="block text-xs text-slate-400 mb-2">ई-मेल</label>
+                                <input type="email" name="email" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="ई-मेल पता">
                             </div>
                         </div>
-                        <div>
-                            <label class="block text-xs text-slate-400 mb-2">संदेश *</label>
-                            <textarea name="message" rows="5" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="अपना संदेश लिखें..."></textarea>
+                        <div id="issueFields">
+                            <div class="grid sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-2">विषय</label>
+                                    <select name="subject" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition">
+                                        <option>सांगठनिक विचार-विमर्श</option>
+                                        <option>विधिक सहायता / परामर्श</option>
+                                        <option>जनहित समस्या निवारण</option>
+                                        <option>अन्य</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-2">वार्ड / मोहल्ला</label>
+                                    <input type="text" name="ward" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="अपना वार्ड दर्ज करें">
+                                </div>
+                            </div>
+                            <div class="mt-5">
+                                <label class="block text-xs text-slate-400 mb-2">संदेश / समस्या विवरण *</label>
+                                <textarea name="message" rows="4" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="अपनी समस्या या सुझाव विस्तार से लिखें..."></textarea>
+                            </div>
                         </div>
-                        <button type="submit" class="magnetic-btn w-full bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white font-bold py-4 rounded-xl shadow-xl transition shine-effect" id="submitBtn">संदेश प्रेषित करें</button>
+                        <div id="volunteerFields" class="hidden space-y-5">
+                            <div class="grid sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-2">उम्र *</label>
+                                    <input type="number" name="age" min="18" max="40" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="18-40 वर्ष">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-2">शैक्षणिक योग्यता</label>
+                                    <select name="education" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition">
+                                        <option>हाई स्कूल</option>
+                                        <option>इंटरमीडिएट</option>
+                                        <option>स्नातक</option>
+                                        <option>स्नातकोत्तर / पेशेवर</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-2">रुचि का क्षेत्र</label>
+                                    <select name="interest" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition">
+                                        <option>बूथ प्रबंधन / डेटा एंट्री</option>
+                                        <option>सोशल मीडिया / डिजिटल</option>
+                                        <option>जनसंपर्क / दीवार लेखन</option>
+                                        <option>विधिक सहायता</option>
+                                        <option>अन्य</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-400 mb-2">उपलब्धता (घंटे/सप्ताह)</label>
+                                    <select name="availability" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition">
+                                        <option>5-10 घंटे</option>
+                                        <option>10-20 घंटे</option>
+                                        <option>20+ घंटे</option>
+                                        <option>पूर्णकालिक</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-2">अपने बारे में / प्रेरणा *</label>
+                                <textarea name="volunteer_message" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-bjpOrange-500 transition" placeholder="आप संगठन में क्यों शामिल होना चाहते हैं?"></textarea>
+                            </div>
+                            <div class="flex items-start gap-3 bg-bjpOrange-500/10 border border-bjpOrange-500/20 rounded-xl p-4">
+                                <i data-lucide="info" class="w-5 h-5 text-bjpOrange-400 shrink-0 mt-0.5"></i>
+                                <p class="text-xs text-slate-300 leading-relaxed">युवा स्वयंसेवक ब्रिगेड में शामिल होकर आप 2027 के चुनावी अभियान का हिस्सा बनेंगे। आपका डेटा गोपनीय रखा जाएगा और केवल संगठनात्मक उद्देश्यों के लिए उपयोग किया जाएगा।</p>
+                            </div>
+                        </div>
+                        <input type="hidden" name="form_type" id="formTypeInput" value="issue">
+                        <button type="submit" class="w-full bg-gradient-to-r from-bjpOrange-600 to-amber-500 hover:from-bjpOrange-700 hover:to-amber-600 text-white font-bold py-4 rounded-xl shadow-xl transition shine-effect" id="submitBtn">संदेश प्रेषित करें</button>
                     </form>
                 </div>
             </div>
@@ -528,7 +750,11 @@
     <footer class="bg-black text-slate-500 py-10 text-xs text-center font-sans border-t border-slate-900">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-between items-center gap-4">
             <div>© 2026 चौ० सोमेश वर्धन सिंह | सर्वाधिकार सुरक्षित</div>
-            <div class="flex gap-4">
+            <div class="flex gap-4 items-center flex-wrap justify-center">
+                <a href="mailto:singh.someshvardhan@gmail.com" class="hover:text-amber-400 transition">singh.someshvardhan@gmail.com</a>
+                <span>•</span>
+                <span>7007750815</span>
+                <span>•</span>
                 <span>राष्ट्राय स्वाहा, इदं न मम</span>
                 <span>•</span>
                 <span>भारतीय जनता पार्टी, उत्तर प्रदेश</span>
@@ -667,31 +893,21 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
         document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-        // Text scramble effect
-        function scrambleText(element, finalText, speed = 30) {
-            const chars = 'अआइईउऊएऐओऔकखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसहळक्षज्ञ';
-            let iteration = 0;
-            const interval = setInterval(() => {
-                element.innerText = finalText.split('').map((char, index) => {
-                    if (index < iteration) return finalText[index];
-                    if (char === ' ' || char === '<') return char;
-                    return chars[Math.floor(Math.random() * chars.length)];
-                }).join('');
-                if (iteration >= finalText.length) clearInterval(interval);
-                iteration += 1 / 3;
-            }, speed);
-        }
-        const scrambleHeading = document.getElementById('scrambleHeading');
-        if (scrambleHeading) {
-            const originalHTML = scrambleHeading.innerHTML;
-            const temp = document.createElement('div');
-            temp.innerHTML = originalHTML;
-            const plainText = temp.textContent;
-            scrambleHeading.innerText = plainText;
-            setTimeout(() => {
-                scrambleText(scrambleHeading, plainText, 25);
-                setTimeout(() => scrambleHeading.innerHTML = originalHTML, 1500);
-            }, 300);
+        // Form tab switcher
+        function switchFormTab(type) {
+            document.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('.form-tab[data-form="' + type + '"]').classList.add('active');
+            document.getElementById('formTypeInput').value = type;
+            if (type === 'issue') {
+                document.getElementById('issueFields').classList.remove('hidden');
+                document.getElementById('volunteerFields').classList.add('hidden');
+                document.getElementById('submitBtn').innerText = 'संदेश प्रेषित करें';
+            } else {
+                document.getElementById('issueFields').classList.add('hidden');
+                document.getElementById('volunteerFields').classList.remove('hidden');
+                document.getElementById('submitBtn').innerText = 'स्वयंसेवक ब्रिगेड में शामिल हों';
+            }
+            lucide.createIcons();
         }
 
         // ===== THREE.JS HERO =====
